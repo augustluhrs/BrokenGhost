@@ -16,10 +16,10 @@ app.use(express.static('public'));
 let io = require('socket.io').listen(server);
 
 //- - - - arrays
-var team1 = [];
-var team2 = [];
+var regions = [];
+
 /*
-function Bubble(_dad, _name, _r, _g, _b){
+function Region(_dad, _name, _r, _g, _b){
 	this.dad = socket.id;
 	this.name = name;
 	this.r = _r;
@@ -41,19 +41,17 @@ screen.on('connection', function (socket) {
 	});
 
 //- - - - -  Player Sockets (Team Formation)
-var team1 = io.of('/players/team1');
+var master = io.of('/puppetmaster');
 
-team1.on('connection',	function (socket){
-		console.log('We have a new player: ' + socket.id);
+master.on('connection',	function (socket){
+		console.log('Welcome, Davis. Your id is: ' + socket.id);
 
-    socket.on('team1', function(bubbles){
-      team1 = bubbles;
-      console.log(team1);
-      screen.emit('team1', team1);
-      fight1.emit('team1', team1);
-      fight2.emit('team1', team1);
-      // socket.broadcast.emit('team1', team1);
-      // console.log('sending to screen');
+    //when Davis sends update, store the new state of the map and send the update to the screen
+    socket.on('update', function(data){
+      regions = data;
+      console.log(data);
+      screen.emit('update', regions);
+      //should store in separate log also, in case need for reset?
     });
 
     // Listen for this client to disconnect
@@ -61,46 +59,3 @@ team1.on('connection',	function (socket){
 			console.log("Client has disconnected " + socket.id);
 		});
 	});
-
-  var team2 = io.of('/players/team2');
-
-  team2.on('connection',	function (socket){
-  		console.log('We have a new player: ' + socket.id);
-
-      socket.on('team2', function(bubbles){
-        team2 = bubbles;
-        screen.emit('team2', team2);
-        fight1.emit('team1', team1);
-        fight2.emit('team1', team1);
-        console.log(team2);
-      });
-
-      // Listen for this client to disconnect
-  		socket.on('disconnect', function() {
-  			console.log("Client has disconnected " + socket.id);
-  		});
-  	});
-
-//- - - - - -  Player Sockets (Fight Screen)
-
-var fight1 = io.of('/players/fight1');
-
-screen.on('connection', function (socket) {
-		console.log("Screen connected: " + socket.id);
-
-    // Listen for this client to disconnect
-		socket.on('disconnect', function() {
-			console.log("Screen has disconnected " + socket.id);
-		});
-	});
-
-  var fight2 = io.of('/players/fight2');
-
-  screen.on('connection', function (socket) {
-  		console.log("Screen connected: " + socket.id);
-
-      // Listen for this client to disconnect
-  		socket.on('disconnect', function() {
-  			console.log("Screen has disconnected " + socket.id);
-  		});
-  	});

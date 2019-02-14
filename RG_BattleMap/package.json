@@ -1,0 +1,15 @@
+{
+  "name": "rg_battlemap",
+  "version": "1.0.0",
+  "description": "interactive battle map for Rogues' Gallery game  <br> <br> using p5.js and node",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "J. August Gogurt Et Al",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socketio": "^1.0.0"
+  }
+}

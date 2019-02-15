@@ -9,6 +9,7 @@ let socket = io('/screen');
 var regions = [];
 var teams = [];
 var teamLimit;
+var refresh;
 // let italy;
 var reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8,
 	reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16;
@@ -42,10 +43,22 @@ function setup(){
 	textAlign(CENTER);
 	// textSize(width/32);
 
+	refresh = createButton('refresh map');
+	refresh.mousePressed(function(){
+		socket.emit('refresh');
+	})
+
+	for (var i = 0; i < regions.length; i++){
+		// for (var j = 0; j < 4; j++){
+		regions[i].c.levels= [0, 0, 255, 155];
+		// }
+	}
 
   // Listen for confirmation of connection
   socket.on('connect', function() {
     console.log("Connected");
+		socket.emit('refresh');
+		redraw();
   });
 
 	// - - - - - heartbeat

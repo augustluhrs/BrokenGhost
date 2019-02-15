@@ -25,7 +25,7 @@ let team8 = {}; //all possible factions
 let teams = [];
 let teamIn1, teamIn2, teamIn3, teamIn4, teamIn5, teamIn6, teamIn7, teamIn8; //team inputs
 let teamButt1, teamButt2, teamButt3, teamButt4, teamButt5, teamButt6, teamButt7,teamButt8; //team display and color changer
-let colorNum = 0;
+let colorNum = 28;
 let teamColors = [
 	0, 255, 0, 150, //green
 	255, 0, 0, 150, //red
@@ -34,7 +34,8 @@ let teamColors = [
 	255, 255, 0, 150, //yellow
 	0, 255, 255, 150, //cyan
 	255, 0, 255, 150, //purple
-	150, 150, 150, 150 //grey
+	150, 150, 150, 150, //grey
+	0, 0, 255, 100 //default blue map
 ]
 let teamLimitIn;
 var teamLimit; //starts with 8 teams
@@ -397,7 +398,7 @@ function teamColor8(){
 
 function laboriousColorFunction(){
 	colorNum += 4;
-	if(colorNum >= 32){
+	if(colorNum >= 36){
 		colorNum = 0;
 	}
 	let tR = teamColors[colorNum];

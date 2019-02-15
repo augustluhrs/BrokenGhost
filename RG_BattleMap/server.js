@@ -32,6 +32,14 @@ screen.on('connection', function (socket) {
     }
     screen.emit('update', data);
 
+    socket.on('refresh', function(){
+      data = {
+        r: regions,
+        t: teams,
+        l: teamLimit
+      }
+      screen.emit('update', data);
+    });
     // Listen for this client to disconnect
 		socket.on('disconnect', function() {
 			console.log("Screen has disconnected " + socket.id);

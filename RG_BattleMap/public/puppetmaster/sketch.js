@@ -12,7 +12,15 @@ var regions = [];
 let italy;
 
 //interface buttons and inputs
-let team1, team2, team3, team4, team5, team6, team7, team8; //all possible factions
+let team1 = {};
+let team2 = {};
+let team3 = {};
+let team4 = {};
+let team5 = {};
+let team6 = {};
+let team7 = {};
+let team8 = {}; //all possible factions
+
 let teamIn1, teamIn2, teamIn3, teamIn4, teamIn5, teamIn6, teamIn7, teamIn8; //team inputs
 let teamButt1, teamButt2, teamButt3, teamButt4, teamButt5, teamButt6, teamButt7,teamButt8; //team display and color changer
 let colorNum = 0;
@@ -51,42 +59,42 @@ function setup(){
 	}*/
 
 	//laborious, but works for now
-	teamIn1 = createInput('team');
+	teamIn1 = createInput('Team COLOR');
 	teamIn1.position(25, 25);
 	teamButt1 = createButton(teamIn1.value());
 	teamButt1.position(200, 25);
 	teamButt1.mousePressed(teamColor1);
-	teamIn2 = createInput('team');
+	teamIn2 = createInput('Team COLOR');
 	teamIn2.position(25, 50);
 	teamButt2 = createButton(teamIn2.value());
 	teamButt2.position(200, 50);
 	teamButt2.mousePressed(teamColor2);
-	teamIn3 = createInput('team');
+	teamIn3 = createInput('Team COLOR');
 	teamIn3.position(25, 75);
 	teamButt3 = createButton(teamIn3.value());
 	teamButt3.position(200, 75);
 	teamButt3.mousePressed(teamColor3);
-	teamIn4 = createInput('team');
+	teamIn4 = createInput('Team COLOR');
 	teamIn4.position(25, 100);
 	teamButt4 = createButton(teamIn4.value());
 	teamButt4.position(200, 100);
 	teamButt4.mousePressed(teamColor4);
-	teamIn5 = createInput('team');
+	teamIn5 = createInput('Team COLOR');
 	teamIn5.position(25, 125);
 	teamButt5 = createButton(teamIn5.value());
 	teamButt5.position(200, 125);
 	teamButt5.mousePressed(teamColor5);
-	teamIn6 = createInput('team');
+	teamIn6 = createInput('Team COLOR');
 	teamIn6.position(25, 150);
 	teamButt6 = createButton(teamIn6.value());
 	teamButt6.position(200, 150);
 	teamButt6.mousePressed(teamColor6);
-	teamIn7 = createInput('team');
+	teamIn7 = createInput('Team COLOR');
 	teamIn7.position(25, 175);
 	teamButt7 = createButton(teamIn7.value());
 	teamButt7.position(200, 175);
 	teamButt7.mousePressed(teamColor7);
-	teamIn8 = createInput('team');
+	teamIn8 = createInput('Team COLOR');
 	teamIn8.position(25, 200);
 	teamButt8 = createButton(teamIn8.value());
 	teamButt8.position(200, 200);
@@ -131,14 +139,15 @@ function setup(){
 
 function draw(){
 	// team updates
-	team1 = teamIn1.value();
-	team2 = teamIn2.value();
-	team3 = teamIn3.value();
-	team4 = teamIn4.value();
-	team5 = teamIn5.value();
-	team6 = teamIn6.value();
-	team7 = teamIn7.value();
-	team8 = teamIn8.value();
+	team1.n = teamIn1.value();
+	// teamButt1.attribute('innerText', teamIn1.value());
+	team2.n = teamIn2.value();
+	team3.n = teamIn3.value();
+	team4.n = teamIn4.value();
+	team5.n = teamIn5.value();
+	team6.n = teamIn6.value();
+	team7.n = teamIn7.value();
+	team8.n = teamIn8.value();
 	teams = [team1, team2, team3, team4, team5, team6, team7, team8];
 	// italy.show();
 }
@@ -147,41 +156,49 @@ function draw(){
 function teamColor1(){
 	laboriousColorFunction();
 	teamButt1.style('background-color', teamCol);
+	team1.c = teamCol;
 }
 
 function teamColor2(){
 	laboriousColorFunction();
 	teamButt2.style('background-color', teamCol);
+	team2.c = teamCol;
 }
 
 function teamColor3(){
 	laboriousColorFunction();
 	teamButt3.style('background-color', teamCol);
+	team3.c = teamCol;
 }
 
 function teamColor4(){
 	laboriousColorFunction();
 	teamButt4.style('background-color', teamCol);
+	team4.c = teamCol;
 }
 
 function teamColor5(){
 	laboriousColorFunction();
 	teamButt5.style('background-color', teamCol);
+	team5.c = teamCol;
 }
 
 function teamColor6(){
 	laboriousColorFunction();
 	teamButt6.style('background-color', teamCol);
+	team6.c = teamCol;
 }
 
 function teamColor7(){
 	laboriousColorFunction();
 	teamButt7.style('background-color', teamCol);
+	team7.c = teamCol;
 }
 
 function teamColor8(){
 	laboriousColorFunction();
 	teamButt8.style('background-color', teamCol);
+	team8.c = teamCol;
 }
 
 function laboriousColorFunction(){

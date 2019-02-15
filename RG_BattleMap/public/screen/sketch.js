@@ -7,7 +7,8 @@
 let socket = io('/screen');
 
 var regions = [];
-let italy;
+var teams = [];
+// let italy;
 
 function setup(){
   //- - - - - overall
@@ -26,8 +27,9 @@ function setup(){
 	// - - - - - heartbeat
 	socket.on('update',
 		function(data){
-			regions = data;
-			console.log(regions);
+			regions = data.r;
+			teams = data.t;
+			console.log(data);
 		});
 }
 

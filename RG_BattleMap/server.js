@@ -17,6 +17,7 @@ let io = require('socket.io').listen(server);
 
 //- - - - arrays
 var regions = [];
+var teams = [];
 
 /*
 function Region(_dad, _name, _r, _g, _b){
@@ -45,6 +46,11 @@ var master = io.of('/puppetmaster');
 
 master.on('connection',	function (socket){
 		console.log('Welcome, Davis. Your id is: ' + socket.id);
+    data = {
+      r: regions,
+      t: teams
+    }
+    master.emit('update', regions);
 
     //when Davis sends update, store the new state of the map and send the update to the screen
     socket.on('update', function(data){

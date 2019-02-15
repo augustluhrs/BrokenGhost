@@ -1,5 +1,6 @@
 // Battle Map Screen to be Projected or Displayed on Players' Phones
 // by August Luhrs Feb. 2019
+// assets from Arnab Chakravarty
 
 
 // Open and connect socket
@@ -23,10 +24,11 @@ function setup(){
   });
 
 	// - - - - - heartbeat
-	socket.on('heartbeat',
+	socket.on('update',
 		function(data){
-		}
-	);
+			regions = data;
+			console.log(regions);
+		});
 }
 
 function draw(){

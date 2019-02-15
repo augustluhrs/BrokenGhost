@@ -14,7 +14,7 @@ var refresh;
 var reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8,
 	reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16;
 
-var fortSize = 100; //size of fortress ellipses
+var fortSize = 150; //size of fortress ellipses
 
 var startCol;
 // let hench1 = {n: 0, c: startCol, r: reg1};
@@ -22,7 +22,7 @@ var startCol;
 var hench = [];
 var henchBox = 60; // w and h of the henchmen boxes
 var henchText = 42; //textSize of henchmen count
-var regText = 36; //Size of reg name
+var regText = width/50; //Size of reg name
 /*
 var jitterX1, jitterX2, jitterX3, jitterX15;
 var jitterY1, jitterY2, jitterY3, jitterY15;

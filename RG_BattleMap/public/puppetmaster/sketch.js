@@ -35,7 +35,7 @@ let teamColors = [
 	0, 255, 255, 150, //cyan
 	255, 0, 255, 150, //purple
 	150, 150, 150, 150, //grey
-	0, 0, 255, 100 //default blue map
+	0, 0, 255, 150 //default blue map
 ]
 let teamLimitIn;
 var teamLimit; //starts with 8 teams

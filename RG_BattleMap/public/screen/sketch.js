@@ -108,7 +108,7 @@ function draw(){
 	showReg16();
 }
 
-function showReg1(){
+function showReg1(){ // North America
 	let rR = regions[0].c.levels[0];
 	let rG = regions[0].c.levels[1];
 	let rB = regions[0].c.levels[2];
@@ -118,27 +118,27 @@ function showReg1(){
 	image(reg1, 0, height/10, width/3, height/3);
 }
 
-function showReg2(){
+function showReg2(){ //Central America
 	let rR = regions[1].c.levels[0];
 	let rG = regions[1].c.levels[1];
 	let rB = regions[1].c.levels[2];
 	let rA = regions[1].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	// image(reg2, 0, 0, width/4, height/3);
+	image(reg2, 11 * width/80, 61 *height/160, width/5, height/4);
 }
 
-function showReg3(){
+function showReg3(){ // South America
 	let rR = regions[2].c.levels[0];
 	let rG = regions[2].c.levels[1];
 	let rB = regions[2].c.levels[2];
 	let rA = regions[2].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	// image(reg3, 0, 0, width/4, height/3);
+	image(reg3, 41 *width/160, 46* height/80, width/8, height/3);
 }
 
-function showReg4(){
+function showReg4(){ // Greenland
 	let rR = regions[3].c.levels[0];
 	let rG = regions[3].c.levels[1];
 	let rB = regions[3].c.levels[2];
@@ -155,37 +155,37 @@ function showReg5(){ //Europe
 	let rA = regions[4].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	image(reg5, 2 * width/5, height/12, width/5, height/3);
+	image(reg5, 15 * width/40, height/12, width/5, height/3);
 }
 
-function showReg6(){
+function showReg6(){ //West Africa
 	let rR = regions[5].c.levels[0];
 	let rG = regions[5].c.levels[1];
 	let rB = regions[5].c.levels[2];
 	let rA = regions[5].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	// image(reg6, 0, 0, width/4, height/3);
+	image(reg6, 129 * width/320, 68 * height/160,  5 * width/40, 5 * height/20);
 }
 
-function showReg7(){
+function showReg7(){ //South Africa
 	let rR = regions[6].c.levels[0];
 	let rG = regions[6].c.levels[1];
 	let rB = regions[6].c.levels[2];
 	let rA = regions[6].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	// image(reg7, 0, 0, width/4, height/3);
+	image(reg7, 78*width/160, 101*height/160, width/8, height/4);
 }
 
-function showReg8(){
+function showReg8(){ // East Africa
 	let rR = regions[7].c.levels[0];
 	let rG = regions[7].c.levels[1];
 	let rB = regions[7].c.levels[2];
 	let rA = regions[7].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	// image(reg8, 0, 0, width/4, height/3);
+	image(reg8, 10 * width/20, 7 * height/16, 5 * width/40, 5 * height/20);
 }
 
 function showReg9(){ //Russia
@@ -195,57 +195,57 @@ function showReg9(){ //Russia
 	let rA = regions[8].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	image(reg9, 11 * width/20, 0, width/4, height/3);
+	image(reg9, 11 * width/20, height/15, width/4, height/3);
 }
 
-function showReg10(){
+function showReg10(){ // Middle East
 	let rR = regions[9].c.levels[0];
 	let rG = regions[9].c.levels[1];
 	let rB = regions[9].c.levels[2];
 	let rA = regions[9].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	// image(reg10, 0, 0, width/4, height/3);
+	image(reg10, 90 * width/160, 61*height/160, 7* width/80, 4*height/20);
 }
 
-function showReg11(){
+function showReg11(){ // India
 	let rR = regions[10].c.levels[0];
 	let rG = regions[10].c.levels[1];
 	let rB = regions[10].c.levels[2];
 	let rA = regions[10].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	// image(reg11, 0, 0, width/4, height/3);
+	image(reg11, 51 * width/80, 31 * height/80, width/9,5* height/20);
 }
 
-function showReg12(){
+function showReg12(){ // Siberia
 	let rR = regions[11].c.levels[0];
 	let rG = regions[11].c.levels[1];
 	let rB = regions[11].c.levels[2];
 	let rA = regions[11].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	image(reg12, 4 * width/5, 0, width/4, height/3);
+	image(reg12, 123 * width/160, height/9, width/4, height/3);
 }
 
-function showReg13(){
+function showReg13(){ //China
 	let rR = regions[12].c.levels[0];
 	let rG = regions[12].c.levels[1];
 	let rB = regions[12].c.levels[2];
 	let rA = regions[12].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	// image(reg13, 0, 0, width/4, height/3);
+	image(reg13, 27 * width/40, 20 * height/60, width/6, 3* height/10);
 }
 
-function showReg14(){
+function showReg14(){ //Oceania
 	let rR = regions[13].c.levels[0];
 	let rG = regions[13].c.levels[1];
 	let rB = regions[13].c.levels[2];
 	let rA = regions[13].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	// image(reg14, 0, 0, width/4, height/3);
+	image(reg14, 8 * width/10, 6* height/10, width/4, height/3);
 }
 
 function showReg15(){

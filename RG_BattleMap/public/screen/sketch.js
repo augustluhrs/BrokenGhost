@@ -83,6 +83,7 @@ function setup(){
 		{n: '0', c: startCol, r: 'P. U. F. F.', x: width/ 10.85, y: height/ 1.37} // Pacific Underwater Freedom Fortress
 	];
 
+
   // Listen for confirmation of connection
   socket.on('connect', function() {
     console.log("Connected");
@@ -176,11 +177,13 @@ function draw(){
 		text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
 		pop();
 	}
+
+	nodeLines();
 }
 
 function mousePressed(){ //for map placement ease
-	// console.log((width/mouseX) +'&'+ (height/mouseY));
-	console.log(mouseX) +'  &  '+ (mouseY));
+	console.log((width/mouseX) +'   &   '+ (height/mouseY));
+	// console.log(mouseX +'  &  '+ mouseY);
 
 }
 
@@ -342,4 +345,29 @@ function showReg16(){
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
 	// image(reg16, 0, 0, width/4, height/3);
+}
+
+
+function nodeLines(){	//connecting node lines
+	push();
+	strokeWeight(10);
+	stroke(255);
+	// filter(BLUR, 4); //blur effect
+	line(width/3.53 , height/3.45, width/3.20, height/ 5.16); //N.America --> Greenland
+	line(width/29.23 , height/4.54, 0, height/ 4.54); // N. America --> Siberia
+	line(width/3.62 , height/1.19, width/8.44, height/ 1.31); // South America --> PUFF
+	line(width/ 2.76, height/1.56, width/2.2, height/ 1.64); // South America --> West Africa
+	line(width/ 2.43, height/6.54, width/2.02, height/4.26 ); // Greenland --> Europe
+	line(width/ 2.09, height/2.54, width/2.15, height/2.21 ); // Europe --> West Africa
+	line(width/2.02 , height/2.54, width/1.9, height/ 2.08); // Europe --> East Africa
+	line(width/ 1.67, height/1.29, width/1.45, height/ 1.18); // South Africa --> UN Air
+	line(width/ 1.05, height/3.93, width, height/ 3.93); // Siberia --> N. America
+	line(width/ 1.16 , height/2.76, width/1.01, height/ 1.92); // Siberia --> PUFF
+	line(width/ 1.27, height/1.67, width/1.21, height/1.48 ); // China --> Oceania
+	line(width/ 1.05, height/1.2, width, height/ 1.26); // Oceania --> PUFF
+	line(width/ 1.15, height/1.19, width/1.33, height/1.19 ); // Oceania --> UN Air
+	line(0 , height/ 1.26, width/ 17.47, height/ 1.35 ); // Oceania --> PUFF
+	line(0 , height/ 1.92, width/ 17.88, height/ 1.6); // Siberia --> PUFF
+	line(width/ 1.42, height/ 1.59, width/ 1.41, height/ 1.37 ); // UN Air --> India
+	pop();
 }

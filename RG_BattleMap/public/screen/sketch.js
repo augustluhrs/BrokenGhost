@@ -91,6 +91,21 @@ function draw(){
 	// tint(255,255,0);
 	// image(reg1, 0, 0, width/4, height/3);
 	showReg1();
+	showReg2();
+	showReg3();
+	showReg4();
+	showReg5();
+	showReg6();
+	showReg7();
+	showReg8();
+	showReg9();
+	showReg10();
+	showReg11();
+	showReg12();
+	showReg13();
+	showReg14();
+	showReg15();
+	showReg16();
 }
 
 function showReg1(){
@@ -100,5 +115,155 @@ function showReg1(){
 	let rA = regions[0].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
 	tint(fillCol);
-	image(reg1, 0, 0, width/4, height/3);
+	image(reg1, 0, height/10, width/3, height/3);
+}
+
+function showReg2(){
+	let rR = regions[1].c.levels[0];
+	let rG = regions[1].c.levels[1];
+	let rB = regions[1].c.levels[2];
+	let rA = regions[1].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	// image(reg2, 0, 0, width/4, height/3);
+}
+
+function showReg3(){
+	let rR = regions[2].c.levels[0];
+	let rG = regions[2].c.levels[1];
+	let rB = regions[2].c.levels[2];
+	let rA = regions[2].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	// image(reg3, 0, 0, width/4, height/3);
+}
+
+function showReg4(){
+	let rR = regions[3].c.levels[0];
+	let rG = regions[3].c.levels[1];
+	let rB = regions[3].c.levels[2];
+	let rA = regions[3].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	image(reg4, width/5, 0, width/4, height/4);
+}
+
+function showReg5(){ //Europe
+	let rR = regions[4].c.levels[0];
+	let rG = regions[4].c.levels[1];
+	let rB = regions[4].c.levels[2];
+	let rA = regions[4].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	image(reg5, 2 * width/5, height/12, width/5, height/3);
+}
+
+function showReg6(){
+	let rR = regions[5].c.levels[0];
+	let rG = regions[5].c.levels[1];
+	let rB = regions[5].c.levels[2];
+	let rA = regions[5].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	// image(reg6, 0, 0, width/4, height/3);
+}
+
+function showReg7(){
+	let rR = regions[6].c.levels[0];
+	let rG = regions[6].c.levels[1];
+	let rB = regions[6].c.levels[2];
+	let rA = regions[6].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	// image(reg7, 0, 0, width/4, height/3);
+}
+
+function showReg8(){
+	let rR = regions[7].c.levels[0];
+	let rG = regions[7].c.levels[1];
+	let rB = regions[7].c.levels[2];
+	let rA = regions[7].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	// image(reg8, 0, 0, width/4, height/3);
+}
+
+function showReg9(){ //Russia
+	let rR = regions[8].c.levels[0];
+	let rG = regions[8].c.levels[1];
+	let rB = regions[8].c.levels[2];
+	let rA = regions[8].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	image(reg9, 11 * width/20, 0, width/4, height/3);
+}
+
+function showReg10(){
+	let rR = regions[9].c.levels[0];
+	let rG = regions[9].c.levels[1];
+	let rB = regions[9].c.levels[2];
+	let rA = regions[9].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	// image(reg10, 0, 0, width/4, height/3);
+}
+
+function showReg11(){
+	let rR = regions[10].c.levels[0];
+	let rG = regions[10].c.levels[1];
+	let rB = regions[10].c.levels[2];
+	let rA = regions[10].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	// image(reg11, 0, 0, width/4, height/3);
+}
+
+function showReg12(){
+	let rR = regions[11].c.levels[0];
+	let rG = regions[11].c.levels[1];
+	let rB = regions[11].c.levels[2];
+	let rA = regions[11].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	image(reg12, 4 * width/5, 0, width/4, height/3);
+}
+
+function showReg13(){
+	let rR = regions[12].c.levels[0];
+	let rG = regions[12].c.levels[1];
+	let rB = regions[12].c.levels[2];
+	let rA = regions[12].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	// image(reg13, 0, 0, width/4, height/3);
+}
+
+function showReg14(){
+	let rR = regions[13].c.levels[0];
+	let rG = regions[13].c.levels[1];
+	let rB = regions[13].c.levels[2];
+	let rA = regions[13].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	// image(reg14, 0, 0, width/4, height/3);
+}
+
+function showReg15(){
+	let rR = regions[14].c.levels[0];
+	let rG = regions[14].c.levels[1];
+	let rB = regions[14].c.levels[2];
+	let rA = regions[14].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	// image(reg15, 0, 0, width/4, height/3);
+}
+
+function showReg16(){
+	let rR = regions[15].c.levels[0];
+	let rG = regions[15].c.levels[1];
+	let rB = regions[15].c.levels[2];
+	let rA = regions[15].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	// image(reg16, 0, 0, width/4, height/3);
 }

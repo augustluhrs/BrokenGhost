@@ -63,6 +63,8 @@ let regionButt1, regionButt2, regionButt3, regionButt4, regionButt5, regionButt6
 let regTeamButt1, regTeamButt2, regTeamButt3, regTeamButt4, regTeamButt5, regTeamButt6, regTeamButt7, regTeamButt8,
 	regTeamButt9, regTeamButt10, regTeamButt11, regTeamButt12, regTeamButt13, regTeamButt14, regTeamButt15, regTeamButt16;
 var regions = [reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8, reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16];
+
+
 let updateMap; //to send updated info to server && screen
 
 function setup(){
@@ -86,7 +88,7 @@ function setup(){
 		teams[i].position(25, i * 25);
 		// teams[i] = teamInput.value();
 	}*/
-
+	
 	//laborious, but works for now
 	teamIn1 = createInput('Team 1');
 	teamIn1.position(25, 25);

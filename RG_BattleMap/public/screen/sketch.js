@@ -14,6 +14,14 @@ var refresh;
 var reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8,
 	reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16;
 
+var startCol;
+// let hench1 = {n: 0, c: startCol, r: reg1};
+// let hench2 = {n: 0, c: startCol, r: reg2};
+var hench = [];
+var henchBox = 60; // w and h of the henchmen boxes
+var henchText = 42; //textSize of henchmen count
+var regText = 36; //Size of reg name
+
 function preload(){
 	reg1 = loadImage('../assets/NorthAmerica.png');
 	reg2 = loadImage('../assets/CentralAmerica.png');
@@ -41,6 +49,8 @@ function setup(){
 	// background(150, 50, 50);
 	background(0);
 	textAlign(CENTER);
+	rectMode(CENTER);
+	startCol = color(0,255, 255,195);
 	// textSize(width/32);
 
 	refresh = createButton('refresh map');
@@ -50,9 +60,14 @@ function setup(){
 
 	for (var i = 0; i < regions.length; i++){
 		// for (var j = 0; j < 4; j++){
-		regions[i].c.levels= [0, 0, 255, 155];
+		regions[i].c.levels = [0, 0, 255, 155];
 		// }
 	}
+
+	hench = [
+		{n: '0', c: startCol, r: 'North America', x: width/5.8 , y: height/3.5},
+		{n: '0', c: startCol, r: 'Central America', x: 0, y: 0}
+	];
 
   // Listen for confirmation of connection
   socket.on('connect', function() {
@@ -69,8 +84,19 @@ function setup(){
 			teams = data.t;
 			teamLimit = int(data.l);
 			console.log(data);
-			console.log(regions);
+			// console.log(regions);
 			// console.log(teams);
+			for (var i = 0; i < hench.length; i++){
+				let hR = regions[i].c.levels[0];
+				let hG = regions[i].c.levels[1];
+				let hB = regions[i].c.levels[2];
+				let hA = regions[i].c.levels[3];
+				let fillCol = color(hR, hG, hB, hA);
+				// fill(fillCol);
+				hench[i].c = fillCol;
+				hench[i].n = regions[i].h;
+			}
+
 			for (var i = 0; i < teamLimit; i++){
 				// stroke(255);
 				// strokeWeight(.5);
@@ -119,6 +145,19 @@ function draw(){
 	showReg14();
 	showReg15();
 	showReg16();
+
+	for (var i = 0; i < hench.length; i++){
+		fill(hench[i].c);
+		rect(hench[i].x, hench[i].y, henchBox, henchBox);
+		stroke(0);
+		fill(255);
+		textSize(regText);
+		text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+		stroke(255);
+		fill(0);
+		textSize(henchText);
+		text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+	}
 }
 
 function showReg1(){ // North America

@@ -17,6 +17,7 @@ function setup(){
 	// createCanvas(int(screenSize * .666), screenSize);
 	createCanvas(windowWidth, windowHeight);
 	background(150, 50, 50);
+	// background(255);
 	textAlign(CENTER);
 	textSize(width/32);
 
@@ -35,13 +36,19 @@ function setup(){
 			console.log(data);
 			console.log(teams);
 			for (var i = 0; i < teamLimit; i++){
-				text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 50)
-				console.log(i);
-				console.log(i+1);
-				console.log(teamLimit);
-				console.log(windowWidth);
-				console.log(windowWidth/(teamLimit - 1));
-				console.log((i + 1) * (windowWidth/(teamLimit + 1)));
+				// stroke(255);
+				let tR = teams[i].c.levels[0];
+				let tG = teams[i].c.levels[1];
+				let tB = teams[i].c.levels[2];
+				let tA = teams[i].c.levels[3];
+				let fillCol = color(tR, tG, tB, tA);
+				fill(fillCol);
+				if (i % 2 == 0){
+					text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 50)
+				}
+				else{
+					text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 25)
+				}
 			}
 		});
 }

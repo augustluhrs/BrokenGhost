@@ -22,7 +22,7 @@ var startCol;
 var hench = [];
 var henchBox = 60; // w and h of the henchmen boxes
 var henchText = 42; //textSize of henchmen count
-var regText = width/50; //Size of reg name
+var regText; //Size of reg name
 /*
 var jitterX1, jitterX2, jitterX3, jitterX15;
 var jitterY1, jitterY2, jitterY3, jitterY15;
@@ -58,6 +58,7 @@ function setup(){
 	textAlign(CENTER);
 	rectMode(CENTER);
 	startCol = color(0,255, 255,195);
+	regText = width/42;
 	// textSize(width/32);
 
 	refresh = createButton('refresh map');

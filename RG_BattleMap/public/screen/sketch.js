@@ -35,7 +35,7 @@ function setup(){
 			teams = data.t;
 			teamLimit = int(data.l);
 			console.log(data);
-			console.log(teams);
+			// console.log(teams);
 			for (var i = 0; i < teamLimit; i++){
 				// stroke(255);
 				// strokeWeight(.5);

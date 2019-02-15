@@ -66,7 +66,21 @@ function setup(){
 
 	hench = [
 		{n: '0', c: startCol, r: 'North America', x: width/5.8 , y: height/3.5},
-		{n: '0', c: startCol, r: 'Central America', x: 0, y: 0}
+		{n: '0', c: startCol, r: 'Central America', x: width/5.4, y: height/1.91},
+		{n: '0', c: startCol, r: 'South America', x: width/3.03, y: height/1.32},
+		{n: '0', c: startCol, r: 'Greenland', x: width/ 2.69, y: height/ 6.21},
+		{n: '0', c: startCol, r: 'Europe', x: width/2.19 , y: height/ 2.89 },
+		{n: '0', c: startCol, r: 'West Africa', x: width/ 2.33 , y: height/ 1.81 },
+		{n: '0', c: startCol, r: 'South Africa', x: width/ 1.95, y: height/ 1.29},
+		{n: '0', c: startCol, r: 'East Africa', x: width/ 1.64 , y: height/ 1.49},
+		{n: '0', c: startCol, r: 'Russia', x: width/ 1.58 , y: height/ 3.86 },
+		{n: '0', c: startCol, r: 'Middle East', x: width/ 1.72, y: height/ 2.08 },
+		{n: '0', c: startCol, r: 'India', x: width/ 1.45, y: height/ 1.72},
+		{n: '0', c: startCol, r: 'Siberia', x: width/ 1.12, y: height/ 3.45 },
+		{n: '0', c: startCol, r: 'China', x: width/ 1.22, y: height/ 1.89 },
+		{n: '0', c: startCol, r: 'Oceania', x: width/ 1.11, y: height/ 1.17},
+		{n: '0', c: startCol, r: 'UN Air Fortress', x: width/ 1.39, y: height/ 1.21},
+		{n: '0', c: startCol, r: 'P. U. F. F.', x: width/ 10.85, y: height/ 1.37} // Pacific Underwater Freedom Fortress
 	];
 
   // Listen for confirmation of connection
@@ -149,15 +163,25 @@ function draw(){
 	for (var i = 0; i < hench.length; i++){
 		fill(hench[i].c);
 		rect(hench[i].x, hench[i].y, henchBox, henchBox);
+		push();
+		strokeWeight(4);
 		stroke(0);
 		fill(255);
 		textSize(regText);
 		text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+		// strokeWeight(4);
 		stroke(255);
 		fill(0);
 		textSize(henchText);
 		text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+		pop();
 	}
+}
+
+function mousePressed(){ //for map placement ease
+	// console.log((width/mouseX) +'&'+ (height/mouseY));
+	console.log(mouseX) +'  &  '+ (mouseY));
+
 }
 
 function showReg1(){ // North America

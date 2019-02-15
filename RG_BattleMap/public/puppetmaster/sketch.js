@@ -34,6 +34,8 @@ let teamColors = [
 	255, 0, 255, 150, //purple
 	150, 150, 150, 150 //grey
 ]
+let teamLimitIn;
+var teamLimit; //starts with 8 teams
 let updateMap; //to send updated info to server && screen
 
 function setup(){
@@ -59,53 +61,55 @@ function setup(){
 	}*/
 
 	//laborious, but works for now
-	teamIn1 = createInput('Team COLOR');
+	teamIn1 = createInput('Team 1');
 	teamIn1.position(25, 25);
-	teamButt1 = createButton(teamIn1.value());
+	teamButt1 = createButton('Team COLOR');
 	teamButt1.position(200, 25);
 	teamButt1.mousePressed(teamColor1);
-	teamIn2 = createInput('Team COLOR');
+	teamIn2 = createInput('Team 2');
 	teamIn2.position(25, 50);
-	teamButt2 = createButton(teamIn2.value());
+	teamButt2 = createButton('Team COLOR');
 	teamButt2.position(200, 50);
 	teamButt2.mousePressed(teamColor2);
-	teamIn3 = createInput('Team COLOR');
+	teamIn3 = createInput('Team 3');
 	teamIn3.position(25, 75);
-	teamButt3 = createButton(teamIn3.value());
+	teamButt3 = createButton('Team COLOR');
 	teamButt3.position(200, 75);
 	teamButt3.mousePressed(teamColor3);
-	teamIn4 = createInput('Team COLOR');
+	teamIn4 = createInput('Team 4');
 	teamIn4.position(25, 100);
-	teamButt4 = createButton(teamIn4.value());
+	teamButt4 = createButton('Team COLOR');
 	teamButt4.position(200, 100);
 	teamButt4.mousePressed(teamColor4);
-	teamIn5 = createInput('Team COLOR');
+	teamIn5 = createInput('Team 5');
 	teamIn5.position(25, 125);
-	teamButt5 = createButton(teamIn5.value());
+	teamButt5 = createButton('Team COLOR');
 	teamButt5.position(200, 125);
 	teamButt5.mousePressed(teamColor5);
-	teamIn6 = createInput('Team COLOR');
+	teamIn6 = createInput('Team 6');
 	teamIn6.position(25, 150);
-	teamButt6 = createButton(teamIn6.value());
+	teamButt6 = createButton('Team COLOR');
 	teamButt6.position(200, 150);
 	teamButt6.mousePressed(teamColor6);
-	teamIn7 = createInput('Team COLOR');
+	teamIn7 = createInput('Team 7');
 	teamIn7.position(25, 175);
-	teamButt7 = createButton(teamIn7.value());
+	teamButt7 = createButton('Team COLOR');
 	teamButt7.position(200, 175);
 	teamButt7.mousePressed(teamColor7);
-	teamIn8 = createInput('Team COLOR');
+	teamIn8 = createInput('Team 8');
 	teamIn8.position(25, 200);
-	teamButt8 = createButton(teamIn8.value());
+	teamButt8 = createButton('Team COLOR');
 	teamButt8.position(200, 200);
 	teamButt8.mousePressed(teamColor8);
-
+	teamLimitIn = createInput('8');
+	teamLimitIn.position(50, 225);
 	updateMap = createButton('UPDATE MAP');
 	updateMap.position(4 * windowWidth/5, windowHeight - 50);
 	updateMap.mousePressed(function(){
 		data = {
       r: regions,
-      t: teams
+      t: teams,
+			l: teamLimit
 		}
 		socket.emit('update', data)
 	});
@@ -149,6 +153,7 @@ function draw(){
 	team7.n = teamIn7.value();
 	team8.n = teamIn8.value();
 	teams = [team1, team2, team3, team4, team5, team6, team7, team8];
+	teamLimit = teamLimitIn.value();
 	// italy.show();
 }
 

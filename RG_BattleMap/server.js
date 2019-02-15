@@ -18,6 +18,7 @@ let io = require('socket.io').listen(server);
 //- - - - arrays
 var regions = [];
 var teams = [];
+var teamLimit;
 
 /*
 function Region(_dad, _name, _r, _g, _b){
@@ -34,7 +35,13 @@ var screen = io.of('/screen');
 
 screen.on('connection', function (socket) {
 		console.log("Screen connected: " + socket.id);
-
+    data = {
+      r: regions,
+      t: teams,
+      l: teamLimit
+    }
+    screen.emit('update', data);
+    
     // Listen for this client to disconnect
 		socket.on('disconnect', function() {
 			console.log("Screen has disconnected " + socket.id);
@@ -48,15 +55,18 @@ master.on('connection',	function (socket){
 		console.log('Welcome, Davis. Your id is: ' + socket.id);
     data = {
       r: regions,
-      t: teams
+      t: teams,
+      l: teamLimit
     }
-    master.emit('update', regions);
+    master.emit('update', data);
 
     //when Davis sends update, store the new state of the map and send the update to the screen
     socket.on('update', function(data){
-      regions = data;
+      regions = data.r;
+      teams = data.t;
+      teamLimit = data.l;
       console.log(data);
-      screen.emit('update', regions);
+      screen.emit('update', data);
       //should store in separate log also, in case need for reset?
     });
 

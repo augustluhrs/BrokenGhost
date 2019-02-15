@@ -27,7 +27,7 @@ let colorNum = 0;
 let teamColors = [
 	0, 255, 0, 150, //green
 	255, 0, 0, 150, //red
-	0, 0, 255, 150, //blue
+	255, 255, 255, 150, //white - was blue, but too dark
 	255, 165, 0, 150, //orange
 	255, 255, 0, 150, //yellow
 	0, 255, 255, 150, //cyan

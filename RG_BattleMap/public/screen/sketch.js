@@ -10,6 +10,27 @@ var regions = [];
 var teams = [];
 var teamLimit;
 // let italy;
+var reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8,
+	reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16;
+
+function preload(){
+	reg1 = loadImage('../assets/NorthAmerica.png');
+	reg2 = loadImage('../assets/CentralAmerica.png');
+	reg3 = loadImage('../assets/SouthAmerica.png');
+	reg4 = loadImage('../assets/Greenland.png');
+	reg5 = loadImage('../assets/Europe.png');
+	reg6 = loadImage('../assets/WestAfrica.png');
+	reg7 = loadImage('../assets/SouthAfrica.png');
+	reg8 = loadImage('../assets/EastAfrica.png');
+	reg9 = loadImage('../assets/Russia.png');
+	reg10 = loadImage('../assets/MiddleEast.png');
+	reg11 = loadImage('../assets/India.png');
+	reg12 = loadImage('../assets/Siberia.png');
+	reg13 = loadImage('../assets/China.png');
+	reg14 = loadImage('../assets/Oceania.png');
+	// reg1 = loadImage('assets/NorthAmerica.png');
+	// reg1 = loadImage('assets/NorthAmerica.png');
+}
 
 function setup(){
   //- - - - - overall
@@ -35,6 +56,7 @@ function setup(){
 			teams = data.t;
 			teamLimit = int(data.l);
 			console.log(data);
+			console.log(regions);
 			// console.log(teams);
 			for (var i = 0; i < teamLimit; i++){
 				// stroke(255);
@@ -60,9 +82,23 @@ function setup(){
 					text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 25)
 				}
 			}
+			redraw();
 		});
 }
 
 function draw(){
+	//image(img, x, y, w, h)
+	// tint(255,255,0);
+	// image(reg1, 0, 0, width/4, height/3);
+	showReg1();
+}
 
+function showReg1(){
+	let rR = regions[0].c.levels[0];
+	let rG = regions[0].c.levels[1];
+	let rB = regions[0].c.levels[2];
+	let rA = regions[0].c.levels[3];
+	let fillCol = color(rR, rG, rB, rA);
+	tint(fillCol);
+	image(reg1, 0, 0, width/4, height/3);
 }

@@ -51,7 +51,7 @@ let reg9 = {n: 'Russia', b: false};
 let reg10 = {n: 'Middle East', b: false};
 let reg11 = {n: 'India', b: false};
 let reg12 = {n: 'Siberia', b: false};
-let reg13 = {n: 'Southeast Asia', b: false};
+let reg13 = {n: 'China', b: false};
 let reg14 = {n: 'Oceania', b: false};
 let reg15 = {n: 'UN Air Fortress', b: false};
 let reg16 = {n: 'Pacific Underwater Fortress', b: false};
@@ -246,7 +246,7 @@ function setup(){
 	regTeamButt13.mousePressed(regColor13);
 	regionIn13 = createInput('0');
 	regionIn13.position(450, 325);
-	regionButt13 = createButton('Southeast Asia BATTLE');
+	regionButt13 = createButton('China BATTLE');
 	regionButt13.position(625, 325);
 	regionButt13.mousePressed(battle13);
 	regTeamButt14 = createButton('region COLOR');

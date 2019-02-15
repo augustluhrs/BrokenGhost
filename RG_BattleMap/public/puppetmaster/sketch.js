@@ -11,7 +11,6 @@
 let socket = io('/puppetmaster');
 
 // let map;
-
 // let italy;
 
 //interface buttons and inputs
@@ -40,26 +39,28 @@ let teamColors = [
 let teamLimitIn;
 var teamLimit; //starts with 8 teams
 
-let reg1 = {b: false};
-let reg2 = {b: false};
-let reg3 = {b: false};
-let reg4 = {b: false};
-let reg5 = {b: false};
-let reg6 = {b: false};
-let reg7 = {b: false};
-let reg8 = {b: false};
-let reg9 = {b: false};
-let reg10 = {b: false};
-let reg11 = {b: false};
-let reg12 = {b: false};
-let reg13 = {b: false};
-let reg14 = {b: false};
-let reg15 = {b: false};
-let reg16 = {b: false};
+let reg1 = {n: 'North America', b: false}; //x, y, t, h
+let reg2 = {n: 'Central America', b: false};
+let reg3 = {n: 'South America', b: false};
+let reg4 = {n: 'Greenland', b: false};
+let reg5 = {n: 'Europe', b: false};
+let reg6 = {n: 'West Africa', b: false};
+let reg7 = {n: 'South Africa', b: false};
+let reg8 = {n: 'East Africa', b: false};
+let reg9 = {n: 'Russia', b: false};
+let reg10 = {n: 'Middle East', b: false};
+let reg11 = {n: 'India', b: false};
+let reg12 = {n: 'Siberia', b: false};
+let reg13 = {n: 'Southeast Asia', b: false};
+let reg14 = {n: 'Oceania', b: false};
+let reg15 = {n: 'UN Air Fortress', b: false};
+let reg16 = {n: 'Pacific Underwater Fortress', b: false};
 let regionIn1, regionIn2, regionIn3, regionIn4, regionIn5, regionIn6, regionIn7, regionIn8,
 	regionIn9, regionIn10, regionIn11, regionIn12, regionIn13, regionIn14, regionIn15, regionIn16;
 let regionButt1, regionButt2, regionButt3, regionButt4, regionButt5, regionButt6, regionButt7, regionButt8,
 	regionButt9, regionButt10, regionButt11, regionButt12, regionButt13, regionButt14, regionButt15, regionButt16;
+let regTeamButt1, regTeamButt2, regTeamButt3, regTeamButt4, regTeamButt5, regTeamButt6, regTeamButt7, regTeamButt8,
+	regTeamButt9, regTeamButt10, regTeamButt11, regTeamButt12, regTeamButt13, regTeamButt14, regTeamButt15, regTeamButt16;
 var regions = [reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8, reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16];
 let updateMap; //to send updated info to server && screen
 
@@ -142,91 +143,137 @@ function setup(){
 	teamLimitIn.position(50, 225);
 
 	//regions
+	// textAlign(RIGHT);
+	regTeamButt1 = createButton('region COLOR');
+	regTeamButt1.position(350, 25);
+	regTeamButt1.mousePressed(regColor1);
 	regionIn1 = createInput('0');
-	regionIn1.position(350, 25);
+	regionIn1.position(450, 25);
 	regionButt1 = createButton('North America BATTLE');
-	regionButt1.position(525, 25);
+	regionButt1.position(625, 25);
 	regionButt1.mousePressed(battle1);
 		// regionButt1.mousePressed(battle, reg1);
+	regTeamButt2 = createButton('region COLOR');
+	regTeamButt2.position(350, 50);
+	regTeamButt2.mousePressed(regColor2);
 	regionIn2 = createInput('0');
-	regionIn2.position(350, 50);
+	regionIn2.position(450, 50);
 	regionButt2 = createButton('Central America BATTLE');
-	regionButt2.position(525, 50);
+	regionButt2.position(625, 50);
 	regionButt2.mousePressed(battle2);
+	regTeamButt3 = createButton('region COLOR');
+	regTeamButt3.position(350, 75);
+	regTeamButt3.mousePressed(regColor3);
 	regionIn3 = createInput('0');
-	regionIn3.position(350, 75);
+	regionIn3.position(450, 75);
 	regionButt3 = createButton('South America BATTLE');
-	regionButt3.position(525, 75);
+	regionButt3.position(625, 75);
 	regionButt3.mousePressed(battle3);
+	regTeamButt4 = createButton('region COLOR');
+	regTeamButt4.position(350, 100);
+	regTeamButt4.mousePressed(regColor4);
 	regionIn4 = createInput('0');
-	regionIn4.position(350, 100);
+	regionIn4.position(450, 100);
 	regionButt4 = createButton('Greenland BATTLE');
-	regionButt4.position(525, 100);
+	regionButt4.position(625, 100);
 	regionButt4.mousePressed(battle4);
+	regTeamButt5 = createButton('region COLOR');
+	regTeamButt5.position(350, 125);
+	regTeamButt5.mousePressed(regColor5);
 	regionIn5 = createInput('0');
-	regionIn5.position(350, 125);
+	regionIn5.position(450, 125);
 	regionButt5 = createButton('Europe BATTLE');
-	regionButt5.position(525, 125);
+	regionButt5.position(625, 125);
 	regionButt5.mousePressed(battle5);
+	regTeamButt6 = createButton('region COLOR');
+	regTeamButt6.position(350, 150);
+	regTeamButt6.mousePressed(regColor6);
 	regionIn6 = createInput('0');
-	regionIn6.position(350, 150);
+	regionIn6.position(450, 150);
 	regionButt6 = createButton('West Africa BATTLE');
-	regionButt6.position(525, 150);
+	regionButt6.position(625, 150);
 	regionButt6.mousePressed(battle6);
+	regTeamButt7 = createButton('region COLOR');
+	regTeamButt7.position(350, 175);
+	regTeamButt7.mousePressed(regColor7);
 	regionIn7 = createInput('0');
-	regionIn7.position(350, 175);
+	regionIn7.position(450, 175);
 	regionButt7 = createButton('South Africa BATTLE');
-	regionButt7.position(525, 175);
+	regionButt7.position(625, 175);
 	regionButt7.mousePressed(battle7);
+	regTeamButt8 = createButton('region COLOR');
+	regTeamButt8.position(350, 200);
+	regTeamButt8.mousePressed(regColor8);
 	regionIn8 = createInput('0');
-	regionIn8.position(350, 200);
+	regionIn8.position(450, 200);
 	regionButt8 = createButton('East Africa BATTLE');
-	regionButt8.position(525, 200);
+	regionButt8.position(625, 200);
 	regionButt8.mousePressed(battle8);
+	regTeamButt9 = createButton('region COLOR');
+	regTeamButt9.position(350, 225);
+	regTeamButt9.mousePressed(regColor9);
 	regionIn9 = createInput('0');
-	regionIn9.position(350, 225);
+	regionIn9.position(450, 225);
 	regionButt9 = createButton('Russia BATTLE');
-	regionButt9.position(525, 225);
-	regionButt9.mousePressed(battle1);
+	regionButt9.position(625, 225);
+	regionButt9.mousePressed(battle9);
+	regTeamButt10 = createButton('region COLOR');
+	regTeamButt10.position(350, 250);
+	regTeamButt10.mousePressed(regColor10);
 	regionIn10 = createInput('0');
-	regionIn10.position(350, 250);
+	regionIn10.position(450, 250);
 	regionButt10 = createButton('Middle East BATTLE');
-	regionButt10.position(525, 250);
+	regionButt10.position(625, 250);
 	regionButt10.mousePressed(battle10);
+	regTeamButt11 = createButton('region COLOR');
+	regTeamButt11.position(350, 275);
+	regTeamButt11.mousePressed(regColor11);
 	regionIn11 = createInput('0');
-	regionIn11.position(350, 275);
+	regionIn11.position(450, 275);
 	regionButt11 = createButton('India BATTLE');
-	regionButt11.position(525, 275);
+	regionButt11.position(625, 275);
 	regionButt11.mousePressed(battle11);
+	regTeamButt12 = createButton('region COLOR');
+	regTeamButt12.position(350, 300);
+	regTeamButt12.mousePressed(regColor12);
 	regionIn12 = createInput('0');
-	regionIn12.position(350, 300);
+	regionIn12.position(450, 300);
 	regionButt12 = createButton('Siberia BATTLE');
-	regionButt12.position(525, 300);
+	regionButt12.position(625, 300);
 	regionButt12.mousePressed(battle12);
+	regTeamButt13 = createButton('region COLOR');
+	regTeamButt13.position(350, 325);
+	regTeamButt13.mousePressed(regColor13);
 	regionIn13 = createInput('0');
-	regionIn13.position(350, 325);
+	regionIn13.position(450, 325);
 	regionButt13 = createButton('Southeast Asia BATTLE');
-	regionButt13.position(525, 325);
+	regionButt13.position(625, 325);
 	regionButt13.mousePressed(battle13);
+	regTeamButt14 = createButton('region COLOR');
+	regTeamButt14.position(350, 350);
+	regTeamButt14.mousePressed(regColor14);
 	regionIn14 = createInput('0');
-	regionIn14.position(350, 350);
+	regionIn14.position(450, 350);
 	regionButt14 = createButton('Oceania BATTLE');
-	regionButt14.position(525, 350);
+	regionButt14.position(625, 350);
 	regionButt14.mousePressed(battle14);
+	regTeamButt15 = createButton('region COLOR');
+	regTeamButt15.position(350, 375);
+	regTeamButt15.mousePressed(regColor15);
 	regionIn15 = createInput('0');
-	regionIn15.position(350, 375);
+	regionIn15.position(450, 375);
 	regionButt15 = createButton('UN Air Fort BATTLE');
-	regionButt15.position(525, 375);
+	regionButt15.position(625, 375);
 	regionButt15.mousePressed(battle15);
+	regTeamButt16 = createButton('region COLOR');
+	regTeamButt16.position(350, 400);
+	regTeamButt16.mousePressed(regColor16);
 	regionIn16 = createInput('0');
-	regionIn16.position(350, 400);
+	regionIn16.position(450, 400);
 	regionButt16 = createButton('Pacific Underwater Fort BATTLE');
-	regionButt16.position(525, 400);
+	regionButt16.position(625, 400);
 	regionButt16.mousePressed(battle16);
-
-
-
-
+	// textAlign(CENTER);
 	updateMap = createButton('UPDATE MAP');
 	updateMap.position(1 * windowWidth/5, windowHeight - 50);
 	updateMap.mousePressed(function(){
@@ -279,7 +326,7 @@ function draw(){
 	teams = [team1, team2, team3, team4, team5, team6, team7, team8];
 	teamLimit = teamLimitIn.value();
 	regions = [reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8, reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16];
-
+	// regTeamButt1.elt.attribute.innerHtml('dook')
 	// italy.show();
 }
 
@@ -407,7 +454,99 @@ function battle15(){
 function battle16(){
 	reg16.b = !reg16.b;
 }
-// function battle(reg){
-// 	reg.b = !reg.b;
-	//no color change
-// }
+
+function regColor1(){
+	laboriousColorFunction();
+	regTeamButt1.style('background-color', teamCol);
+	reg1.c = teamCol;
+}
+
+function regColor2(){
+	laboriousColorFunction();
+	regTeamButt2.style('background-color', teamCol);
+	reg2.c = teamCol;
+}
+
+function regColor3(){
+	laboriousColorFunction();
+	regTeamButt3.style('background-color', teamCol);
+	reg3.c = teamCol;
+}
+
+function regColor4(){
+	laboriousColorFunction();
+	regTeamButt4.style('background-color', teamCol);
+	reg4.c = teamCol;
+}
+
+function regColor5(){
+	laboriousColorFunction();
+	regTeamButt5.style('background-color', teamCol);
+	reg5.c = teamCol;
+}
+
+function regColor6(){
+	laboriousColorFunction();
+	regTeamButt6.style('background-color', teamCol);
+	reg6.c = teamCol;
+}
+
+function regColor7(){
+	laboriousColorFunction();
+	regTeamButt7.style('background-color', teamCol);
+	reg7.c = teamCol;
+}
+
+function regColor8(){
+	laboriousColorFunction();
+	regTeamButt8.style('background-color', teamCol);
+	reg8.c = teamCol;
+}
+
+function regColor9(){
+	laboriousColorFunction();
+	regTeamButt9.style('background-color', teamCol);
+	reg9.c = teamCol;
+}
+
+function regColor10(){
+	laboriousColorFunction();
+	regTeamButt10.style('background-color', teamCol);
+	reg10.c = teamCol;
+}
+
+function regColor11(){
+	laboriousColorFunction();
+	regTeamButt11.style('background-color', teamCol);
+	reg11.c = teamCol;
+}
+
+function regColor12(){
+	laboriousColorFunction();
+	regTeamButt12.style('background-color', teamCol);
+	reg12.c = teamCol;
+}
+
+function regColor13(){
+	laboriousColorFunction();
+	regTeamButt13.style('background-color', teamCol);
+	reg13.c = teamCol;
+}
+
+function regColor14(){
+	laboriousColorFunction();
+	regTeamButt14.style('background-color', teamCol);
+	reg14.c = teamCol;
+}
+
+function regColor15(){
+	laboriousColorFunction();
+	regTeamButt15.style('background-color', teamCol);
+	reg15.c = teamCol;
+}
+
+function regColor16(){
+	laboriousColorFunction();
+	regTeamButt16.style('background-color', teamCol);
+	reg16.c = teamCol;
+}

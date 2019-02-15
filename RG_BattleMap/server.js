@@ -20,16 +20,6 @@ var regions = [];
 var teams = [];
 var teamLimit;
 
-/*
-function Region(_dad, _name, _r, _g, _b){
-	this.dad = socket.id;
-	this.name = name;
-	this.r = _r;
-	this.g = _g;
-	this.b = _b;
-}
-*/
-
 // - - - - Screen Socket
 var screen = io.of('/screen');
 
@@ -41,7 +31,7 @@ screen.on('connection', function (socket) {
       l: teamLimit
     }
     screen.emit('update', data);
-    
+
     // Listen for this client to disconnect
 		socket.on('disconnect', function() {
 			console.log("Screen has disconnected " + socket.id);

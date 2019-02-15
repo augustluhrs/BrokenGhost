@@ -325,6 +325,22 @@ function draw(){
 	team8.n = teamIn8.value();
 	teams = [team1, team2, team3, team4, team5, team6, team7, team8];
 	teamLimit = teamLimitIn.value();
+	reg1.h = regionIn1.value();
+	reg2.h = regionIn2.value();
+	reg3.h = regionIn3.value();
+	reg4.h = regionIn4.value();
+	reg5.h = regionIn5.value();
+	reg6.h = regionIn6.value();
+	reg7.h = regionIn7.value();
+	reg8.h = regionIn8.value();
+	reg9.h = regionIn9.value();
+	reg10.h = regionIn10.value();
+	reg11.h = regionIn11.value();
+	reg12.h = regionIn12.value();
+	reg13.h = regionIn13.value();
+	reg14.h = regionIn14.value();
+	reg15.h = regionIn15.value();
+	reg16.h = regionIn16.value();
 	regions = [reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8, reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16];
 	// regTeamButt1.elt.attribute.innerHtml('dook')
 	// italy.show();

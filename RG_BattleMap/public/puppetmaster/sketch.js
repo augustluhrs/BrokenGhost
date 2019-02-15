@@ -88,7 +88,7 @@ function setup(){
 		teams[i].position(25, i * 25);
 		// teams[i] = teamInput.value();
 	}*/
-	
+
 	//laborious, but works for now
 	teamIn1 = createInput('Team 1');
 	teamIn1.position(25, 25);
@@ -312,6 +312,7 @@ function setup(){
 	socket.on('update', function(data){
 		regions = data.r;
 		teams = data.t;
+		teamLimit = data.l;
 		});
 }
 

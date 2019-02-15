@@ -14,6 +14,8 @@ var refresh;
 var reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8,
 	reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16;
 
+var fortSize = 100; //size of fortress ellipses
+
 var startCol;
 // let hench1 = {n: 0, c: startCol, r: reg1};
 // let hench2 = {n: 0, c: startCol, r: reg2};
@@ -21,6 +23,11 @@ var hench = [];
 var henchBox = 60; // w and h of the henchmen boxes
 var henchText = 42; //textSize of henchmen count
 var regText = 36; //Size of reg name
+/*
+var jitterX1, jitterX2, jitterX3, jitterX15;
+var jitterY1, jitterY2, jitterY3, jitterY15;
+var jitterSpeed = 2;
+*/
 
 function preload(){
 	reg1 = loadImage('../assets/NorthAmerica.png');
@@ -170,7 +177,6 @@ function draw(){
 		fill(255);
 		textSize(regText);
 		text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-		// strokeWeight(4);
 		stroke(255);
 		fill(0);
 		textSize(henchText);
@@ -333,8 +339,20 @@ function showReg15(){
 	let rB = regions[14].c.levels[2];
 	let rA = regions[14].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	// image(reg15, 0, 0, width/4, height/3);
+	fill(fillCol);
+	ellipse(width/1.39 , height/1.21, fortSize, fortSize);
+	/*
+	ellipse(width/1.39 + jitterX15, height/1.21 + jitterY15, fortSize, fortSize);
+	if (regions[14].b){
+		jitterX15 += random(-jitterSpeed, jitterSpeed);
+		jitterY15 += random(-jitterSpeed, jitterSpeed);
+		// redraw();
+	}
+	else{
+		jitterX15 = 0;
+		jitterY15 = 0;
+	}
+	*/
 }
 
 function showReg16(){
@@ -343,8 +361,8 @@ function showReg16(){
 	let rB = regions[15].c.levels[2];
 	let rA = regions[15].c.levels[3];
 	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	// image(reg16, 0, 0, width/4, height/3);
+	fill(fillCol);
+	ellipse(width/ 10.85, height/ 1.37, fortSize, fortSize);
 }
 
 

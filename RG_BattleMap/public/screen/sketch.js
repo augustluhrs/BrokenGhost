@@ -6,6 +6,7 @@
 // Open and connect socket
 let socket = io('/screen');
 
+let canvas;
 var regions = [];
 var teams = [];
 var teamLimit;
@@ -23,6 +24,8 @@ var hench = [];
 var henchBox = 60; // w and h of the henchmen boxes
 var henchText = 42; //textSize of henchmen count
 var regText; //Size of reg name
+let font;
+let kaiju;
 /*
 var jitterX1, jitterX2, jitterX3, jitterX15;
 var jitterY1, jitterY2, jitterY3, jitterY15;
@@ -44,17 +47,23 @@ function preload(){
 	reg12 = loadImage('../assets/Siberia.png');
 	reg13 = loadImage('../assets/China.png');
 	reg14 = loadImage('../assets/Oceania.png');
-	// reg1 = loadImage('assets/NorthAmerica.png');
-	// reg1 = loadImage('assets/NorthAmerica.png');
+	//reg15 and reg16 are ellipses for now
+	font = loadFont('../assets/fonts/Action_Man_Shaded_Italic.ttf');
+	kaiju = loadImage('../assets/kaiju.png');
 }
 
 function setup(){
   //- - - - - overall
 	// var screenSize = windowHeight - 100;
 	// createCanvas(int(screenSize * .666), screenSize);
+
+	// canvas = createCanvas(windowWidth, windowHeight);
+	// canvas.style('display', 'block');
 	createCanvas(windowWidth, windowHeight);
+
 	// background(150, 50, 50);
 	background(0);
+	textFont(font);
 	textAlign(CENTER);
 	rectMode(CENTER);
 	startCol = color(0,255, 255,195);
@@ -62,6 +71,7 @@ function setup(){
 	// textSize(width/32);
 
 	refresh = createButton('refresh map');
+	refresh.position(0,10);
 	refresh.mousePressed(function(){
 		socket.emit('refresh');
 	})
@@ -128,6 +138,7 @@ function setup(){
 				let tB = teams[i].c.levels[2];
 				let tA = teams[i].c.levels[3];
 				let fillCol = color(tR, tG, tB, tA);
+				stroke(fillCol);
 				fill(fillCol);
 				// console.log(teams[i].n.length);
 				// textSize(width/(teams[i].n.length * 4));
@@ -189,9 +200,9 @@ function draw(){
 }
 
 function mousePressed(){ //for map placement ease
-	console.log((width/mouseX) +'   &   '+ (height/mouseY));
+	// console.log((width/mouseX) +'   &   '+ (height/mouseY));
 	// console.log(mouseX +'  &  '+ mouseY);
-
+	image(kaiju, mouseX, mouseY, width/6, height/5);
 }
 
 function showReg1(){ // North America

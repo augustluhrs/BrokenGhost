@@ -26,11 +26,11 @@ var screen = io.of('/screen');
 screen.on('connection', function (socket) {
 		console.log("Screen connected: " + socket.id);
     // setInterval(function(){
-    //   data = {
-    //     r: regions,
-    //     t: teams,
-    //     l: teamLimit
-    //   }
+      data = {
+        r: regions,
+        t: teams,
+        l: teamLimit
+      }
     //   screen.emit('update', data);
     // }, 33);
     screen.emit('update', data);
@@ -61,6 +61,11 @@ master.on('connection',	function (socket){
       l: teamLimit
     }
     master.emit('update', data);
+
+    socket.on('timerStart', function(){
+      console.log('timer started');
+      screen.emit('timerStart');
+    });
 
     //when Cody sends update, store the new state of the map and send the update to the screen
     socket.on('update', function(data){

@@ -27,6 +27,8 @@ var regText; //Size of reg name
 let font;
 let kaiju;
 let test = 0;
+let timerOn = false;
+let startMillis, elapsed, clock, clockSec, clockMin, clockHour;
 /*
 var jitterX1, jitterX2, jitterX3, jitterX15;
 var jitterY1, jitterY2, jitterY3, jitterY15;
@@ -133,6 +135,10 @@ function setup(){
 		redraw();
   });
 
+	socket.on('timerStart', function(){
+		timerOn = true;
+		startMillis = millis();
+	})
 
 	// - - - - - heartbeat
 	socket.on('update',
@@ -187,6 +193,7 @@ function setup(){
 }
 
 function draw(){
+	background(0);
 	fill(255, test, 255);
 	ellipse(200, test, 20, 20);
 	test+=5;
@@ -217,12 +224,43 @@ function draw(){
 		// pop();
 	}
 
+	// if (kaijuOn) {image(kaiju, balalalala)}
+
+	if (timerOn){ //time elapsed since start of game
+		elapsed = millis() - startMillis;
+		// console.log(elapsed);
+		textSize(width/25);
+		// hours = 0;
+		// mins = 0;
+		// // hours = elapsed / 360;
+		// elapsed = elapsed % 360;
+		// // mins = elapsed / 60;
+		// elapsed = elapsed % 60;
+		// secs = elapsed;
+		// text(hours + ":" + mins + ":" + secs, 19 * width/20, height/20 );
+		clock = int(elapsed / 1000);
+    clockMin = int(clock / 60) - (clockHour * 60);
+    clockSec = int(clock % 60);
+    clockHour = int(clock / 3600);
+    // textSize(height/10);
+    strokeWeight(4);
+    stroke(0);
+    fill(255);
+    if (clockSec < 10 && clockMin <10){
+      text(clockHour + ":0" + clockMin + ":0" + clockSec, 18 * width/20, height/10);
+    }
+    else if(clockSec < 10){
+      text(clockHour + ":" + clockMin + ":0" + clockSec, 18 * width/20, height/10);
+    }
+    else if(clockMin < 10){
+      text(clockHour + ":0" + clockMin + ":" + clockSec, 18 * width/20, height/10);
+    }
+    else text(clockHour + ":" + clockMin + ":" + clockSec, 18 * width/20, height/10);
+	}
 	nodeLines();
 }
 
 function mousePressed(){ //for map placement ease
-	// console.log((width/mouseX) +'   &   '+ (height/mouseY));
-	// console.log(mouseX +'  &  '+ mouseY);
 	image(kaiju, mouseX, mouseY, width/6, height/5); // multiple clicks = fade in
 }
 

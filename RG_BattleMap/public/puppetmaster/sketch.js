@@ -64,7 +64,7 @@ let regTeamButt1, regTeamButt2, regTeamButt3, regTeamButt4, regTeamButt5, regTea
 	regTeamButt9, regTeamButt10, regTeamButt11, regTeamButt12, regTeamButt13, regTeamButt14, regTeamButt15, regTeamButt16;
 var regions = [reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8, reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16];
 
-
+let timerButton;
 let updateMap; //to send updated info to server && screen
 
 function setup(){
@@ -277,6 +277,10 @@ function setup(){
 	regionButt16.position(625, 400);
 	regionButt16.mousePressed(battle16);
 	// textAlign(CENTER);
+	timerButton = createButton('START TIMER');
+	timerButton.mousePressed(function(){
+		socket.emit('timerStart');
+	});
 	updateMap = createButton('UPDATE MAP');
 	updateMap.position(1 * windowWidth/5, windowHeight - 50);
 	updateMap.mousePressed(function(){

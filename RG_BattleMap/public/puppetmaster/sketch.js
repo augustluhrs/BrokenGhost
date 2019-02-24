@@ -51,6 +51,7 @@ let regColorButts = [];
 let regIns = [];
 let regBattleButts = [];
 let battleCount; //if 2, battle
+let letsBattle = false; //
 let regData = []; //region socket data
 
 let colorDiv;

@@ -71,11 +71,11 @@ function setup(){
 	regText = width/45;
 	startCol = color(150,150, 175,195);
 
-	refresh = createButton('refresh map');
-	refresh.position(0,10);
-	refresh.mousePressed(function(){
-		socket.emit('refresh');
-	})
+	// refresh = createButton('refresh map');
+	// refresh.position(0,10);
+	// refresh.mousePressed(function(){
+	// 	socket.emit('refresh');
+	// })
 
 	regions = [ //just for map
 		{img: reg1, x: 0, y: height/10, w: width/3, h: height/3 },
@@ -153,9 +153,9 @@ function setup(){
 
 function draw(){
 	background(0);
-	fill(255, test, 255);
-	ellipse(200, test, 20, 20);
-	test+=5;
+	// fill(255, test, 255);
+	// ellipse(200, test, 20, 20);
+	// test+=5;
 
 	for (var i = hench.length - 1; i >= 0; i--){ //switched to fix M. East text and allow for Antarctica add
 		//map draw

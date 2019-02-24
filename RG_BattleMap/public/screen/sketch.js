@@ -149,36 +149,6 @@ function setup(){
 				hench[i].c = fillCol;
 				hench[i].n = data.r[i].h;
 			}
-
-			for (var i = 0; i < teamLimit; i++){
-				// stroke(255);
-				// strokeWeight(.5);
-				let tR = teams[i].c.levels[0];
-				let tG = teams[i].c.levels[1];
-				let tB = teams[i].c.levels[2];
-				let tA = teams[i].c.levels[3];
-				let fillCol = color(tR, tG, tB, tA);
-				stroke(0);
-				fill(fillCol);
-				// textSize(width/(teams[i].n.length * 4));
-				textSize(width/(35 + teams[i].n.length)); //team size text scaling
-				/*
-				if (teams[i].n.length >= 12){
-					textSize(windowWidth/60);
-				}
-				else{
-					textSize(windowWidth/50);
-				}
-				*/
-				//two rows of team names, offset
-				if (i % 2 == 0){
-					text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 50)
-				}
-				else{
-					text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 10)
-				}
-			}
-			redraw();
 		});
 }
 
@@ -188,12 +158,12 @@ function draw(){
 	ellipse(200, test, 20, 20);
 	test+=5;
 
-	for (var i = 0; i < hench.length; i++){
+	for (var i = hench.length - 1; i >= 0; i--){ //switched to fix M. East text and allow for Antarctica add
+		//map draw
 		fill(hench[i].c);
 		tint(hench[i].c);
 		if (i != 14 && i != 15 ){
 			image(regions[i].img, regions[i].x, regions[i].y, regions[i].w, regions[i].h);
-
 		}
 		else {
 			ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
@@ -212,6 +182,24 @@ function draw(){
 		textSize(henchText);
 		text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
 		// pop();
+	}
+	//team draw
+	for (var i = 0; i < teamLimit; i++){
+		let tR = teams[i].c.levels[0];
+		let tG = teams[i].c.levels[1];
+		let tB = teams[i].c.levels[2];
+		let tA = teams[i].c.levels[3];
+		let fillCol = color(tR, tG, tB, tA);
+		stroke(0);
+		fill(fillCol);
+		textSize(width/(35 + teams[i].n.length)); //team size text scaling
+		//two rows of team names, offset
+		if (i % 2 == 0){
+			text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 50)
+		}
+		else{
+			text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 10)
+		}
 	}
 
 	// if (kaijuOn) {image(kaiju, balalalala)}

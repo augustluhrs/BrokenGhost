@@ -67,6 +67,14 @@ var regions = [reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8, reg9, reg10, reg1
 let timerButton;
 let updateMap; //to send updated info to server && screen
 
+let colorDiv;
+let colorButts = []; //all color buttons
+let colorBucket; //stores the selected color
+let swatches = ['HotPink', 'Magenta', 'Purple', 'Indigo', 'Crimson', 'OrangeRed',
+		'GoldenRod', 'Yellow', 'DarkKhaki', 'Pink', 'PaleGreen', 'MediumSpringGreen',
+		'YellowGreen', 'Olive', 'SaddleBrown', 'Lime', 'SeaGreen', 'DarkGreen', 'Teal',
+		'Cyan', 'CornflowerBlue', 'Blue', 'White', 'Gray', 'LightSlateGray', 'DarkSlateGray'];
+
 function setup(){
   //- - - - - overall
 	// var screenSize = windowHeight - 100;
@@ -277,12 +285,29 @@ function setup(){
 	regionButt16.position(625, 400);
 	regionButt16.mousePressed(battle16);
 	// textAlign(CENTER);
+
+
+	//color buttons -- super thanks to u/GoToLoop on processing forum!
+	// colorDiv = createDiv('colorButtons');
+	for(let i = 0; i < swatches.length; i++){
+		let thisCol = swatches[i];
+		colorButts[i] = createButton(thisCol).mousePressed(() => colorGrab(thisCol));
+		colorButts[i].style('background-color', thisCol);
+		colorButts[i].parent('colors');
+	}
+
+
+
+
+
+
+	//overall buttons
 	timerButton = createButton('START TIMER');
 	timerButton.mousePressed(function(){
 		socket.emit('timerStart');
 	});
+	timerButton.parent('overall');
 	updateMap = createButton('UPDATE MAP');
-	updateMap.position(1 * windowWidth/5, windowHeight - 50);
 	updateMap.mousePressed(function(){
 		data = {
       r: regions,
@@ -291,6 +316,10 @@ function setup(){
 		}
 		socket.emit('update', data)
 	});
+	updateMap.parent('overall');
+
+
+
 
   // Listen for confirmation of connection
   socket.on('connect', function() {
@@ -336,6 +365,27 @@ function draw(){
 	regions = [reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8, reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16];
 }
 
+function colorGrab(colorButt){
+	colorBucket = colorButt;
+}
+/*
+	let newCol = new ColorButt('Magenta', color('magenta'));
+	newCol = createButton('newCol.name');
+	newCol.mousePressed(newCol.colorGrab());
+	colorButts.push(newCol);
+
+class ColorButt {
+	constructor(name, c){
+		this.name = name;
+		this.c = c;
+		this = createButton('')
+	}
+
+	colorGrab(){
+		colorBucket = this.c;
+	}
+}
+*/
 //I hate that these are individual, but it's late and I can fix it later
 function teamColor1(){
 	laboriousColorFunction();

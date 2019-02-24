@@ -137,19 +137,18 @@ function setup(){
 			// regions = data.r;
 			teams = data.t;
 			teamLimit = int(data.l);
-			console.log(data);
+			// console.log(data);
 
 			for (var i = 0; i < hench.length; i++){
-				let hR = data.r[i].c.levels[0];
-				let hG = data.r[i].c.levels[1];
-				let hB = data.r[i].c.levels[2];
-				let hA = data.r[i].c.levels[3];
-				let fillCol = color(hR, hG, hB, hA);
-				// fill(fillCol);
-				hench[i].c = fillCol;
+				// let fillCol = color(regions[i].color);
+				hench[i].c = color(data.r[i].color);
 				hench[i].n = data.r[i].h;
 			}
 		});
+
+	socket.on('battle', function(){
+		console.log('Battle between:');
+	})
 }
 
 function draw(){
@@ -185,20 +184,16 @@ function draw(){
 	}
 	//team draw
 	for (var i = 0; i < teamLimit; i++){
-		let tR = teams[i].c.levels[0];
-		let tG = teams[i].c.levels[1];
-		let tB = teams[i].c.levels[2];
-		let tA = teams[i].c.levels[3];
-		let fillCol = color(tR, tG, tB, tA);
+		let fillCol = color(teams[i].color);
 		stroke(0);
 		fill(fillCol);
-		textSize(width/(35 + teams[i].n.length)); //team size text scaling
+		textSize(width/(35 + teams[i].name.length)); //team size text scaling
 		//two rows of team names, offset
 		if (i % 2 == 0){
-			text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 50)
+			text(teams[i].name, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 50)
 		}
 		else{
-			text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 10)
+			text(teams[i].name, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 10)
 		}
 	}
 

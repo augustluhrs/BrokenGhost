@@ -19,6 +19,14 @@ let io = require('socket.io').listen(server);
 var regions = [];
 var teams = [];
 var teamLimit;
+var dataFirst = false;
+
+function logs(){
+  console.log(regions);
+  console.log(teams);
+  console.log(teamLimit);
+}
+
 
 // - - - - Screen Socket
 var screen = io.of('/screen');
@@ -55,12 +63,14 @@ var master = io.of('/puppetmaster');
 
 master.on('connection',	function (socket){
 		console.log('Welcome, Cody. Your id is: ' + socket.id);
-    data = {
-      r: regions,
-      t: teams,
-      l: teamLimit
-    }
-    master.emit('update', data);
+    // if(dataFirst){ //only triggers if Cody has reconnected
+    //   data = {
+    //     r: regions,
+    //     t: teams,
+    //     l: teamLimit
+    //   }
+    //   master.emit('update', data);
+    // }
 
     socket.on('timerStart', function(){
       console.log('timer started');
@@ -72,13 +82,26 @@ master.on('connection',	function (socket){
       regions = data.r;
       teams = data.t;
       teamLimit = data.l;
-      console.log(data);
+      // console.log(data);
       screen.emit('update', data);
       //should store in separate log also, in case need for reset?
+    });
+    //log output so not constant
+    setInterval(function(){
+      logs();
+    }, 10000);
+
+    socket.on('battle', function(){
+      console.log('Battle between:');
+      screen.emit('battle');
     });
 
     // Listen for this client to disconnect
 		socket.on('disconnect', function() {
 			console.log("Client has disconnected " + socket.id);
-		});
+      // dataFirst = false;
+      // if (!dataFirst){
+      //   dataFirst = true;
+      // }
+    });
 	});

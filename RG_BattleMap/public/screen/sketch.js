@@ -6,20 +6,16 @@
 // Open and connect socket
 let socket = io('/screen');
 
+//rando variables
 let canvas;
 var regions = [];
 var teams = [];
 var teamLimit;
 var refresh;
-// let italy;
 var reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8,
 	reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16;
-
 var fortSize = 150; //size of fortress ellipses
-
 var startCol;
-// let hench1 = {n: 0, c: startCol, r: reg1};
-// let hench2 = {n: 0, c: startCol, r: reg2};
 var hench = [];
 var henchBox; // w and h of the henchmen boxes
 var henchText; //textSize of henchmen count
@@ -80,12 +76,6 @@ function setup(){
 	refresh.mousePressed(function(){
 		socket.emit('refresh');
 	})
-
-	// for (var i = 0; i < regions.length; i++){
-	// 	// for (var j = 0; j < 4; j++){
-	// 	regions[i].c.levels = [0, 0, 255, 155];
-	// 	// }
-	// }
 
 	regions = [ //just for map
 		{img: reg1, x: 0, y: height/10, w: width/3, h: height/3 },
@@ -227,22 +217,12 @@ function draw(){
 	// if (kaijuOn) {image(kaiju, balalalala)}
 
 	if (timerOn){ //time elapsed since start of game
-		elapsed = millis() - startMillis;
-		// console.log(elapsed);
 		textSize(width/25);
-		// hours = 0;
-		// mins = 0;
-		// // hours = elapsed / 360;
-		// elapsed = elapsed % 360;
-		// // mins = elapsed / 60;
-		// elapsed = elapsed % 60;
-		// secs = elapsed;
-		// text(hours + ":" + mins + ":" + secs, 19 * width/20, height/20 );
+		elapsed = millis() - startMillis;
 		clock = int(elapsed / 1000);
     clockMin = int(clock / 60) - (clockHour * 60);
     clockSec = int(clock % 60);
     clockHour = int(clock / 3600);
-    // textSize(height/10);
     strokeWeight(4);
     stroke(0);
     fill(255);

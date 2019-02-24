@@ -21,11 +21,12 @@ var startCol;
 // let hench1 = {n: 0, c: startCol, r: reg1};
 // let hench2 = {n: 0, c: startCol, r: reg2};
 var hench = [];
-var henchBox = 60; // w and h of the henchmen boxes
-var henchText = 42; //textSize of henchmen count
+var henchBox; // w and h of the henchmen boxes
+var henchText; //textSize of henchmen count
 var regText; //Size of reg name
 let font;
 let kaiju;
+let test = 0;
 /*
 var jitterX1, jitterX2, jitterX3, jitterX15;
 var jitterY1, jitterY2, jitterY3, jitterY15;
@@ -48,7 +49,8 @@ function preload(){
 	reg13 = loadImage('../assets/China.png');
 	reg14 = loadImage('../assets/Oceania.png');
 	//reg15 and reg16 are ellipses for now
-	font = loadFont('../assets/fonts/Action_Man_Shaded_Italic.ttf');
+	// font = loadFont('../assets/fonts/Action_Man_Shaded_Italic.ttf');
+	font = loadFont('../assets/fonts/Action_Man_Bold_Italic.ttf');
 	kaiju = loadImage('../assets/kaiju.png');
 }
 
@@ -66,9 +68,10 @@ function setup(){
 	textFont(font);
 	textAlign(CENTER);
 	rectMode(CENTER);
-	startCol = color(0,255, 255,195);
-	regText = width/42;
-	// textSize(width/32);
+	henchBox = width/32; // w and h of the henchmen boxes
+	henchText = width/45; //textSize of henchmen count
+	regText = width/45;
+	startCol = color(150,150, 175,195);
 
 	refresh = createButton('refresh map');
 	refresh.position(0,10);
@@ -76,11 +79,31 @@ function setup(){
 		socket.emit('refresh');
 	})
 
-	for (var i = 0; i < regions.length; i++){
-		// for (var j = 0; j < 4; j++){
-		regions[i].c.levels = [0, 0, 255, 155];
-		// }
-	}
+	// for (var i = 0; i < regions.length; i++){
+	// 	// for (var j = 0; j < 4; j++){
+	// 	regions[i].c.levels = [0, 0, 255, 155];
+	// 	// }
+	// }
+
+	regions = [ //just for map
+		{img: reg1, x: 0, y: height/10, w: width/3, h: height/3 },
+		{img: reg2, x: 11 * width/80, y: 61 * height/160, w: width/5, h: height/4 },
+		{img: reg3, x: 41 * width/160, y: 46 * height/80, w: width/8, h: height/3 },
+		{img: reg4, x: width/5, y: 0, w: width/4, h: height/4 },
+		{img: reg5, x: 15 * width/40, y: height/12, w: width/5, h: height/3 },
+		{img: reg6, x: 129 * width/320, y: 68 * height/160, w: 5 * width/40, h: 5 * height/20 },
+		{img: reg7, x: 78*width/160, y: 101*height/160, w: width/8, h: height/4 },
+		{img: reg8, x: 10 * width/20, y: 7 * height/16, w: 5 * width/40, h: 5 * height/20 },
+		{img: reg9, x: 11 * width/20, y: height/15, w: width/4, h: height/3 },
+		{img: reg10, x: 90 * width/160, y: 61*height/160, w: 7* width/80, h: 4*height/20 },
+		{img: reg11, x: 51 * width/80, y: 31 * height/80, w:width/9, h: 5* height/20 },
+		{img: reg12, x: 123 * width/160, y: height/9, w: width/4, h: height/3},
+		{img: reg13, x: 27 * width/40, y: 20 * height/60, w: width/6, h: 3* height/10},
+		{img: reg14, x: 8 * width/10, y: 6* height/10,w: width/4,h: height/3},
+		{ex: width/1.39, ey: height/1.21},
+		{ex: width/10.85, ey: height/1.37}
+	];
+
 
 	hench = [
 		{n: '0', c: startCol, r: 'North America', x: width/5.8 , y: height/3.5},
@@ -101,6 +124,7 @@ function setup(){
 		{n: '0', c: startCol, r: 'P. U. F. F.', x: width/ 10.85, y: height/ 1.37} // Pacific Underwater Freedom Fortress
 	];
 
+	socket.emit('refresh');
 
   // Listen for confirmation of connection
   socket.on('connect', function() {
@@ -109,25 +133,25 @@ function setup(){
 		redraw();
   });
 
+
 	// - - - - - heartbeat
 	socket.on('update',
 		function(data){
-			background(0);
-			regions = data.r;
+			// background(0); // ?????
+			// regions = data.r;
 			teams = data.t;
 			teamLimit = int(data.l);
 			console.log(data);
-			// console.log(regions);
-			// console.log(teams);
+
 			for (var i = 0; i < hench.length; i++){
-				let hR = regions[i].c.levels[0];
-				let hG = regions[i].c.levels[1];
-				let hB = regions[i].c.levels[2];
-				let hA = regions[i].c.levels[3];
+				let hR = data.r[i].c.levels[0];
+				let hG = data.r[i].c.levels[1];
+				let hB = data.r[i].c.levels[2];
+				let hA = data.r[i].c.levels[3];
 				let fillCol = color(hR, hG, hB, hA);
 				// fill(fillCol);
 				hench[i].c = fillCol;
-				hench[i].n = regions[i].h;
+				hench[i].n = data.r[i].h;
 			}
 
 			for (var i = 0; i < teamLimit; i++){
@@ -138,21 +162,24 @@ function setup(){
 				let tB = teams[i].c.levels[2];
 				let tA = teams[i].c.levels[3];
 				let fillCol = color(tR, tG, tB, tA);
-				stroke(fillCol);
+				stroke(0);
 				fill(fillCol);
-				// console.log(teams[i].n.length);
 				// textSize(width/(teams[i].n.length * 4));
+				textSize(width/(35 + teams[i].n.length)); //team size text scaling
+				/*
 				if (teams[i].n.length >= 12){
 					textSize(windowWidth/60);
 				}
 				else{
 					textSize(windowWidth/50);
 				}
+				*/
+				//two rows of team names, offset
 				if (i % 2 == 0){
 					text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 50)
 				}
 				else{
-					text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 25)
+					text(teams[i].n, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 10)
 				}
 			}
 			redraw();
@@ -160,40 +187,34 @@ function setup(){
 }
 
 function draw(){
-	//image(img, x, y, w, h)
-	// tint(255,255,0);
-	// image(reg1, 0, 0, width/4, height/3);
-	showReg1();
-	showReg2();
-	showReg3();
-	showReg4();
-	showReg5();
-	showReg6();
-	showReg7();
-	showReg8();
-	showReg9();
-	showReg10();
-	showReg11();
-	showReg12();
-	showReg13();
-	showReg14();
-	showReg15();
-	showReg16();
+	fill(255, test, 255);
+	ellipse(200, test, 20, 20);
+	test+=5;
 
 	for (var i = 0; i < hench.length; i++){
 		fill(hench[i].c);
-		rect(hench[i].x, hench[i].y, henchBox, henchBox);
-		push();
+		tint(hench[i].c);
+		if (i != 14 && i != 15 ){
+			image(regions[i].img, regions[i].x, regions[i].y, regions[i].w, regions[i].h);
+
+		}
+		else {
+			ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
+		}
+		// image(regions[1].img, regions[1].x + (i*5), regions[1].y, regions[1].w, regions[1].h);
 		strokeWeight(4);
+		rect(hench[i].x, hench[i].y, henchBox, henchBox);
+		// push();
+		// strokeWeight(4);
 		stroke(0);
 		fill(255);
 		textSize(regText);
 		text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-		stroke(255);
-		fill(0);
+		stroke(0);
+		fill(255);
 		textSize(henchText);
 		text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-		pop();
+		// pop();
 	}
 
 	nodeLines();
@@ -202,181 +223,20 @@ function draw(){
 function mousePressed(){ //for map placement ease
 	// console.log((width/mouseX) +'   &   '+ (height/mouseY));
 	// console.log(mouseX +'  &  '+ mouseY);
-	image(kaiju, mouseX, mouseY, width/6, height/5);
+	image(kaiju, mouseX, mouseY, width/6, height/5); // multiple clicks = fade in
 }
 
-function showReg1(){ // North America
-	let rR = regions[0].c.levels[0];
-	let rG = regions[0].c.levels[1];
-	let rB = regions[0].c.levels[2];
-	let rA = regions[0].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg1, 0, height/10, width/3, height/3);
-}
-
-function showReg2(){ //Central America
-	let rR = regions[1].c.levels[0];
-	let rG = regions[1].c.levels[1];
-	let rB = regions[1].c.levels[2];
-	let rA = regions[1].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg2, 11 * width/80, 61 *height/160, width/5, height/4);
-}
-
-function showReg3(){ // South America
-	let rR = regions[2].c.levels[0];
-	let rG = regions[2].c.levels[1];
-	let rB = regions[2].c.levels[2];
-	let rA = regions[2].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg3, 41 *width/160, 46* height/80, width/8, height/3);
-}
-
-function showReg4(){ // Greenland
-	let rR = regions[3].c.levels[0];
-	let rG = regions[3].c.levels[1];
-	let rB = regions[3].c.levels[2];
-	let rA = regions[3].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg4, width/5, 0, width/4, height/4);
-}
-
-function showReg5(){ //Europe
-	let rR = regions[4].c.levels[0];
-	let rG = regions[4].c.levels[1];
-	let rB = regions[4].c.levels[2];
-	let rA = regions[4].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg5, 15 * width/40, height/12, width/5, height/3);
-}
-
-function showReg6(){ //West Africa
-	let rR = regions[5].c.levels[0];
-	let rG = regions[5].c.levels[1];
-	let rB = regions[5].c.levels[2];
-	let rA = regions[5].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg6, 129 * width/320, 68 * height/160,  5 * width/40, 5 * height/20);
-}
-
-function showReg7(){ //South Africa
-	let rR = regions[6].c.levels[0];
-	let rG = regions[6].c.levels[1];
-	let rB = regions[6].c.levels[2];
-	let rA = regions[6].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg7, 78*width/160, 101*height/160, width/8, height/4);
-}
-
-function showReg8(){ // East Africa
-	let rR = regions[7].c.levels[0];
-	let rG = regions[7].c.levels[1];
-	let rB = regions[7].c.levels[2];
-	let rA = regions[7].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg8, 10 * width/20, 7 * height/16, 5 * width/40, 5 * height/20);
-}
-
-function showReg9(){ //Russia
-	let rR = regions[8].c.levels[0];
-	let rG = regions[8].c.levels[1];
-	let rB = regions[8].c.levels[2];
-	let rA = regions[8].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg9, 11 * width/20, height/15, width/4, height/3);
-}
-
-function showReg10(){ // Middle East
-	let rR = regions[9].c.levels[0];
-	let rG = regions[9].c.levels[1];
-	let rB = regions[9].c.levels[2];
-	let rA = regions[9].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg10, 90 * width/160, 61*height/160, 7* width/80, 4*height/20);
-}
-
-function showReg11(){ // India
-	let rR = regions[10].c.levels[0];
-	let rG = regions[10].c.levels[1];
-	let rB = regions[10].c.levels[2];
-	let rA = regions[10].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg11, 51 * width/80, 31 * height/80, width/9,5* height/20);
-}
-
-function showReg12(){ // Siberia
-	let rR = regions[11].c.levels[0];
-	let rG = regions[11].c.levels[1];
-	let rB = regions[11].c.levels[2];
-	let rA = regions[11].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg12, 123 * width/160, height/9, width/4, height/3);
-}
-
-function showReg13(){ //China
-	let rR = regions[12].c.levels[0];
-	let rG = regions[12].c.levels[1];
-	let rB = regions[12].c.levels[2];
-	let rA = regions[12].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg13, 27 * width/40, 20 * height/60, width/6, 3* height/10);
-}
-
-function showReg14(){ //Oceania
-	let rR = regions[13].c.levels[0];
-	let rG = regions[13].c.levels[1];
-	let rB = regions[13].c.levels[2];
-	let rA = regions[13].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	tint(fillCol);
-	image(reg14, 8 * width/10, 6* height/10, width/4, height/3);
-}
-
-function showReg15(){
-	let rR = regions[14].c.levels[0];
-	let rG = regions[14].c.levels[1];
-	let rB = regions[14].c.levels[2];
-	let rA = regions[14].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	fill(fillCol);
-	ellipse(width/1.39 , height/1.21, fortSize, fortSize);
-	/*
-	ellipse(width/1.39 + jitterX15, height/1.21 + jitterY15, fortSize, fortSize);
-	if (regions[14].b){
-		jitterX15 += random(-jitterSpeed, jitterSpeed);
-		jitterY15 += random(-jitterSpeed, jitterSpeed);
-		// redraw();
-	}
-	else{
-		jitterX15 = 0;
-		jitterY15 = 0;
-	}
-	*/
-}
-
-function showReg16(){
-	let rR = regions[15].c.levels[0];
-	let rG = regions[15].c.levels[1];
-	let rB = regions[15].c.levels[2];
-	let rA = regions[15].c.levels[3];
-	let fillCol = color(rR, rG, rB, rA);
-	fill(fillCol);
-	ellipse(width/ 10.85, height/ 1.37, fortSize, fortSize);
-}
-
+//battle attempt from earlier
+	// ellipse(width/1.39 + jitterX15, height/1.21 + jitterY15, fortSize, fortSize);
+	// if (regions[14].b){
+	// 	jitterX15 += random(-jitterSpeed, jitterSpeed);
+	// 	jitterY15 += random(-jitterSpeed, jitterSpeed);
+	// 	// redraw();
+	// }
+	// else{
+	// 	jitterX15 = 0;
+	// 	jitterY15 = 0;
+	// }
 
 function nodeLines(){	//connecting node lines
 	push();

@@ -25,12 +25,16 @@ var screen = io.of('/screen');
 
 screen.on('connection', function (socket) {
 		console.log("Screen connected: " + socket.id);
-    data = {
-      r: regions,
-      t: teams,
-      l: teamLimit
-    }
+    // setInterval(function(){
+    //   data = {
+    //     r: regions,
+    //     t: teams,
+    //     l: teamLimit
+    //   }
+    //   screen.emit('update', data);
+    // }, 33);
     screen.emit('update', data);
+
 
     socket.on('refresh', function(){
       data = {
@@ -50,7 +54,7 @@ screen.on('connection', function (socket) {
 var master = io.of('/puppetmaster');
 
 master.on('connection',	function (socket){
-		console.log('Welcome, Davis. Your id is: ' + socket.id);
+		console.log('Welcome, Cody. Your id is: ' + socket.id);
     data = {
       r: regions,
       t: teams,
@@ -58,7 +62,7 @@ master.on('connection',	function (socket){
     }
     master.emit('update', data);
 
-    //when Davis sends update, store the new state of the map and send the update to the screen
+    //when Cody sends update, store the new state of the map and send the update to the screen
     socket.on('update', function(data){
       regions = data.r;
       teams = data.t;

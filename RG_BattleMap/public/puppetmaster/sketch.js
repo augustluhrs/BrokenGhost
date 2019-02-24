@@ -1,4 +1,4 @@
-// Master Interface for Davis the Intern
+// Master Interface for Cody the Intern
 // Controls the Screen Display Elements
 // by August Luhrs Feb. 2019
 // assets from Arnab Chakravarty
@@ -27,15 +27,15 @@ let teamIn1, teamIn2, teamIn3, teamIn4, teamIn5, teamIn6, teamIn7, teamIn8; //te
 let teamButt1, teamButt2, teamButt3, teamButt4, teamButt5, teamButt6, teamButt7,teamButt8; //team display and color changer
 let colorNum = 28;
 let teamColors = [
-	0, 255, 0, 150, //green
-	255, 0, 0, 150, //red
-	255, 255, 255, 150, //white - was blue, but too dark
-	255, 165, 0, 150, //orange
-	255, 255, 0, 150, //yellow
-	0, 255, 255, 150, //cyan
-	255, 0, 255, 150, //purple
-	150, 150, 150, 150, //grey
-	0, 0, 255, 150 //default blue map
+	0, 255, 0, 255, //green
+	255, 0, 0, 255, //red
+	255, 255, 255, 255, //white - was blue, but too dark
+	255, 165, 0, 255, //orange
+	255, 255, 0, 255, //yellow
+	0, 255, 255, 255, //cyan
+	255, 0, 255, 255, //purple
+	150, 150, 150, 255, //grey
+	0, 0, 255, 255 //default blue map
 ]
 let teamLimitIn;
 var teamLimit; //starts with 8 teams
@@ -288,21 +288,6 @@ function setup(){
 		socket.emit('update', data)
 	});
 
-	/* stupid italy
-	italy = createImg('../assets/italy.jpg');
-	// italy = loadImage('../assets/italy.jpg');
-	italy.class('region');
-	// italy.parent('map');
-	// italy.style('display', 'inline-block');
-	italy.position(100, 100);
-	italy.show();
-	italy.mousePressed(function(){
-		console.log('italy');
-		// italy.tint(random(255), random(255), random(255));
-		// italy.style('color', '#ffff00');
-	});
-	*/
-
   // Listen for confirmation of connection
   socket.on('connect', function() {
     console.log("Connected");
@@ -319,7 +304,6 @@ function setup(){
 function draw(){
 	// team updates
 	team1.n = teamIn1.value();
-	// teamButt1.attribute('innerText', teamIn1.value());
 	team2.n = teamIn2.value();
 	team3.n = teamIn3.value();
 	team4.n = teamIn4.value();
@@ -346,8 +330,6 @@ function draw(){
 	reg15.h = regionIn15.value();
 	reg16.h = regionIn16.value();
 	regions = [reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8, reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16];
-	// regTeamButt1.elt.attribute.innerHtml('dook')
-	// italy.show();
 }
 
 //I hate that these are individual, but it's late and I can fix it later

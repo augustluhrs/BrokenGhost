@@ -116,7 +116,24 @@ master.on('connection',	function (socket){
     socket.on('battle over', function(){
       console.log('Battle Over');
       screen.emit('battle over');
-    })
+    });
+
+    socket.on('kaiju', function(){
+      console.log('Kaiju Active');
+      screen.emit('kaiju');
+    });
+    socket.on('moles', function(){
+      console.log('Moles Active');
+      screen.emit('moles');
+    });
+    socket.on('doomsday', function(){
+      console.log('Doomsday Device Active');
+      screen.emit('doomsday');
+    });
+    socket.on('superbious', function(){
+      console.log('Superbious Active');
+      screen.emit('superbious');
+    });
 
     // Listen for this client to disconnect
 		socket.on('disconnect', function() {

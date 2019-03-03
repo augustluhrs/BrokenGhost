@@ -32,7 +32,9 @@ let regions = [ // need array wrapper?
 	{name: 'China', h: 0, b: false, color: regStartCol},
 	{name: 'Oceania', h: 0, b: false, color: regStartCol},
 	{name: 'UN Air Fortress', h: 0, b: false, color: regStartCol},
-	{name: 'P.U.F.F.', h: 0, b: false, color: regStartCol}
+	{name: 'P.U.F.F.', h: 0, b: false, color: regStartCol},
+	{name: 'Antarctica', h: 'S', b: false, color: regStartCol}
+
 ];
 
 /*
@@ -67,7 +69,7 @@ let timerButton; // starts timer on screen
 let updateMap; // to send updated info to server && screen -- want to phase out
 
 //special events
-let superOn, kaijuOn, moleOn, doomOn;
+let superButt, kaijuButt, moleButt, doomButt;
 
 function setup(){
 	noCanvas();
@@ -122,16 +124,26 @@ function setup(){
 
 
 	//special buttons
-	kaijuOn = createButton('KAIJU ACTIVE');
-	kaijuOn.parent('special');
-	moleOn = createButton('MOLES ACTIVE');
-	moleOn.parent('special');
-
-	doomOn = createButton('DOOMSDAY ACTIVE');
-	doomOn.parent('special');
-
-	superOn = createButton('SUPERBIOUS ACTIVE');
-	superOn.parent('special');
+	kaijuButt = createButton('KAIJU ACTIVE');
+	kaijuButt.parent('special');
+	kaijuButt.mousePressed(function(){
+		socket.emit('kaiju');
+	});
+	moleButt = createButton('MOLES ACTIVE');
+	moleButt.parent('special');
+	moleButt.mousePressed(function(){
+		socket.emit('moles');
+	});
+	doomButt = createButton('DOOMSDAY ACTIVE');
+	doomButt.parent('special');
+	doomButt.mousePressed(function(){
+		socket.emit('doomsday');
+	});
+	superButt = createButton('SUPERBIOUS ACTIVE');
+	superButt.parent('special');
+	superButt.mousePressed(function(){
+		socket.emit('superbious');
+	});
 
 	// superOn.mousePressed()
 

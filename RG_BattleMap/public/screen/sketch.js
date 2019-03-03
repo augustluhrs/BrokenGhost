@@ -29,6 +29,10 @@ let timeElapsed; //from server
 let letsBattle = false;
 let jitterX, jitterY;
 let jitterSpeed = 5;
+let kaijuOn = false;
+let molesOn = false;
+let doomOn = false;
+let superOn = false;
 
 function preload(){
 	reg1 = loadImage('../assets/NorthAmerica.png');
@@ -89,7 +93,8 @@ function setup(){
 		{img: reg13, x: 27 * width/40, y: 20 * height/60, w: width/6, h: 3* height/10},
 		{img: reg14, x: 8 * width/10, y: 6* height/10,w: width/4,h: height/3},
 		{ex: width/1.39, ey: height/1.21},
-		{ex: width/10.85, ey: height/1.37}
+		{ex: width/10.85, ey: height/1.37},
+		{ex: width/2.44,  ey: height/1.18, a: false} //Antarctica
 	];
 
 
@@ -109,7 +114,8 @@ function setup(){
 		{n: '0', c: startCol, r: 'China', x: width/ 1.22, y: height/ 1.89 },
 		{n: '0', c: startCol, r: 'Oceania', x: width/ 1.11, y: height/ 1.17},
 		{n: '0', c: startCol, r: 'UN Air Fortress', x: width/ 1.39, y: height/ 1.21},
-		{n: '0', c: startCol, r: 'P. U. F. F.', x: width/ 10.85, y: height/ 1.37} // Pacific Underwater Freedom Fortress
+		{n: '0', c: startCol, r: 'P. U. F. F.', x: width/ 10.85, y: height/ 1.37}, // Pacific Underwater Freedom Fortress
+		{n: 'S', c: startCol, r: 'Antarctica', x: width/2.45, y: height/1.15}
 	];
 
 	socket.emit('refresh');
@@ -153,7 +159,20 @@ function setup(){
 	socket.on('battle over', function(){
 		console.log('Battle Over');
 		letsBattle = false;
-	})
+	});
+
+	socket.on('kaiju', function(){
+		kaijuOn = true;
+	});
+	socket.on('moles', function(){
+		molesOn = true;
+	});
+	socket.on('doomsday', function(){
+		doomOn = true;
+	});
+	socket.on('superbious', function(){
+		superOn = true;
+	});
 
 }
 
@@ -164,7 +183,7 @@ function draw(){
 			//map draw
 			fill(hench[i].c);
 			tint(hench[i].c);
-			if (i != 14 && i != 15 ){
+			if (i != 14 && i != 15 && i != 16){
 				image(regions[i].img, regions[i].x, regions[i].y, regions[i].w, regions[i].h);
 			}
 			else {
@@ -191,7 +210,7 @@ function draw(){
 				//map draw
 				fill(hench[i].c);
 				tint(hench[i].c);
-				if (i != 14 && i != 15 ){
+				if (i != 14 && i != 15 && i != 16){
 					image(regions[i].img, regions[i].x + jitterX, regions[i].y + jitterY, regions[i].w + jitterX, regions[i].h + jitterY);
 				}
 				else {
@@ -247,9 +266,6 @@ function draw(){
 			text(teams[i].name, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 10)
 		}
 	}
-
-	// if (kaijuOn) {image(kaiju, balalalala)}
-
 	if (timerOn){ //time elapsed since start of game
 		textSize(width/25);
 		// elapsed = millis() - startMillis;
@@ -271,24 +287,37 @@ function draw(){
     }
     else text(clockHour + ":" + clockMin + ":" + clockSec, 18 * width/20, height/10);
 	}
-	nodeLines();
+	nodeLines(); //map connections
+	if (kaijuOn) {
+		push();
+		tint(240, 240, 240);
+		image(kaiju, width/1.16, height/2.67, width/8, height/5);
+		pop();
+	}
+	if(molesOn){
+		push();
+		tint(240, 240, 240);
+		image(moles, width/3.6, height/2.9, width/7, height/7);
+		pop();
+	}
+	if(doomOn){
+		push();
+		tint(240, 240, 240);
+		image(doomDevice, 0, 0, width/7, height/8);
+		pop();
+	}
+	if(superOn){
+		push();
+		tint(240, 240, 240);
+		image(superbious, width/2.46, height/1.22, width/7, height/8);
+		pop();
+	}
+
 }
 
-function mousePressed(){ //for map placement ease
-	image(kaiju, mouseX, mouseY, width/6, height/5); // multiple clicks = fade in
+function mousePressed(){
+	console.log(width/mouseX, height/mouseY);
 }
-
-//battle attempt from earlier
-	// ellipse(width/1.39 + jitterX15, height/1.21 + jitterY15, fortSize, fortSize);
-	// if (regions[14].b){
-	// 	jitterX15 += random(-jitterSpeed, jitterSpeed);
-	// 	jitterY15 += random(-jitterSpeed, jitterSpeed);
-	// 	// redraw();
-	// }
-	// else{
-	// 	jitterX15 = 0;
-	// 	jitterY15 = 0;
-	// }
 
 function nodeLines(){	//connecting node lines
 	push();

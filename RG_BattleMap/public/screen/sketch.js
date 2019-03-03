@@ -25,6 +25,7 @@ let kaiju;
 let test = 0;
 let timerOn = false;
 let startMillis, elapsed, clock, clockSec, clockMin, clockHour;
+let timeElapsed; //from server
 let letsBattle = false;
 let jitterX, jitterY;
 let jitterSpeed = 5;
@@ -117,10 +118,10 @@ function setup(){
 		redraw();
   });
 
-	socket.on('timerStart', function(){
-		timerOn = true;
-		startMillis = millis();
-	})
+	// socket.on('timerStart', function(){
+	// 	timerOn = true;
+	// 	startMillis = millis();
+	// })
 
 	// - - - - - heartbeat
 	socket.on('update',
@@ -128,7 +129,10 @@ function setup(){
 			// regions = data.r; //don't uncomment this
 			teams = data.t;
 			teamLimit = int(data.l);
-			// console.log(data);
+			timeElapsed = data.m;
+			if (timeElapsed > 1){
+				timerOn = true;
+			}
 
 			for (var i = 0; i < hench.length; i++){
 				// let fillCol = color(regions[i].color);
@@ -174,7 +178,7 @@ function draw(){
 			textSize(henchText);
 			text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
 		}
-	}
+	} //jitter the battlers
 	else { //fade all but fighting and jitter
 		for (var i = hench.length - 1; i >= 0; i--){ //switched to fix M. East text and allow for Antarctica add
 			if (hench[i].b == true){ //highlight and jitter
@@ -203,6 +207,8 @@ function draw(){
 			}
 			else{ //fade
 				//map draw
+				// let fadeCol = hench[i].c;
+				// fadeCol.setAlpha(50);
 				fill(hench[i].c);
 				tint(hench[i].c);
 				if (i != 14 && i != 15 ){
@@ -225,7 +231,7 @@ function draw(){
 		}
 	}
 	//team draw
-	for (var i = 0; i < teamLimit; i++){
+	for (var i = 0; i < teamLimit; i++){ //team names
 		let fillCol = color(teams[i].color);
 		stroke(0);
 		fill(fillCol);
@@ -243,8 +249,8 @@ function draw(){
 
 	if (timerOn){ //time elapsed since start of game
 		textSize(width/25);
-		elapsed = millis() - startMillis;
-		clock = int(elapsed / 1000);
+		// elapsed = millis() - startMillis;
+		clock = int(timeElapsed / 1000);
     clockMin = int(clock / 60) - (clockHour * 60);
     clockSec = int(clock % 60);
     clockHour = int(clock / 3600);

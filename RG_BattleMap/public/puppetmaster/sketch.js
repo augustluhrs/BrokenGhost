@@ -130,6 +130,11 @@ function setup(){
 	timerButton.parent('overall');
 	battleOver = createButton('BATTLE OVER');
 	battleOver.mousePressed(function(){
+		for (var i = 0; i < regions.length; i++){
+			if (regBattleButts[i].elt.style.backgroundColor == 'red'){
+				regBattleButts[i].elt.style.backgroundColor = 'blue';
+			}
+		}
 		socket.emit('battle over');
 		letsBattle = false;
 	})
@@ -225,21 +230,3 @@ function battleOnOff(reg, i){
 function colorGrab(colorButt){
 	colorBucket = colorButt;
 }
-/*
-	let newCol = new ColorButt('Magenta', color('magenta'));
-	newCol = createButton('newCol.name');
-	newCol.mousePressed(newCol.colorGrab());
-	colorButts.push(newCol);
-
-class ColorButt {
-	constructor(name, c){
-		this.name = name;
-		this.c = c;
-		this = createButton('')
-	}
-
-	colorGrab(){
-		colorBucket = this.c;
-	}
-}
-*/

@@ -20,6 +20,8 @@ var regions = [];
 var teams = [];
 var teamLimit;
 var dataFirst = false;
+let startMillis;
+let timerOn = false;
 
 function logs(){
   console.log(regions);
@@ -74,6 +76,9 @@ master.on('connection',	function (socket){
 
     socket.on('timerStart', function(){
       console.log('timer started');
+      startMillis = Date.now();
+      timerOn = true;
+
       screen.emit('timerStart');
     });
 
@@ -83,7 +88,19 @@ master.on('connection',	function (socket){
       teams = data.t;
       teamLimit = data.l;
       // console.log(data);
-      screen.emit('update', data);
+      if (timerOn){
+        let timeElapsed = Date.now() - startMillis;
+        let dataPlus = {
+          r: regions,
+          t: teams,
+          l: teamLimit,
+          m: timeElapsed
+        }
+        screen.emit('update', dataPlus);
+      }
+      else{
+        screen.emit('update', data);
+      }
       //should store in separate log also, in case need for reset?
     });
     //log output so not constant

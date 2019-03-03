@@ -48,7 +48,10 @@ function preload(){
 	//reg15 and reg16 are ellipses for now
 	// font = loadFont('../assets/fonts/Action_Man_Shaded_Italic.ttf');
 	font = loadFont('../assets/fonts/Action_Man_Bold_Italic.ttf');
-	kaiju = loadImage('../assets/kaiju.png');
+	kaiju = loadImage('../assets/Kaiju.png');
+	doomDevice = loadImage('../assets/Doomsday.png');
+	moles = loadImage('../assets/Moles.png');
+	superbious = loadImage('../assets/Superbious.png');
 }
 
 function setup(){

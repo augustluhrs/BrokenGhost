@@ -66,6 +66,8 @@ let swatches = ['HotPink', 'Magenta', 'Purple', 'Indigo', 'Crimson', 'OrangeRed'
 let timerButton; // starts timer on screen
 let updateMap; // to send updated info to server && screen -- want to phase out
 
+//special events
+let superOn, kaijuOn, moleOn, doomOn;
 
 function setup(){
 	noCanvas();
@@ -119,6 +121,19 @@ function setup(){
 
 
 
+	//special buttons
+	kaijuOn = createButton('KAIJU ACTIVE');
+	kaijuOn.parent('special');
+	moleOn = createButton('MOLES ACTIVE');
+	moleOn.parent('special');
+
+	doomOn = createButton('DOOMSDAY ACTIVE');
+	doomOn.parent('special');
+
+	superOn = createButton('SUPERBIOUS ACTIVE');
+	superOn.parent('special');
+
+	// superOn.mousePressed()
 
 
 
@@ -129,6 +144,7 @@ function setup(){
 	});
 	timerButton.parent('overall');
 	battleOver = createButton('BATTLE OVER');
+	battleOver.parent('overall');
 	battleOver.mousePressed(function(){
 		for (var i = 0; i < regions.length; i++){
 			if (regBattleButts[i].elt.style.backgroundColor == 'red'){
@@ -156,9 +172,6 @@ function setup(){
 	});
 	updateMap.parent('overall');
 
-
-
-
   // Listen for confirmation of connection
   socket.on('connect', function() {
     console.log("Connected");
@@ -184,14 +197,14 @@ function draw(){
 			teamIns[i].show();
 			teamButts[i].show();
 		}
-	}
+	} //adjustable team inputs
 	for (var i = 0; i < teamButts.length; i++){
 		teamData[i] = {
 			teamNum: i+1,
 			name: teamIns[i].elt.value,
 			color: teamButts[i].elt.style.backgroundColor
 		};
-	}
+	} //team color Buttons
 	//region updates
 	battleCount = 0;
 	for (var i = 0; i < regions.length; i++){

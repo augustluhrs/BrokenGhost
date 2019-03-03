@@ -25,11 +25,9 @@ let kaiju;
 let test = 0;
 let timerOn = false;
 let startMillis, elapsed, clock, clockSec, clockMin, clockHour;
-/*
-var jitterX1, jitterX2, jitterX3, jitterX15;
-var jitterY1, jitterY2, jitterY3, jitterY15;
-var jitterSpeed = 2;
-*/
+let letsBattle = false;
+let jitterX, jitterY;
+let jitterSpeed = 5;
 
 function preload(){
 	reg1 = loadImage('../assets/NorthAmerica.png');
@@ -70,12 +68,6 @@ function setup(){
 	henchText = width/45; //textSize of henchmen count
 	regText = width/45;
 	startCol = color(150,150, 175,195);
-
-	// refresh = createButton('refresh map');
-	// refresh.position(0,10);
-	// refresh.mousePressed(function(){
-	// 	socket.emit('refresh');
-	// })
 
 	regions = [ //just for map
 		{img: reg1, x: 0, y: height/10, w: width/3, h: height/3 },
@@ -133,8 +125,7 @@ function setup(){
 	// - - - - - heartbeat
 	socket.on('update',
 		function(data){
-			// background(0); // ?????
-			// regions = data.r;
+			// regions = data.r; //don't uncomment this
 			teams = data.t;
 			teamLimit = int(data.l);
 			// console.log(data);
@@ -143,44 +134,95 @@ function setup(){
 				// let fillCol = color(regions[i].color);
 				hench[i].c = color(data.r[i].color);
 				hench[i].n = data.r[i].h;
+				hench[i].b = data.r[i].b;
 			}
 		});
 
 	socket.on('battle', function(){
 		console.log('Battle between:');
+		letsBattle = true;
+	});
+
+	socket.on('battle over', function(){
+		console.log('Battle Over');
+		letsBattle = false;
 	})
+
 }
 
 function draw(){
 	background(0);
-	// fill(255, test, 255);
-	// ellipse(200, test, 20, 20);
-	// test+=5;
+	if (!letsBattle){
+		for (var i = hench.length - 1; i >= 0; i--){ //switched to fix M. East text and allow for Antarctica add
+			//map draw
+			fill(hench[i].c);
+			tint(hench[i].c);
+			if (i != 14 && i != 15 ){
+				image(regions[i].img, regions[i].x, regions[i].y, regions[i].w, regions[i].h);
+			}
+			else {
+				ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
+			}
+			strokeWeight(4);
+			rect(hench[i].x, hench[i].y, henchBox, henchBox);
+			stroke(0);
+			fill(255);
+			textSize(regText);
+			text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+			stroke(0);
+			fill(255);
+			textSize(henchText);
+			text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+		}
+	}
+	else { //fade all but fighting and jitter
+		for (var i = hench.length - 1; i >= 0; i--){ //switched to fix M. East text and allow for Antarctica add
+			if (hench[i].b == true){ //highlight and jitter
+				let jitterX = random((jitterSpeed * -1), jitterSpeed);
+				let jitterY = random((jitterSpeed * -1), jitterSpeed);
 
-	for (var i = hench.length - 1; i >= 0; i--){ //switched to fix M. East text and allow for Antarctica add
-		//map draw
-		fill(hench[i].c);
-		tint(hench[i].c);
-		if (i != 14 && i != 15 ){
-			image(regions[i].img, regions[i].x, regions[i].y, regions[i].w, regions[i].h);
+				//map draw
+				fill(hench[i].c);
+				tint(hench[i].c);
+				if (i != 14 && i != 15 ){
+					image(regions[i].img, regions[i].x + jitterX, regions[i].y + jitterY, regions[i].w + jitterX, regions[i].h + jitterY);
+				}
+				else {
+					ellipse(regions[i].ex + jitterX, regions[i].ey + jitterY, fortSize + jitterX, fortSize + jitterY);
+				}
+				strokeWeight(4);
+				rect(hench[i].x, hench[i].y, henchBox, henchBox);
+				stroke(0);
+				fill(255);
+				textSize(regText);
+				text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+				stroke(0);
+				fill(255);
+				textSize(henchText);
+				text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+			}
+			else{ //fade
+				//map draw
+				fill(hench[i].c);
+				tint(hench[i].c);
+				if (i != 14 && i != 15 ){
+					image(regions[i].img, regions[i].x, regions[i].y, regions[i].w, regions[i].h);
+				}
+				else {
+					ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
+				}
+				strokeWeight(4);
+				rect(hench[i].x, hench[i].y, henchBox, henchBox);
+				stroke(0);
+				fill(255);
+				textSize(regText);
+				text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+				stroke(0);
+				fill(255);
+				textSize(henchText);
+				text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+			}
 		}
-		else {
-			ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
-		}
-		// image(regions[1].img, regions[1].x + (i*5), regions[1].y, regions[1].w, regions[1].h);
-		strokeWeight(4);
-		rect(hench[i].x, hench[i].y, henchBox, henchBox);
-		// push();
-		// strokeWeight(4);
-		stroke(0);
-		fill(255);
-		textSize(regText);
-		text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-		stroke(0);
-		fill(255);
-		textSize(henchText);
-		text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-		// pop();
 	}
 	//team draw
 	for (var i = 0; i < teamLimit; i++){

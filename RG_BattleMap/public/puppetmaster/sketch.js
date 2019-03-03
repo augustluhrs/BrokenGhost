@@ -51,8 +51,9 @@ let regColorButts = [];
 let regIns = [];
 let regBattleButts = [];
 let battleCount; //if 2, battle
-let letsBattle = false; //
+let letsBattle = false;
 let regData = []; //region socket data
+let battleOver; //battle over button
 
 let colorDiv;
 let colorButts = []; //all color buttons
@@ -127,6 +128,11 @@ function setup(){
 		socket.emit('timerStart');
 	});
 	timerButton.parent('overall');
+	battleOver = createButton('BATTLE OVER');
+	battleOver.mousePressed(function(){
+		socket.emit('battle over');
+		letsBattle = false;
+	})
 	updateMap = createButton('UPDATE MAP'); //outdated
 	updateMap.mousePressed(function(){
 		for (var i = 0; i < teamButts.length; i++){
@@ -200,8 +206,9 @@ function draw(){
 		l: teamLimit
 	}
 	socket.emit('update', data);
-	if (battleCount == 2){
-		socket.emit('battle');
+	if (battleCount == 2 && !letsBattle){
+			socket.emit('battle');
+			letsBattle = true;
 	}
 }
 
@@ -234,167 +241,5 @@ class ColorButt {
 	colorGrab(){
 		colorBucket = this.c;
 	}
-}
-*/
-//I hate that these are individual, but it's late and I can fix it later
-
-function battle1(){
-	reg1.b = !reg1.b;
-}
-
-function battle2(){
-	reg2.b = !reg2.b;
-}
-
-function battle3(){
-	reg3.b = !reg3.b;
-}
-
-function battle4(){
-	reg4.b = !reg4.b;
-}
-
-function battle5(){
-	reg5.b = !reg5.b;
-}
-
-function battle6(){
-	reg6.b = !reg6.b;
-}
-
-function battle7(){
-	reg7.b = !reg7.b;
-}
-
-function battle8(){
-	reg8.b = !reg8.b;
-}
-
-function battle9(){
-	reg9.b = !reg9.b;
-}
-
-function battle10(){
-	reg10.b = !reg10.b;
-}
-
-function battle11(){
-	reg11.b = !reg11.b;
-}
-
-function battle12(){
-	reg12.b = !reg12.b;
-}
-
-function battle13(){
-	reg13.b = !reg13.b;
-}
-
-function battle14(){
-	reg14.b = !reg14.b;
-}
-
-function battle15(){
-	reg15.b = !reg15.b;
-}
-
-function battle16(){
-	reg16.b = !reg16.b;
-}
-/*
-function regColor1(){
-	laboriousColorFunction();
-	regTeamButt1.style('background-color', teamCol);
-	reg1.c = teamCol;
-}
-
-function regColor2(){
-	laboriousColorFunction();
-	regTeamButt2.style('background-color', teamCol);
-	reg2.c = teamCol;
-}
-
-function regColor3(){
-	laboriousColorFunction();
-	regTeamButt3.style('background-color', teamCol);
-	reg3.c = teamCol;
-}
-
-function regColor4(){
-	laboriousColorFunction();
-	regTeamButt4.style('background-color', teamCol);
-	reg4.c = teamCol;
-}
-
-function regColor5(){
-	laboriousColorFunction();
-	regTeamButt5.style('background-color', teamCol);
-	reg5.c = teamCol;
-}
-
-function regColor6(){
-	laboriousColorFunction();
-	regTeamButt6.style('background-color', teamCol);
-	reg6.c = teamCol;
-}
-
-function regColor7(){
-	laboriousColorFunction();
-	regTeamButt7.style('background-color', teamCol);
-	reg7.c = teamCol;
-}
-
-function regColor8(){
-	laboriousColorFunction();
-	regTeamButt8.style('background-color', teamCol);
-	reg8.c = teamCol;
-}
-
-function regColor9(){
-	laboriousColorFunction();
-	regTeamButt9.style('background-color', teamCol);
-	reg9.c = teamCol;
-}
-
-function regColor10(){
-	laboriousColorFunction();
-	regTeamButt10.style('background-color', teamCol);
-	reg10.c = teamCol;
-}
-
-function regColor11(){
-	laboriousColorFunction();
-	regTeamButt11.style('background-color', teamCol);
-	reg11.c = teamCol;
-}
-
-function regColor12(){
-	laboriousColorFunction();
-	regTeamButt12.style('background-color', teamCol);
-	reg12.c = teamCol;
-}
-
-function regColor13(){
-	laboriousColorFunction();
-	regTeamButt13.style('background-color', teamCol);
-	reg13.c = teamCol;
-}
-
-function regColor14(){
-	laboriousColorFunction();
-	regTeamButt14.style('background-color', teamCol);
-	reg14.c = teamCol;
-}
-
-function regColor15(){
-	laboriousColorFunction();
-	regTeamButt15.style('background-color', teamCol);
-	reg15.c = teamCol;
-}
-
-function regColor16(){
-	laboriousColorFunction();
-	regTeamButt16.style('background-color', teamCol);
-	reg16.c = teamCol;
 }
 */

@@ -89,12 +89,17 @@ master.on('connection',	function (socket){
     //log output so not constant
     setInterval(function(){
       logs();
-    }, 10000);
+    }, 30000);
 
     socket.on('battle', function(){
       console.log('Battle between:');
       screen.emit('battle');
     });
+
+    socket.on('battle over', function(){
+      console.log('Battle Over');
+      screen.emit('battle over');
+    })
 
     // Listen for this client to disconnect
 		socket.on('disconnect', function() {

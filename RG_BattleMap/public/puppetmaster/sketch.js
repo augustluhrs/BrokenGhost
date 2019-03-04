@@ -71,6 +71,8 @@ let updateMap; // to send updated info to server && screen -- want to phase out
 //special events
 let superButt, kaijuButt, moleButt, doomButt;
 let targetButts = [];
+let laserButt;
+// let target = '';
 
 function setup(){
 	noCanvas();
@@ -126,33 +128,35 @@ function setup(){
 		colorButts[i].parent('colors');
 	}
 
-
-
 	//special buttons
+	//Kaiju
 	kaijuButt = createButton('KAIJU ACTIVE');
-	kaijuButt.parent('special');
+	kaijuButt.parent('kaiju');
 	kaijuButt.mousePressed(function(){
 		socket.emit('kaiju');
 	});
+	//molemen
 	moleButt = createButton('MOLES ACTIVE');
-	moleButt.parent('special');
+	moleButt.parent('mole');
 	moleButt.mousePressed(function(){
 		socket.emit('moles');
 	});
+	//doomsday device
 	doomButt = createButton('DOOMSDAY ACTIVE');
-	doomButt.parent('special');
+	doomButt.parent('doom');
 	doomButt.mousePressed(function(){
 		socket.emit('doomsday');
 	});
+	laserButt = createButton('FIRE ZE LAZA').mousePressed(() =>
+		socket.emit('fire laser'));
+	laserButt.parent('doom');
+
+	//superbious
 	superButt = createButton('SUPERBIOUS ACTIVE');
-	superButt.parent('special');
+	superButt.parent('super');
 	superButt.mousePressed(function(){
 		socket.emit('superbious');
 	});
-
-	// superOn.mousePressed()
-
-
 
 	//overall buttons
 	timerButton = createButton('START TIMER');

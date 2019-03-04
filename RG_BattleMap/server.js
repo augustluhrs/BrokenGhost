@@ -130,6 +130,10 @@ master.on('connection',	function (socket){
       console.log('Doomsday Device Active');
       screen.emit('doomsday');
     });
+    socket.on('fire laser', function(){
+      console.log('firing laser');
+      screen.emit('fire laser');
+    });
     socket.on('superbious', function(){
       console.log('Superbious Active');
       screen.emit('superbious');

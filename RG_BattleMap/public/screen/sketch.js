@@ -30,8 +30,11 @@ let letsBattle = false;
 let jitterX, jitterY;
 let jitterSpeed = 5;
 let kaijuOn = false;
+let noTarget = true;
 let molesOn = false;
 let doomOn = false;
+let laserOn = false;
+let laserReset = 0;
 let superOn = false;
 
 function preload(){
@@ -148,6 +151,7 @@ function setup(){
 				hench[i].c = color(data.r[i].color);
 				hench[i].n = data.r[i].h;
 				hench[i].b = data.r[i].b;
+				hench[i].t = data.r[i].t;
 			}
 		});
 
@@ -169,6 +173,10 @@ function setup(){
 	});
 	socket.on('doomsday', function(){
 		doomOn = true;
+	});
+	socket.on('fire laser', function(){
+		laserOn = true;
+		console.log('firing laser');
 	});
 	socket.on('superbious', function(){
 		superOn = true;
@@ -233,7 +241,7 @@ function draw(){
 				// fadeCol.setAlpha(50);
 				fill(hench[i].c);
 				tint(hench[i].c);
-				if (i != 14 && i != 15 ){
+				if (i != 14 && i != 15 && i != 16){
 					image(regions[i].img, regions[i].x, regions[i].y, regions[i].w, regions[i].h);
 				}
 				else {
@@ -291,7 +299,16 @@ function draw(){
 	if (kaijuOn) {
 		push();
 		tint(240, 240, 240);
-		image(kaiju, width/1.16, height/2.67, width/8, height/5);
+		noTarget = true;
+		for (var i = hench.length - 1; i >= 0; i--){
+			if (hench[i].t == true){
+				image(kaiju, hench[i].x, hench[i].y, width/8, height/5);
+				noTarget = false;
+			}
+		}
+		if(noTarget){
+			image(kaiju, width/1.16, height/2.67, width/8, height/5);
+		}
 		pop();
 	}
 	if(molesOn){
@@ -304,7 +321,22 @@ function draw(){
 		push();
 		tint(240, 240, 240);
 		image(doomDevice, 0, 0, width/7, height/8);
+			if (laserOn){
+				stroke(0, 255, 0);
+				strokeWeight(7);
+				laserReset = 0;
+				for (var i = hench.length - 1; i >= 0; i--){
+					if (hench[i].t == true){
+						line(width/11.2, height/15.88, hench[i].x, hench[i].y);
+						laserReset++;
+					}
+				}
+				if (laserReset == 0){
+					laserOn = false;
+				}
+			}
 		pop();
+
 	}
 	if(superOn){
 		push();

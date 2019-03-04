@@ -17,23 +17,23 @@ let socket = io('/puppetmaster');
 let teams = [];
 let regStartCol = 'gray';
 let regions = [ // need array wrapper?
-	{name: 'North America', h: 0, b: false, t: false, color: regStartCol},
-	{name: 'Central America', h: 0, b: false,t: false, color: regStartCol},
-	{name: 'South America', h: 0, b: false,t: false, color: regStartCol},
-	{name: 'Greenland', h: 0, b: false, t: false,color: regStartCol},
-	{name: 'Europe', h: 0, b: false,t: false, color: regStartCol},
-	{name: 'West Africa', h: 0, b: false,t: false, color: regStartCol},
-	{name: 'South Africa', h: 0, b: false,t: false, color: regStartCol},
-	{name: 'East Africa', h: 0, b: false,t: false, color: regStartCol},
-	{name: 'Russia', h: 0, b: false,t: false, color: regStartCol},
-	{name: 'Middle East', h: 0, b: false,t: false, color: regStartCol},
-	{name: 'India', h: 0, b: false, t: false,color: regStartCol},
-	{name: 'Siberia', h: 0, b: false, t: false,color: regStartCol},
-	{name: 'China', h: 0, b: false, t: false,color: regStartCol},
-	{name: 'Oceania', h: 0, b: false,t: false, color: regStartCol},
-	{name: 'UN Air Fortress', h: 0, b: false, t: false,color: regStartCol},
-	{name: 'P.U.F.F.', h: 0, b: false, t: false,color: regStartCol},
-	{name: 'Antarctica', h: 'S', b: false,t: false, color: regStartCol}
+	{name: 'North America', h: 0, b: false, t: false, s: false, color: regStartCol},
+	{name: 'Central America', h: 0, b: false,t: false, s: false, color: regStartCol},
+	{name: 'South America', h: 0, b: false,t: false,  s: false,color: regStartCol},
+	{name: 'Greenland', h: 0, b: false, t: false, s: false,color: regStartCol},
+	{name: 'Europe', h: 0, b: false,t: false,  s: false,color: regStartCol},
+	{name: 'West Africa', h: 0, b: false,t: false, s: false, color: regStartCol},
+	{name: 'South Africa', h: 0, b: false,t: false, s: false, color: regStartCol},
+	{name: 'East Africa', h: 0, b: false,t: false,  s: false,color: regStartCol},
+	{name: 'Russia', h: 0, b: false,t: false,  s: false,color: regStartCol},
+	{name: 'Middle East', h: 0, b: false,t: false,  s: false,color: regStartCol},
+	{name: 'India', h: 0, b: false, t: false, s: false,color: regStartCol},
+	{name: 'Siberia', h: 0, b: false, t: false, s: false,color: regStartCol},
+	{name: 'China', h: 0, b: false, t: false, s: false,color: regStartCol},
+	{name: 'Oceania', h: 0, b: false,t: false, s: false, color: regStartCol},
+	{name: 'UN Air Fortress', h: 0, b: false, t: false, s: false,color: regStartCol},
+	{name: 'P.U.F.F.', h: 0, b: false, t: false, s: false,color: regStartCol},
+	{name: 'Antarctica', h: 'S', b: false,t: false,  s: false,color: regStartCol}
 
 ];
 
@@ -71,6 +71,7 @@ let updateMap; // to send updated info to server && screen -- want to phase out
 //special events
 let superButt, kaijuButt, moleButt, doomButt;
 let targetButts = [];
+let superTargetButts = [];
 let laserButt;
 // let target = '';
 
@@ -116,6 +117,10 @@ function setup(){
 			targetOnOff(targetButts[i], regions[i]));
 		targetButts[i].style('background-color', 'teal');
 		targetButts[i].parent(divId);
+		superTargetButts[i] = createButton('Super Target').mousePressed(() =>
+			superTargetOnOff(superTargetButts[i], regions[i]));
+		superTargetButts[i].style('background-color', 'cyan');
+		superTargetButts[i].parent(divId);
 	}
 
 
@@ -155,6 +160,7 @@ function setup(){
 	superButt = createButton('SUPERBIOUS ACTIVE');
 	superButt.parent('super');
 	superButt.mousePressed(function(){
+		regions[16].s = true;
 		socket.emit('superbious');
 	});
 
@@ -268,6 +274,16 @@ function targetOnOff(butt, reg){
 	else {
 		butt.elt.style.backgroundColor = 'teal';
 		reg.t = false;
+	}
+}
+function superTargetOnOff(butt, reg){
+	if (butt.elt.style.backgroundColor == 'cyan'){
+		butt.elt.style.backgroundColor = 'pink';
+		reg.s = true;
+	}
+	else {
+		butt.elt.style.backgroundColor = 'cyan';
+		reg.s = false;
 	}
 }
 function colorGrab(colorButt){

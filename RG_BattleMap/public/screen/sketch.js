@@ -32,10 +32,63 @@ let jitterSpeed = 5;
 let kaijuOn = false;
 let noTarget = true;
 let molesOn = false;
+let moleArmy = [];
+let moleCount = 100;
+let moleHill;
+let moleColors = [
+	[244, 164, 96],
+	[205, 133, 63],
+	[210, 105, 30],
+	[139, 69, 19],
+	[160, 82, 45],
+	[165, 42, 42]
+];
+let firstMoles;
 let doomOn = false;
 let laserOn = false;
 let laserReset = 0;
 let superOn = false;
+let superFlyIn = false;
+let superFlyCount = 0;
+// let superTarget;
+
+
+class Mole {
+	constructor(region){
+		this.x = int(region.x);
+		this.y = int(region.y);
+		this.diameter = random(2,5);
+		// this.speedX = int(random(-3, 3));
+		// this.speedY = int(random(-3, 3));
+		this.speedX = random(-3, 3);
+		this.speedY = random(-3, 3);
+		// this.stutterX = int(random(-this.speedX, this.speedX));
+		// this.stutterY = int(random(-this.speedY, this.speedY));
+		this.c = random(moleColors);
+	}
+
+	move(){
+		/*
+		if (this.x % 4 == 0){
+			this.x += this.speedX + this.stutterX;
+			this.y += this.speedY;
+		}
+		else if (this.x % 6 == 0){
+			this.x += this.speedX;
+			this.y += this.speedY + this.stutterY;
+		}
+		else{*/
+			this.x += this.speedX;
+			this.y += this.speedY;
+		// }
+	}
+
+	display(){
+		noStroke();
+		fill(this.c[0], this.c[1], this.c[2]);
+		ellipse(this.x, this.y, this.diameter, this.diameter);
+	}
+}
 
 function preload(){
 	reg1 = loadImage('../assets/NorthAmerica.png');
@@ -104,7 +157,7 @@ function setup(){
 	hench = [
 		{n: '0', c: startCol, r: 'North America', x: width/5.8 , y: height/3.5},
 		{n: '0', c: startCol, r: 'Central America', x: width/5.4, y: height/1.91},
-		{n: '0', c: startCol, r: 'South America', x: width/3.03, y: height/1.32},
+		{n: '0', c: startCol, r: 'South America', x: width/3.61, y: height/1.37},
 		{n: '0', c: startCol, r: 'Greenland', x: width/ 2.69, y: height/ 6.21},
 		{n: '0', c: startCol, r: 'Europe', x: width/2.19 , y: height/ 2.89 },
 		{n: '0', c: startCol, r: 'West Africa', x: width/ 2.33 , y: height/ 1.81 },
@@ -114,7 +167,7 @@ function setup(){
 		{n: '0', c: startCol, r: 'Middle East', x: width/ 1.72, y: height/ 2.08 },
 		{n: '0', c: startCol, r: 'India', x: width/ 1.45, y: height/ 1.72},
 		{n: '0', c: startCol, r: 'Siberia', x: width/ 1.12, y: height/ 3.45 },
-		{n: '0', c: startCol, r: 'China', x: width/ 1.22, y: height/ 1.89 },
+		{n: '0', c: startCol, r: 'China', x: width/ 1.31, y: height/ 2.24 },
 		{n: '0', c: startCol, r: 'Oceania', x: width/ 1.11, y: height/ 1.17},
 		{n: '0', c: startCol, r: 'UN Air Fortress', x: width/ 1.39, y: height/ 1.21},
 		{n: '0', c: startCol, r: 'P. U. F. F.', x: width/ 10.85, y: height/ 1.37}, // Pacific Underwater Freedom Fortress
@@ -152,6 +205,7 @@ function setup(){
 				hench[i].n = data.r[i].h;
 				hench[i].b = data.r[i].b;
 				hench[i].t = data.r[i].t;
+				hench[i].s = data.r[i].s;
 			}
 		});
 
@@ -170,6 +224,8 @@ function setup(){
 	});
 	socket.on('moles', function(){
 		molesOn = true;
+		firstMoles = true;
+		molesOut = false;
 	});
 	socket.on('doomsday', function(){
 		doomOn = true;
@@ -180,6 +236,7 @@ function setup(){
 	});
 	socket.on('superbious', function(){
 		superOn = true;
+		superFlyIn = true;
 	});
 
 }
@@ -194,19 +251,37 @@ function draw(){
 			if (i != 14 && i != 15 && i != 16){
 				image(regions[i].img, regions[i].x, regions[i].y, regions[i].w, regions[i].h);
 			}
-			else {
+			else if (i == 14 || i == 15){
+				ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
+			}
+			else if (superOn){
 				ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
 			}
 			strokeWeight(4);
-			rect(hench[i].x, hench[i].y, henchBox, henchBox);
+			if (i != 16){
+				rect(hench[i].x, hench[i].y, henchBox, henchBox);
+			}
+			else if (superOn){
+				rect(hench[i].x, hench[i].y, henchBox, henchBox);
+			}
 			stroke(0);
 			fill(255);
 			textSize(regText);
-			text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+			if (i != 16){
+				text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+			}
+			else if (superOn){
+				text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+			}
 			stroke(0);
 			fill(255);
 			textSize(henchText);
-			text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+			if (i != 16){
+				text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+			}
+			else if (superOn){
+				text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+			}
 		}
 	} //jitter the battlers
 	else { //fade all but fighting and jitter
@@ -221,19 +296,37 @@ function draw(){
 				if (i != 14 && i != 15 && i != 16){
 					image(regions[i].img, regions[i].x + jitterX, regions[i].y + jitterY, regions[i].w + jitterX, regions[i].h + jitterY);
 				}
-				else {
+				else if (i == 14 || i == 15){
+					ellipse(regions[i].ex + jitterX, regions[i].ey + jitterY, fortSize + jitterX, fortSize + jitterY);
+				}
+				else if (superOn){
 					ellipse(regions[i].ex + jitterX, regions[i].ey + jitterY, fortSize + jitterX, fortSize + jitterY);
 				}
 				strokeWeight(4);
-				rect(hench[i].x, hench[i].y, henchBox, henchBox);
+				if (i != 16){
+					rect(hench[i].x, hench[i].y, henchBox, henchBox);
+				}
+				else if (superOn){
+					rect(hench[i].x, hench[i].y, henchBox, henchBox);
+				}
 				stroke(0);
 				fill(255);
 				textSize(regText);
-				text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+				if (i != 16){
+					text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+				}
+				else if (superOn){
+					text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+				}
 				stroke(0);
 				fill(255);
 				textSize(henchText);
-				text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+				if (i != 16){
+					text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+				}
+				else if (superOn){
+					text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+				}
 			}
 			else{ //fade
 				//map draw
@@ -244,19 +337,37 @@ function draw(){
 				if (i != 14 && i != 15 && i != 16){
 					image(regions[i].img, regions[i].x, regions[i].y, regions[i].w, regions[i].h);
 				}
-				else {
+				else if (i == 14 || i == 15){
+					ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
+				}
+				else if (superOn){
 					ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
 				}
 				strokeWeight(4);
-				rect(hench[i].x, hench[i].y, henchBox, henchBox);
+				if (i != 16){
+					rect(hench[i].x, hench[i].y, henchBox, henchBox);
+				}
+				else if (superOn){
+					rect(hench[i].x, hench[i].y, henchBox, henchBox);
+				}
 				stroke(0);
 				fill(255);
 				textSize(regText);
-				text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+				if (i != 16){
+					text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+				}
+				else if (superOn){
+					text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+				}
 				stroke(0);
 				fill(255);
 				textSize(henchText);
-				text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+				if (i != 16){
+					text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+				}
+				else if (superOn){
+					text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+				}
 			}
 		}
 	}
@@ -296,7 +407,7 @@ function draw(){
     else text(clockHour + ":" + clockMin + ":" + clockSec, 18 * width/20, height/10);
 	}
 	nodeLines(); //map connections
-	if (kaijuOn) {
+	if (kaijuOn) { //kaiju shows up on target regions
 		push();
 		tint(240, 240, 240);
 		noTarget = true;
@@ -311,13 +422,45 @@ function draw(){
 		}
 		pop();
 	}
-	if(molesOn){
+	if(molesOn){ //moles pop out of target region, 100 per click
 		push();
 		tint(240, 240, 240);
 		image(moles, width/3.6, height/2.9, width/7, height/7);
 		pop();
+		push();
+		if (firstMoles){
+			for (var i = hench.length - 1; i >= 0; i--){
+				if (hench[i].t == true){
+					moleHill = hench[i];
+				}
+			}
+			for (let i = 0; i < moleCount; i++){
+				moleArmy.push(new Mole(moleHill));
+			}
+			firstMoles = false;
+		}
+		/*
+		else if(!molesOut){
+			if (moleArmy.length >= 1000){
+				molesOut = true;
+			}
+ 			else if (moleArmy.length % 95 == 0){
+				for (let i = 0; i < moleCount; i++){
+					moleArmy.push(new Mole(moleHill));
+				}
+			}
+		}
+		*/
+		for (let i = moleArmy.length - 1; i >= 0; i--){
+			moleArmy[i].move();
+			moleArmy[i].display();
+			if (moleArmy[i].x > width || moleArmy[i].x < 0 || moleArmy[i].y > height || moleArmy[i].y < 0){
+				moleArmy.splice(i, 1);
+			}
+		}
+		pop();
 	}
-	if(doomOn){
+	if(doomOn){ //laser shows up and fires on target regions
 		push();
 		tint(240, 240, 240);
 		image(doomDevice, 0, 0, width/7, height/8);
@@ -341,7 +484,22 @@ function draw(){
 	if(superOn){
 		push();
 		tint(240, 240, 240);
-		image(superbious, width/2.46, height/1.22, width/7, height/8);
+		if (superFlyIn){ // for future animation?
+			if (superFlyCount < 100){
+				superFlyCount++;
+			}
+			else {
+				superFlyIn = false;
+			}
+		}
+		else{
+			for (var i = hench.length - 1; i >= 0; i --){
+				if (hench[i].s == true){
+					image(superbious, hench[i].x, hench[i].y, width/7, height/8);
+					// image(superbious, width/2.46, height/1.22, width/7, height/8);
+				}
+			}
+		}
 		pop();
 	}
 

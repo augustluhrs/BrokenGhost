@@ -56,6 +56,7 @@ let battleCount; //if 2, battle
 let letsBattle = false;
 let regData = []; //region socket data
 let battleOver; //battle over button
+let quakeButt;
 
 let colorDiv;
 let colorButts = []; //all color buttons
@@ -179,6 +180,15 @@ function setup(){
 	stopTimer = createButton('STOP TIMER')
 		.parent('overall')
 		.mousePressed(() =>	socket.emit('stop timer'));
+	quakeButt = createButton('EARTHQUAKE')
+		.parent('overall')
+		.mousePressed(function(){
+			for (var i = 0; i < regions.length; i++){
+				if (regBattleButts[i].elt.style.backgroundColor == 'blue'){
+					regBattleButts[i].elt.style.backgroundColor = 'red';
+				}
+			}
+		});
 	battleOver = createButton('BATTLE OVER');
 	battleOver.parent('overall');
 	battleOver.mousePressed(function(){
@@ -260,7 +270,7 @@ function draw(){
 		l: teamLimit
 	}
 	socket.emit('update', data);
-	if (battleCount == 2 && !letsBattle){
+	if (battleCount >= 2 && !letsBattle){
 			socket.emit('battle');
 			letsBattle = true;
 	}

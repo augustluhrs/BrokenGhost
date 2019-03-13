@@ -65,7 +65,7 @@ let swatches = ['HotPink', 'Magenta', 'Purple', 'Indigo', 'Crimson', 'OrangeRed'
 		'YellowGreen', 'Olive', 'SaddleBrown', 'Lime', 'SeaGreen', 'DarkGreen', 'Teal',
 		'Cyan', 'CornflowerBlue', 'Blue', 'White', 'Gray', 'LightSlateGray', 'DarkSlateGray'];
 
-let timerButton; // starts timer on screen
+let timerButton, stopTimer; // timer on server
 let updateMap; // to send updated info to server && screen -- want to phase out
 
 //special events
@@ -88,7 +88,7 @@ function setup(){
 	 teamLimitIn.parent('teams');
 	 // team buttons
 	 for (let i = 0; i < teamLimit; i++){
-		 teamIns[i] = createInput(i);
+		 teamIns[i] = createInput('Team ' + (i+1));
 		 teamIns[i].parent('teams');
 		 teamButts[i] = createButton('Team ' + (i+1) + ' Color').mousePressed(() =>
 	 			teamButts[i].style('background-color', colorBucket));
@@ -170,6 +170,9 @@ function setup(){
 		socket.emit('timerStart');
 	});
 	timerButton.parent('overall');
+	stopTimer = createButton('STOP TIMER')
+		.parent('overall')
+		.mousePressed(() =>	socket.emit('stop timer'));
 	battleOver = createButton('BATTLE OVER');
 	battleOver.parent('overall');
 	battleOver.mousePressed(function(){

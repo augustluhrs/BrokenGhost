@@ -198,6 +198,9 @@ function setup(){
 			if (timeElapsed > 1){
 				timerOn = true;
 			}
+			else {
+				timerOn = false;
+			}
 
 			for (var i = 0; i < hench.length; i++){
 				// let fillCol = color(regions[i].color);
@@ -264,24 +267,24 @@ function draw(){
 			else if (superOn){
 				rect(hench[i].x, hench[i].y, henchBox, henchBox);
 			}
-			stroke(0);
-			fill(255);
-			textSize(regText);
-			if (i != 16){
-				text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-			}
-			else if (superOn){
-				text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-			}
-			stroke(0);
-			fill(255);
-			textSize(henchText);
-			if (i != 16){
-				text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-			}
-			else if (superOn){
-				text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-			}
+			// stroke(0);
+			// fill(255);
+			// textSize(regText);
+			// if (i != 16){
+			// 	text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+			// }
+			// else if (superOn){
+			// 	text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+			// }
+			// stroke(0);
+			// fill(255);
+			// textSize(henchText);
+			// if (i != 16){
+			// 	text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+			// }
+			// else if (superOn){
+			// 	text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+			// }
 		}
 	} //jitter the battlers
 	else { //fade all but fighting and jitter
@@ -309,24 +312,24 @@ function draw(){
 				else if (superOn){
 					rect(hench[i].x, hench[i].y, henchBox, henchBox);
 				}
-				stroke(0);
-				fill(255);
-				textSize(regText);
-				if (i != 16){
-					text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-				}
-				else if (superOn){
-					text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-				}
-				stroke(0);
-				fill(255);
-				textSize(henchText);
-				if (i != 16){
-					text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-				}
-				else if (superOn){
-					text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-				}
+			// 	stroke(0);
+			// 	fill(255);
+			// 	textSize(regText);
+			// 	if (i != 16){
+			// 		text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+			// 	}
+			// 	else if (superOn){
+			// 		text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+			// 	}
+			// 	stroke(0);
+			// 	fill(255);
+			// 	textSize(henchText);
+			// 	if (i != 16){
+			// 		text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+			// 	}
+			// 	else if (superOn){
+			// 		text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+			// 	}
 			}
 			else{ //fade
 				//map draw
@@ -350,25 +353,41 @@ function draw(){
 				else if (superOn){
 					rect(hench[i].x, hench[i].y, henchBox, henchBox);
 				}
-				stroke(0);
-				fill(255);
-				textSize(regText);
-				if (i != 16){
-					text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-				}
-				else if (superOn){
-					text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-				}
-				stroke(0);
-				fill(255);
-				textSize(henchText);
-				if (i != 16){
-					text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-				}
-				else if (superOn){
-					text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-				}
+				// stroke(0);
+				// fill(255);
+				// textSize(regText);
+				// if (i != 16){
+				// 	text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+				// }
+				// else if (superOn){
+				// 	text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+				// }
+				// stroke(0);
+				// fill(255);
+				// textSize(henchText);
+				// if (i != 16){
+				// 	text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+				// }
+				// else if (superOn){
+				// 	text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+				// }
 			}
+		}
+	}
+	//region and hench text
+	stroke(0);
+	fill(255);
+	textSize(regText);
+	for (var i = hench.length - 1; i >= 0; i--){
+		if (i != 16){
+			text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+			textSize(henchText);
+			text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
+		}
+		else if (superOn){
+			text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
+			textSize(henchText);
+			text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
 		}
 	}
 	//team draw
@@ -413,12 +432,15 @@ function draw(){
 		noTarget = true;
 		for (var i = hench.length - 1; i >= 0; i--){
 			if (hench[i].t == true){
-				image(kaiju, hench[i].x, hench[i].y, width/8, height/5);
+				push();
+				imageMode(CENTER);
+				image(kaiju, hench[i].x + (width/72), hench[i].y + (height/108), width/8, height/5);
+				pop();
 				noTarget = false;
 			}
 		}
 		if(noTarget){
-			image(kaiju, width/1.16, height/2.67, width/8, height/5);
+			image(kaiju, width/1.16 + (width/72), height/2.67 + (height/108), width/8, height/5);
 		}
 		pop();
 	}
@@ -495,14 +517,15 @@ function draw(){
 		else{
 			for (var i = hench.length - 1; i >= 0; i --){
 				if (hench[i].s == true){
-					image(superbious, hench[i].x, hench[i].y, width/7, height/8);
-					// image(superbious, width/2.46, height/1.22, width/7, height/8);
+					push();
+					imageMode(CENTER);
+					image(superbious, hench[i].x + (width/72), hench[i].y + (height/108), width/6, height/6);
+				 	pop();
 				}
 			}
 		}
 		pop();
 	}
-
 }
 
 function mousePressed(){

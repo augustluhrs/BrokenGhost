@@ -79,7 +79,15 @@ master.on('connection',	function (socket){
       startMillis = Date.now();
       timerOn = true;
 
-      screen.emit('timerStart');
+      // screen.emit('timerStart');
+    });
+
+    socket.on('stop timer', function(){
+      console.log('timer off');
+      // startMillis = Date.now();
+      timerOn = false;
+
+      // screen.emit('stop timer');
     });
 
     //when Cody sends update, store the new state of the map and send the update to the screen

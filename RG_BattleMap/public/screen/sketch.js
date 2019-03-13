@@ -225,11 +225,23 @@ function setup(){
 	socket.on('kaiju', function(){
 		kaijuOn = true;
 	});
+
+	socket.on('kaiju off', function(){
+		kaijuOn = false;
+	});
+
 	socket.on('moles', function(){
 		molesOn = true;
 		firstMoles = true;
 		molesOut = false;
 	});
+
+	socket.on('moles off', function(){
+		molesOn = false;
+		// firstMoles = true;
+		// molesOut = false;
+	});
+
 	socket.on('doomsday', function(){
 		doomOn = true;
 	});
@@ -267,24 +279,6 @@ function draw(){
 			else if (superOn){
 				rect(hench[i].x, hench[i].y, henchBox, henchBox);
 			}
-			// stroke(0);
-			// fill(255);
-			// textSize(regText);
-			// if (i != 16){
-			// 	text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-			// }
-			// else if (superOn){
-			// 	text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-			// }
-			// stroke(0);
-			// fill(255);
-			// textSize(henchText);
-			// if (i != 16){
-			// 	text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-			// }
-			// else if (superOn){
-			// 	text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-			// }
 		}
 	} //jitter the battlers
 	else { //fade all but fighting and jitter
@@ -312,24 +306,6 @@ function draw(){
 				else if (superOn){
 					rect(hench[i].x, hench[i].y, henchBox, henchBox);
 				}
-			// 	stroke(0);
-			// 	fill(255);
-			// 	textSize(regText);
-			// 	if (i != 16){
-			// 		text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-			// 	}
-			// 	else if (superOn){
-			// 		text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-			// 	}
-			// 	stroke(0);
-			// 	fill(255);
-			// 	textSize(henchText);
-			// 	if (i != 16){
-			// 		text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-			// 	}
-			// 	else if (superOn){
-			// 		text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-			// 	}
 			}
 			else{ //fade
 				//map draw
@@ -353,24 +329,6 @@ function draw(){
 				else if (superOn){
 					rect(hench[i].x, hench[i].y, henchBox, henchBox);
 				}
-				// stroke(0);
-				// fill(255);
-				// textSize(regText);
-				// if (i != 16){
-				// 	text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-				// }
-				// else if (superOn){
-				// 	text(hench[i].r, hench[i].x, hench[i].y - henchBox/2 - 20);
-				// }
-				// stroke(0);
-				// fill(255);
-				// textSize(henchText);
-				// if (i != 16){
-				// 	text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-				// }
-				// else if (superOn){
-				// 	text(hench[i].n, hench[i].x, hench[i].y + henchBox/4);
-				// }
 			}
 		}
 	}
@@ -398,10 +356,10 @@ function draw(){
 		textSize(width/(35 + teams[i].name.length)); //team size text scaling
 		//two rows of team names, offset
 		if (i % 2 == 0){
-			text(teams[i].name, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 50)
+			text(teams[i].name, (i + 1) * windowWidth/(teamLimit + 1) , height - height/18)
 		}
 		else{
-			text(teams[i].name, (i + 1) * windowWidth/(teamLimit + 1) , windowHeight - 10)
+			text(teams[i].name, (i + 1) * windowWidth/(teamLimit + 1) , height - height/54)
 		}
 	}
 	if (timerOn){ //time elapsed since start of game

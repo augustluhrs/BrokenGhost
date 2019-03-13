@@ -72,7 +72,7 @@ let updateMap; // to send updated info to server && screen -- want to phase out
 let superButt, kaijuButt, moleButt, doomButt;
 let targetButts = [];
 let superTargetButts = [];
-let laserButt;
+let kaijuOffButt, molesOffButt, laserButt;
 // let target = '';
 
 function setup(){
@@ -140,12 +140,18 @@ function setup(){
 	kaijuButt.mousePressed(function(){
 		socket.emit('kaiju');
 	});
+	kaijuOffButt = createButton('KAIJU OFF')
+		.parent('kaiju')
+		.mousePressed(() => socket.emit('kaiju off'));
 	//molemen
 	moleButt = createButton('MOLES ACTIVE');
 	moleButt.parent('mole');
 	moleButt.mousePressed(function(){
 		socket.emit('moles');
 	});
+	molesOffButt = createButton('MOLES OFF')
+		.parent('mole')
+		.mousePressed(() => socket.emit('moles off'));
 	//doomsday device
 	doomButt = createButton('DOOMSDAY ACTIVE');
 	doomButt.parent('doom');

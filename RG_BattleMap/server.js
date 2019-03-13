@@ -130,10 +130,22 @@ master.on('connection',	function (socket){
       console.log('Kaiju Active');
       screen.emit('kaiju');
     });
+
+    socket.on('kaiju off', function(){
+      console.log('Kaiju OFF');
+      screen.emit('kaiju off');
+    });
+
     socket.on('moles', function(){
       console.log('Moles Active');
       screen.emit('moles');
     });
+
+    socket.on('moles off', function(){
+      console.log('Moles OFF');
+      screen.emit('moles off');
+    });
+
     socket.on('doomsday', function(){
       console.log('Doomsday Device Active');
       screen.emit('doomsday');

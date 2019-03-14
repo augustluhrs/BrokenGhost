@@ -59,9 +59,9 @@ function preload(){
 
 function setup(){
 	noCanvas();
-	textFont(font);
-	textAlign(CENTER);
-	regText = width/45;
+	// textFont(font);
+	// textAlign(CENTER);
+	// regText = width/45;
 	startCol = color(150,150, 175,195);
 
 	regions = [ //just for map
@@ -186,11 +186,10 @@ function setup(){
 		// regionPs[16] = createP('');
 	});
 
-
 	regionPs = [];
 	for (var i = 0; i < hench.length; i++){
 		if (i != 16){
-			regionPs[i] = createP(hench[i].r + " is controlled by " + hench[i].n + ' henchmen from ' + hench[i].own);
+			regionPs[i] = createP(hench[i].r + ": " + hench[i].n + ' henchmen from ' + hench[i].own);
 		}
 		else {
 			regionPs[i] = createP('');
@@ -207,7 +206,7 @@ function draw(){
 		}
 		for (var i = 0; i < hench.length ; i++){
 			// regionPs[i].remove();
-			regionPs[i] = createP(hench[i].r + " is controlled by " + hench[i].n + ' henchmen from ' + hench[i].own);
+			regionPs[i] = createP(hench[i].r + ": " + hench[i].n + ' henchmen from ' + hench[i].own);
 		}
 	}
 	else {
@@ -216,7 +215,7 @@ function draw(){
 		}
 		for (var i = 0; i < hench.length - 1; i++){
 			// regionPs[i].remove();
-			regionPs[i] = createP(hench[i].r + " is controlled by " + hench[i].n + ' henchmen from ' + hench[i].own);
+			regionPs[i] = createP(hench[i].r + ": " + hench[i].n + ' henchmen from ' + hench[i].own);
 		}
 	}
 

@@ -15,7 +15,8 @@ let socket = io('/puppetmaster');
 
 //interface buttons and inputs
 let teams = [];
-let regStartCol = 'gray';
+let regStartCol = 'mediumOrchid';
+let startLabel = 'Superb!'
 let regions = [ // need array wrapper?
 	{name: 'North America', h: 0, b: false, t: false, s: false, color: regStartCol},
 	{name: 'Central America', h: 0, b: false,t: false, s: false, color: regStartCol},
@@ -66,6 +67,7 @@ let swatches = ['HotPink', 'Magenta', 'Purple', 'Indigo', 'Crimson', 'OrangeRed'
 		'YellowGreen', 'Olive', 'SaddleBrown', 'Lime', 'SeaGreen', 'DarkGreen', 'Teal',
 		'Cyan', 'CornflowerBlue', 'Blue', 'White', 'Gray', 'LightSlateGray', 'DarkSlateGray'];
 
+let mapWipeButt, takeoverButt;
 let timerButton, stopTimer; // timer on server
 let updateMap; // to send updated info to server && screen -- want to phase out
 
@@ -107,7 +109,7 @@ function setup(){
 			regColorButts[i].style('background-color', colorBucket)); //need to add corresponding data line
 		regColorButts[i].style('background-color', regStartCol);
 		regColorButts[i].parent(divId);
-		regIns[i] = createInput('0'); //need corr data line
+		regIns[i] = createInput(startLabel); //need corr data line
 		regIns[i].parent(divId);
 		// regBattleButts[i] = createButton('Battle? : ' + regions[i].b); //need draw loop update
 		regBattleButts[i] = createButton('Battle?').mousePressed(() =>
@@ -172,6 +174,29 @@ function setup(){
 	});
 
 	//overall buttons
+	mapWipeButt = createButton('MAP RESET')
+		.parent('super')
+		.mousePressed(function(){
+			for (var i = 0; i < regions.length; i++){
+				regColorButts[i].style('background-color', 'gray');
+				regIns[i].value('0');
+			}
+		});
+	takeoverButt = createButton('Lets Take Over the World')
+		.parent('overall')
+		.mousePressed(function(){
+			teamLimitIn.value('5');
+			teamButts[0].style('background-color', 'OrangeRed');
+			teamIns[0].value('Let\'s');
+			teamButts[1].style('background-color', 'Yellow');
+			teamIns[1].value('Take');
+			teamButts[2].style('background-color', 'Lime');
+			teamIns[2].value('Over');
+			teamButts[3].style('background-color', 'Cyan');
+			teamIns[3].value('The');
+			teamButts[4].style('background-color', 'Magenta');
+			teamIns[4].value('World');
+		});
 	timerButton = createButton('START TIMER');
 	timerButton.mousePressed(function(){
 		socket.emit('timerStart');

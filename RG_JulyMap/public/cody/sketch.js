@@ -80,20 +80,57 @@ let mapWipeButt, takeoverButt;
 // let updateMap; // to send updated info to server && screen -- want to phase out
 
 //special events
-let superButt;
+// let antButt;
 // let kaijuButt, moleButt, doomButt;
 // let targetButts = [];
-let superTargetButts = [];
+// let superTargetButts = [];
 // let kaijuOffButt, molesOffButt, laserButt;
 // let target = '';
 
+//new Buttons and arrays
+//regions
+let megavatorButt, gateButt, puffButt, antarcButt;
+let megavatorOn = false;
+let gateOn = false;
+let puffOn = false;
+let antarcOn = false;
+//NPCs
+let moleButt, moonButt, merButt, oganButt, superButt;
+let moleOn = false;
+let moonOn = false;
+let merOn = false;
+let oganOn = false;
+let superOn = false;
+//events
+// let kaijuButt, stellaButt;
+let events = {
+	megavator: megavatorOn,
+	gate: gateOn,
+	puff: puffOn,
+	antarc: antarcOn,
+	mole: moleOn,
+	moon: moonOn,
+	mer: merOn,
+	ogan: oganOn,
+	super: superOn
+};
+let npcs = {
+	molemen: {x: 0, y: 0, s: false},
+	moonmen: {x: 0, y: 0, s: false},
+	mermen: {x: 0, y: 0, s: false},
+	oganaughts: {x: 0, y: 0, s: false},
+	superbious: {x: 0, y: 0, s: false}
+};
+
+
 function setup(){
-	noCanvas();
+	// noCanvas();
 	 /*
 	NEW AND IMPROVED INPUTS
 	-- super thanks to u/GoToLoop on processing forum for loop/arrow functions
 	 */
-
+	 createCanvas(windowWidth, windowHeight);
+	 background(0);
 	 //number of teams in play
 	 startTeams = str(teamLimit);
 	 teamLimitIn = createInput(startTeams);
@@ -130,11 +167,11 @@ function setup(){
 			targetOnOff(targetButts[i], regions[i]));
 		targetButts[i].style('background-color', 'teal');
 		targetButts[i].parent(divId);
-		*/
 		superTargetButts[i] = createButton('Super Target').mousePressed(() =>
 			superTargetOnOff(superTargetButts[i], regions[i]));
 		superTargetButts[i].style('background-color', 'cyan');
 		superTargetButts[i].parent(divId);
+		*/
 	}
 
 
@@ -177,16 +214,16 @@ function setup(){
 	laserButt.parent('doom');
 	*/
 	//superbious
-	superButt = createButton('SUPERBIOUS ACTIVE');
-	superButt.parent('super');
-	superButt.mousePressed(function(){
-		regions[14].s = true;
-		socket.emit('superbious');
-	});
+	// antarcButt = createButton('Show Antarctica Region');
+	// antarcButt.parent('super');
+	// antarcButt.mousePressed(function(){
+	// 	regions[14].s = true;
+	// 	// socket.emit('superbious');
+	// });
 
 	//overall buttons
 	mapWipeButt = createButton('MAP RESET')
-		.parent('super')
+		.parent('overall')
 		.mousePressed(function(){
 			for (var i = 0; i < regions.length; i++){
 				regColorButts[i].style('background-color', 'gray');
@@ -208,64 +245,44 @@ function setup(){
 			teamButts[4].style('background-color', 'Magenta');
 			teamIns[4].value('World');
 		});
-	/*
-	timerButton = createButton('START TIMER');
-	timerButton.mousePressed(function(){
-		socket.emit('timerStart');
-	});
-	timerButton.parent('overall');
-	stopTimer = createButton('STOP TIMER')
-		.parent('overall')
-		.mousePressed(() =>	socket.emit('stop timer'));
-	quakeButt = createButton('EARTHQUAKE')
-		.parent('overall')
+	//event buttons
+	puffButt = createButton('Show P.U.F.F. Region')
+		.parent('events')
 		.mousePressed(function(){
-			for (var i = 0; i < regions.length; i++){
-				if (regBattleButts[i].elt.style.backgroundColor == 'blue'){
-					regBattleButts[i].elt.style.backgroundColor = 'red';
-				}
-			}
+			// puffOn = true;
+			events.puff = true;
 		});
-	battleOver = createButton('BATTLE OVER');
-	battleOver.parent('overall');
-	battleOver.mousePressed(function(){
-		for (var i = 0; i < regions.length; i++){
-			if (regBattleButts[i].elt.style.backgroundColor == 'red'){
-				regBattleButts[i].elt.style.backgroundColor = 'blue';
-			}
-		}
-		socket.emit('battle over');
-		letsBattle = false;
-	})
-	updateMap = createButton('UPDATE MAP'); //outdated
-	updateMap.mousePressed(function(){
-		for (var i = 0; i < teamButts.length; i++){
-			teamData[i] = {
-				teamNum: i+1,
-				name: teamIns[i].elt.value,
-				color: teamButts[i].elt.style.backgroundColor
-			};
-		}
-		data = {
-      r: regions,
-      t: teamData,
-			l: teamLimit
-		}
-		socket.emit('update', data);
-	});
-	updateMap.parent('overall');
-	*/
+	megavatorButt = createButton('Show Mole Megavator Region')
+		.parent('events')
+		.mousePressed(function(){
+			events.megavator = true;
+		});
+	gateButt = createButton('Show Moon Gate Region')
+		.parent('events')
+		.mousePressed(function(){
+			events.gate = true;
+		});
+	antarcButt = createButton('Show Antarctica Region');
+		antarcButt.parent('super');
+		antarcButt.mousePressed(function(){
+			events.antarc = true;
+		});
+
+	//NPC Buttons
+
+
   // Listen for confirmation of connection
   socket.on('connect', function() {
     console.log("Connected");
   });
 
 	// - - - - - heartbeat
-	socket.on('update', function(data){
-		regions = data.r;
-		teams = data.t;
-		teamLimit = data.l;
-		});
+	// socket.on('update', function(data){
+	// 	regions = data.r;
+	// 	teams = data.t;
+	// 	teamLimit = data.l;
+	//
+	// 	});
 }
 
 function draw(){
@@ -311,7 +328,9 @@ function draw(){
 	data = {
 		r: regions,
 		t: teamData,
-		l: teamLimit
+		l: teamLimit,
+		e: events,
+		n: npcs
 	}
 	socket.emit('update', data);
 	/*
@@ -342,16 +361,16 @@ function targetOnOff(butt, reg){
 	}
 }
 */
-function superTargetOnOff(butt, reg){
-	if (butt.elt.style.backgroundColor == 'cyan'){
-		butt.elt.style.backgroundColor = 'pink';
-		reg.s = true;
-	}
-	else {
-		butt.elt.style.backgroundColor = 'cyan';
-		reg.s = false;
-	}
-}
+// function superTargetOnOff(butt, reg){
+// 	if (butt.elt.style.backgroundColor == 'cyan'){
+// 		butt.elt.style.backgroundColor = 'pink';
+// 		reg.s = true;
+// 	}
+// 	else {
+// 		butt.elt.style.backgroundColor = 'cyan';
+// 		reg.s = false;
+// 	}
+// }
 function colorGrab(colorButt){
 	colorBucket = colorButt;
 }

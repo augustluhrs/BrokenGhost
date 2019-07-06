@@ -18,6 +18,8 @@ let io = require('socket.io').listen(server);
 var regions = [];
 var teams = [];
 var teamLimit;
+var events = {};
+var npcs = {};
 // var dataFirst = false;
 // let startMillis;
 // let timerOn = false;
@@ -37,7 +39,9 @@ map.on('connection', function(socket) {
   data = {
     r: regions,
     t: teams,
-    l: teamLimit
+    l: teamLimit,
+    e: events,
+    n: npcs
   }
   map.emit('update', data);
 
@@ -45,7 +49,9 @@ map.on('connection', function(socket) {
     data = {
       r: regions,
       t: teams,
-      l: teamLimit
+      l: teamLimit,
+      e: events,
+      n: npcs
     }
     map.emit('update', data);
   });
@@ -90,6 +96,8 @@ cody.on('connection', function(socket) {
     regions = data.r;
     teams = data.t;
     teamLimit = data.l;
+    events = data.e;
+    npcs = data.n;
     // console.log(data);
     // if (timerOn){
     //   let timeElapsed = Date.now() - startMillis;
@@ -153,11 +161,11 @@ cody.on('connection', function(socket) {
       map.emit('fire laser');
     });
     */
-    
-    socket.on('superbious', function() {
-      console.log('Superbious Active');
-      map.emit('superbious');
-    });
+
+    // socket.on('superbious', function() {
+    //   console.log('Superbious Active');
+    //   map.emit('superbious');
+    // });
 
   // Listen for this client to disconnect
   socket.on('disconnect', function() {

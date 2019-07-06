@@ -31,9 +31,21 @@
   - "map" URL now /map not /screen, and all socket events now "map"
   - "cody" interface now /cody not /puppetmaster, and all socket events now "cody"
 
-- Possible Add-ons
-  - Some kind of map interface that allows NPC images to be clicked and dragged around the map
-
+- Add-ons
+  - Some kind of map interface that allows NPC images to be clicked and dragged around the map (canvas on interface, with buttons that toggle which element is being moved)
+  - to do: cody
+    - map outline on canvas
+    - buttons (NPC select)
+    - button (show the selected, doesn't take off map (so can place before showing))
+    - indicator for which NPC is selected
+    - colored ellipses for canvas, no, use mini imgs
+    - NPC number inputs
+    - new event
+      - no, just send with update, need new object array for NPCs & update
+  - to do: map
+    - draw if for all NPCs and regions
+    - region and NPC show toggles
+    - new object array & update
 
 - Arnab
   - new region imgs to insert

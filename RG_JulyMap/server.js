@@ -152,11 +152,12 @@ cody.on('connection', function(socket) {
       console.log('firing laser');
       map.emit('fire laser');
     });
+    */
+    
     socket.on('superbious', function() {
       console.log('Superbious Active');
       map.emit('superbious');
     });
-    */
 
   // Listen for this client to disconnect
   socket.on('disconnect', function() {

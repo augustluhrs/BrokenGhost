@@ -180,7 +180,7 @@ function setup(){
 	superButt = createButton('SUPERBIOUS ACTIVE');
 	superButt.parent('super');
 	superButt.mousePressed(function(){
-		regions[16].s = true;
+		regions[14].s = true;
 		socket.emit('superbious');
 	});
 

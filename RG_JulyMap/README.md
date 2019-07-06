@@ -2,15 +2,17 @@
 
 ### Updates
 - Basics Streamlining
-  - team names
-  - change colors of team and regions
+  - same basics:
+    - team names
+    - change colors of team and regions
+    - update numbers on each region
   - new regions/map
     - Greenland now N.A
     - West/East Africa now North Africa
     - Middle East and India now Near East
     - Siberia now Pacific Rim
     - Oceania now Australia    
-  - update numbers on each region
+  - new nodeLines (connectors)
   - removed following features
     - timer
     - Kaiju
@@ -31,3 +33,8 @@
 
 - Possible Add-ons
   - Some kind of map interface that allows NPC images to be clicked and dragged around the map
+
+
+- Arnab
+  - new region imgs to insert
+  - adjust the positioning of the new regions

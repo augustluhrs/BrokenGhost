@@ -50,3 +50,5 @@
 - Arnab
   - new region imgs to insert
   - adjust the positioning of the new regions
+  - NPC images as Gwen develops
+  - adjust width/height of NPC images

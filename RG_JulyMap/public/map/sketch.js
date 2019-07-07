@@ -11,6 +11,8 @@ let socket = io('/map');
 // 	reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16;
 var nAmerica, cAmerica, sAmerica, europe, nAfrica, sAfrica, russia, nearEast,
 	pacRim, china, australia;
+var mermen, moonmen, molemen, oganaughts, superbious;
+
 
 //rando variables
 let canvas;
@@ -142,7 +144,7 @@ function preload(){
 	pacRim = loadImage('../assets/Siberia.png');
 	china = loadImage('../assets/China.png');
 	australia = loadImage('../assets/Oceania.png');
-	// reg 12-15 are event regions
+	// reg 12-15 are event regions (ellipses)
 
 	//font
 	font = loadFont('../assets/fonts/Action_Man_Bold_Italic.ttf');
@@ -151,6 +153,10 @@ function preload(){
 	// kaiju = loadImage('../assets/Kaiju.png');
 	// doomDevice = loadImage('../assets/Doomsday.png');
 	// moles = loadImage('../assets/Moles.png');
+	// mermen = loadImage('');
+	// moonmen = loadImage('');
+	// molemen = loadImage('');
+	// oganaughts = loadImage('');
 	superbious = loadImage('../assets/Superbious.png');
 }
 
@@ -249,13 +255,21 @@ function setup(){
 		super: superOn
 	};
 
-	npcs = {
-		molemen: {x: 0, y: 0, s: false},
-		moonmen: {x: 0, y: 0, s: false},
-		mermen: {x: 0, y: 0, s: false},
-		oganaughts: {x: 0, y: 0, s: false},
-		superbious: {x: 0, y: 0, s: false}
-	};
+	npcs = [
+		{img: mermen, x: 0, y: 0, w: 100, h: 100, s: false},
+		{img: molemen, x: 0, y: 0, w: 100, h: 100, s: false},
+		{img: moonmen, x: 0, y: 0, w: 100, h: 100, s: false},
+		{img: oganaughts, x: 0, y: 0, w: 100, h: 100, s: false},
+		{img: superbious, x: 0, y: 0, w: 100, h: 100, s: false}
+	];
+
+	// npcs = {
+	// 	molemen: {x: 0, y: 0, s: false},
+	// 	moonmen: {x: 0, y: 0, s: false},
+	// 	mermen: {x: 0, y: 0, s: false},
+	// 	oganaughts: {x: 0, y: 0, s: false},
+	// 	superbious: {x: 0, y: 0, s: false}
+	// };
 
 	socket.emit('refresh');
 
@@ -278,15 +292,15 @@ function setup(){
 			teams = data.t;
 			teamLimit = int(data.l);
 			events = data.e;
-			npcs = data.n;
-			// timeElapsed = data.m;
-			// if (timeElapsed > 1){
-			// 	timerOn = true;
-			// }
-			// else {
-			// 	timerOn = false;
-			// }
-
+			// npcs = data.n;
+			let normNpcs = data.n;
+			//update NPC locations/show
+			for (var i = 0; i < npcs.length; i++){
+				npcs[i].x = width/normNpcs[i].x;
+				npcs[i].y = height/normNpcs[i].y;
+				npcs[i].s = normNpcs[i].s;
+			}
+			// update region data
 			for (var i = 0; i < hench.length; i++){
 				// let fillCol = color(regions[i].color);
 				hench[i].c = color(data.r[i].color);
@@ -378,6 +392,12 @@ function draw(){
 		}
 	}
 	nodeLines(); //map connections
+	//NPC draw
+	for (var i = npcs.length - 1; i >= 0; i--){
+		if (npcs[i].s == true){
+			image(npcs[i].img, npcs[i].x, npcs[i].y, npcs[i].w, npcs[i].h);
+		}
+	}
 }
 
 function mousePressed(){ //just for positioning

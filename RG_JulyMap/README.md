@@ -47,8 +47,17 @@
     - region and NPC show toggles
     - new object array & update
 
-- Arnab
-  - new region imgs to insert
-  - adjust the positioning of the new regions
-  - NPC images as Gwen develops
-  - adjust width/height of NPC images
+### Arnab
+- new region imgs to insert
+  - map lines: 50-60
+  - cody lines: 103-113
+- adjust the positioning of the new regions
+  - map lines: 94-104
+  - cody lines: 310-320
+- NPC images as Gwen develops
+  - map lines: 70-73
+  - cody lines: 123-126
+- adjust width/height of NPC images
+  - map lines: 150-154
+  - cody lines: 327-331
+- if wanting troop size with NPCs, maybe put a little box with # next to img like the hench box?

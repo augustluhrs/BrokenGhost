@@ -4,22 +4,14 @@
 // assets from Arnab Chakravarty
 // updates July 2019
 
-
-// FOR THE LOVE OF GOD DON'T LOOK AT THIS CODE
-// ITS HORRENDOUS, I DID WHAT I HAD TO
-
-
 // Open and connect socket
 let socket = io('/cody');
-
-// let map;
-// let italy;
 
 //interface buttons and inputs
 let teams = [];
 let regStartCol = 'mediumOrchid';
 let startLabel = 'Superb!'
-let regions = [ // need array wrapper?
+let regions = [
 	{name: 'North America', h: 0, b: false, t: false, s: false, color: regStartCol},
 	{name: 'Central America', h: 0, b: false,t: false, s: false, color: regStartCol},
 	{name: 'South America', h: 0, b: false,t: false,  s: false,color: regStartCol},
@@ -43,29 +35,19 @@ let regions = [ // need array wrapper?
 	{name: 'Mole Megavator', h: 0, b: false, t: false, s: false,color: regStartCol},
 	{name: 'Moon Gate', h: 0, b: false, t: false, s: false,color: regStartCol},
 	{name: 'Antarctica', h: 'S', b: false,t: false,  s: false,color: regStartCol}
-
 ];
 
-/*
-UPDATED V.3
-
-*/
-let startTeams //starts with 20 team max
-let teamLimitIn;
-var teamLimit = 8; //starts with 20 team max
+//overall variables
+let startTeams; //str for the team text?
+let teamLimitIn; //the input box for team #
+var teamLimit = 8; //starts with 8 team max
 let teamIns = []; //team name inputs
 let teamButts = []; //all team color buttons
-// let teamColors = []; //just to store color for logging
 let teamData = []; //team socket data
 
-let regColorButts = [];
-let regIns = [];
-// let regBattleButts = [];
-// let battleCount; //if 2, battle
-// let letsBattle = false;
+let regColorButts = []; //the buttons that change region color
+let regIns = []; //the henchment input boxes for each region
 let regData = []; //region socket data
-// let battleOver; //battle over button
-// let quakeButt;
 
 let colorDiv;
 let colorButts = []; //all color buttons
@@ -75,35 +57,26 @@ let swatches = ['HotPink', 'Magenta', 'Purple', 'Indigo', 'Crimson', 'OrangeRed'
 		'YellowGreen', 'Olive', 'SaddleBrown', 'Lime', 'SeaGreen', 'DarkGreen', 'Teal',
 		'Cyan', 'CornflowerBlue', 'Blue', 'White', 'Gray', 'LightSlateGray', 'DarkSlateGray'];
 
-let mapWipeButt, takeoverButt;
-// let timerButton, stopTimer; // timer on server
-// let updateMap; // to send updated info to server && screen -- want to phase out
+let mapWipeButt, takeoverButt; //misc buttons
 
-//special events
-// let antButt;
-// let kaijuButt, moleButt, doomButt;
-// let targetButts = [];
-// let superTargetButts = [];
-// let kaijuOffButt, molesOffButt, laserButt;
-// let target = '';
-
-//for map
-let mapRegions;
+//img variables for map
+let mapRegions = [];
 var nAmerica, cAmerica, sAmerica, europe, nAfrica, sAfrica, russia, nearEast,
 	pacRim, china, australia;
 //NPC images
 var mermen, moonmen, molemen, oganaughts, superbious;
+var fortSize, antFortWidth, antFortHeight;
 
 //new Buttons and arrays
 //regions
-let megavatorButt, gateButt, puffButt, antarcButt;
+let megavatorButt, gateButt, puffButt, antarcButt; //show region buttons
 let megavatorOn = false;
 let gateOn = false;
 let puffOn = false;
 let antarcOn = false;
 //NPCs
-let moleButt, moonButt, merButt, oganButt, superButt;
-let moveMole, moveMoon, moveMer, moveOgan, moveSuper;
+let moleButt, moonButt, merButt, oganButt, superButt; //move NPC buttons
+let showMole, showMoon, showMer, showOgan, showSuper; //show NPC checkboxes
 let moleOn = false;
 let moonOn = false;
 let merOn = false;
@@ -155,17 +128,20 @@ function preload(){
 }
 
 function setup(){
-	// noCanvas();
 	 /*
 	NEW AND IMPROVED INPUTS
 	-- super thanks to u/GoToLoop on processing forum for loop/arrow functions
 	 */
 	 createCanvas(windowWidth, windowHeight);
 	 background(0);
+	 fortSize	= width/11.19;
+	 antFortWidth = 3 * width/4;
+	 antFortHeight = height/15;
 	 //number of teams in play
 	 startTeams = str(teamLimit);
 	 teamLimitIn = createInput(startTeams);
 	 teamLimitIn.parent('teams');
+
 	 // team buttons
 	 for (let i = 0; i < teamLimit; i++){
 		 teamIns[i] = createInput('Team ' + (i+1));
@@ -188,69 +164,15 @@ function setup(){
 		regColorButts[i].parent(divId);
 		regIns[i] = createInput(startLabel); //need corr data line
 		regIns[i].parent(divId);
-		/*
-		// regBattleButts[i] = createButton('Battle? : ' + regions[i].b); //need draw loop update
-		regBattleButts[i] = createButton('Battle?').mousePressed(() =>
-			battleOnOff(regBattleButts[i]));
-		regBattleButts[i].style('background-color', 'blue');
-		regBattleButts[i].parent(divId);
-		targetButts[i] = createButton('TARGET').mousePressed(() =>
-			targetOnOff(targetButts[i], regions[i]));
-		targetButts[i].style('background-color', 'teal');
-		targetButts[i].parent(divId);
-		superTargetButts[i] = createButton('Super Target').mousePressed(() =>
-			superTargetOnOff(superTargetButts[i], regions[i]));
-		superTargetButts[i].style('background-color', 'cyan');
-		superTargetButts[i].parent(divId);
-		*/
 	}
 
-
 	//color buttons
-	// colorDiv = createDiv('colorButtons');
 	for(let i = 0; i < swatches.length; i++){
 		let thisCol = swatches[i];
 		colorButts[i] = createButton(thisCol).mousePressed(() => colorGrab(thisCol));
 		colorButts[i].style('background-color', thisCol);
 		colorButts[i].parent('colors');
 	}
-	/*
-	//special buttons
-	//Kaiju
-	kaijuButt = createButton('KAIJU ACTIVE');
-	kaijuButt.parent('kaiju');
-	kaijuButt.mousePressed(function(){
-		socket.emit('kaiju');
-	});
-	kaijuOffButt = createButton('KAIJU OFF')
-		.parent('kaiju')
-		.mousePressed(() => socket.emit('kaiju off'));
-	//molemen
-	moleButt = createButton('MOLES ACTIVE');
-	moleButt.parent('mole');
-	moleButt.mousePressed(function(){
-		socket.emit('moles');
-	});
-	molesOffButt = createButton('MOLES OFF')
-		.parent('mole')
-		.mousePressed(() => socket.emit('moles off'));
-	//doomsday device
-	doomButt = createButton('DOOMSDAY ACTIVE');
-	doomButt.parent('doom');
-	doomButt.mousePressed(function(){
-		socket.emit('doomsday');
-	});
-	laserButt = createButton('FIRE ZE LAZA').mousePressed(() =>
-		socket.emit('fire laser'));
-	laserButt.parent('doom');
-	*/
-	//superbious
-	// antarcButt = createButton('Show Antarctica Region');
-	// antarcButt.parent('super');
-	// antarcButt.mousePressed(function(){
-	// 	regions[14].s = true;
-	// 	// socket.emit('superbious');
-	// });
 
 	//overall buttons
 	mapWipeButt = createButton('MAP RESET')
@@ -276,6 +198,7 @@ function setup(){
 			teamButts[4].style('background-color', 'Magenta');
 			teamIns[4].value('World');
 		});
+
 	//event buttons
 	puffButt = createButton('Show P.U.F.F. Region')
 		.parent('events')
@@ -331,61 +254,57 @@ function setup(){
 			targetOnOff(superButt);
 		});
 
-	moveMer = createCheckbox('show Mermen')
+	//NPC checkboxes
+	showMer = createCheckbox('show Mermen')
 		.parent('NPCs')
 		.changed(function(){
-			if(moveMer.checked()){
+			if(showMer.checked()){
 				npcs[0].s = true;
 			}
 			else{
 				npcs[0].s = false;
 			}
 		});
-	moveMole = createCheckbox('show Molemen')
+	showMole = createCheckbox('show Molemen')
 		.parent('NPCs')
 		.changed(function(){
-			if(moveMole.checked()){
+			if(showMole.checked()){
 				npcs[1].s = true;
 			}
 			else{
 				npcs[1].s = false;
 			}
 		});
-	moveMoon = createCheckbox('show Moonmen')
+	showMoon = createCheckbox('show Moonmen')
 		.parent('NPCs')
 		.changed(function(){
-			if(moveMoon.checked()){
+			if(showMoon.checked()){
 				npcs[2].s = true;
 			}
 			else{
 				npcs[2].s = false;
 			}
 		});
-	moveOgan = createCheckbox('show Oganaughts')
+	showOgan = createCheckbox('show Oganaughts')
 		.parent('NPCs')
 		.changed(function(){
-			if(moveOgan.checked()){
+			if(showOgan.checked()){
 				npcs[3].s = true;
 			}
 			else{
 				npcs[3].s = false;
 			}
 		});
-	moveSuper = createCheckbox('show Superbious')
+	showSuper = createCheckbox('show Superbious')
 		.parent('super')
 		.changed(function(){
-			if(moveSuper.checked()){
+			if(showSuper.checked()){
 				npcs[4].s = true;
 			}
 			else{
 				npcs[4].s = false;
 			}
 		});
-
-
-
-	// 	checkbox = createCheckbox('label', false);
-  // checkbox.changed(myCheckedEvent);
 
 	mapRegions = [ //just for map, region images
 		{img: nAmerica, x: 0, y: height/10, w: width/3, h: height/3 },
@@ -404,37 +323,23 @@ function setup(){
 		{ex: width/1.46, ey: height/1.39}, //Moon Gate
 		{ex: width/2,  ey: height/1.05, a: false} //Antarctica
 	];
-	npcs = [
+	npcs = [ //stores all NPC data
 		{img: mermen, x: 0, y: 0, w: 100, h: 100, s: false},
 		{img: molemen, x: 0, y: 0, w: 100, h: 100, s: false},
 		{img: moonmen, x: 0, y: 0, w: 100, h: 100, s: false},
 		{img: oganaughts, x: 0, y: 0, w: 100, h: 100, s: false},
 		{img: superbious, x: 0, y: 0, w: 100, h: 100, s: false}
 	];
-	// npcs = {
-	// 	molemen: {img: molemen, x: 0, y: 0, w: 40, h: 40, s: false},
-	// 	moonmen: {img: moonmen, x: 0, y: 0, w: 40, h: 40, s: false},
-	// 	mermen: {img: mermen, x: 0, y: 0, w: 40, h: 40, s: false},
-	// 	oganaughts: {img: oganaughts, x: 0, y: 0, w: 40, h: 40, s: false},
-	// 	superbious: {img: superbious, x: 0, y: 0, w: 40, h: 40, s: false}
-	// };
 
   // Listen for confirmation of connection
   socket.on('connect', function() {
     console.log("Connected");
   });
-
-	// - - - - - heartbeat
-	// socket.on('update', function(data){
-	// 	regions = data.r;
-	// 	teams = data.t;
-	// 	teamLimit = data.l;
-	//
-	// 	});
 }
 
 function draw(){
 	background(0);
+
 	//canvas draw
 	for (var i = mapRegions.length - 1; i >= 0; i--){
 		//map draw
@@ -446,37 +351,26 @@ function draw(){
 			image(mapRegions[i].img, mapRegions[i].x, mapRegions[i].y, mapRegions[i].w, mapRegions[i].h);
 		}
 		else if (i == 11 && events.puff){ //if puff is active
-			ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
+			ellipse(mapRegions[i].ex, mapRegions[i].ey, fortSize, fortSize);
 		}
 		else if (i == 12 && events.megavator){ //if megavator is active
-			ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
+			ellipse(mapRegions[i].ex, mapRegions[i].ey, fortSize, fortSize);
 		}
 		else if (i == 13 && events.gate){ //if gate is active
-			ellipse(regions[i].ex, regions[i].ey, fortSize, fortSize);
+			ellipse(mapRegions[i].ex, mapRegions[i].ey, fortSize, fortSize);
 		}
 		else if (i == 14 && events.antarc){ //antarctica
-			ellipse(regions[i].ex, regions[i].ey, antFortWidth, antFortHeight);
+			ellipse(mapRegions[i].ex, mapRegions[i].ey, antFortWidth, antFortHeight);
 		}
 		pop();
 	}
+
 	//NPC draw
 	for (var i = npcs.length - 1; i >= 0; i--){
 		if (npcs[i].s == true){
 			image(npcs[i].img, npcs[i].x, npcs[i].y, npcs[i].w, npcs[i].h);
 		}
 	}
-	// no longer object
-	// for (var npc in npcs){
-	// 	console.log(npc);
-	// 	console.log(npcs);
-	// 	if (npcs.npc.s == true){
-	// 		console.log('draw');
-	// 		image(npc.img, npc.x, npc.y, npc.w, npc.h);
-	// 	}
-	// 	else{
-	// 		console.log(npcs.npc.h)
-	// 	}
-	// }
 
 	// team updates
 	teamLimit = teamLimitIn.value();
@@ -490,6 +384,7 @@ function draw(){
 			teamButts[i].show();
 		}
 	}
+
 	//adjustable team inputs
 	for (var i = 0; i < teamButts.length; i++){
 		teamData[i] = {
@@ -498,11 +393,13 @@ function draw(){
 			color: teamButts[i].elt.style.backgroundColor
 		};
 	}
+
 	//update regions array
 	for (var i = 0; i < regions.length; i++){
 		regions[i].h = regIns[i].elt.value;
 		regions[i].color = regColorButts[i].elt.style.backgroundColor;
 	}
+
 	//need to normalize npc x/ys
 	let normNpcs = [
 		{x: (width/npcs[0].x), y: (height/npcs[0].y), s: npcs[0].s},
@@ -511,6 +408,7 @@ function draw(){
 		{x: (width/npcs[3].x), y: (height/npcs[3].y), s: npcs[3].s},
 		{x: (width/npcs[4].x), y: (height/npcs[4].y), s: npcs[4].s}
 	]
+
 	//send full status to server/map
 	data = {
 		r: regions,
@@ -522,7 +420,7 @@ function draw(){
 	socket.emit('update', data);
 }
 
-function mouseDragged(){
+function mouseDragged(){ //only move the NPCs with active buttons
 	if (merButt.elt.style.backgroundColor == 'green'){
 		npcs[0].x = mouseX;
 		npcs[0].y = mouseY;

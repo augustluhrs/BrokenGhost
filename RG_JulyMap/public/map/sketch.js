@@ -6,13 +6,11 @@
 // Open and connect socket
 let socket = io('/map');
 
-//i img variables
-// var reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8,
-// 	reg9, reg10, reg11, reg12, reg13, reg14, reg15, reg16;
+//img variables
 var nAmerica, cAmerica, sAmerica, europe, nAfrica, sAfrica, russia, nearEast,
 	pacRim, china, australia;
+// var kaiju, stella;
 var mermen, moonmen, molemen, oganaughts, superbious;
-
 
 //rando variables
 let canvas;
@@ -22,7 +20,6 @@ var teamLimit;
 var events = {};
 var npcs = {};
 
-// var fortSize = 150; //size of fortress ellipses
 var fortSize; //size of fortress ellipses
 var antFortWidth; //size of antarctica ellipse
 var antFortHeight; //size of antarctica ellipse
@@ -32,36 +29,8 @@ var henchBox; // w and h of the henchmen boxes
 var henchText; //textSize of henchmen count
 var regText; //Size of reg name
 let font;
-// let kaiju;
-// let timerOn = false;
-// let startMillis, elapsed, clock, clockSec, clockMin, clockHour;
-// let timeElapsed; //from server
-// let letsBattle = false;
-// let jitterX, jitterY;
-// let jitterSpeed = 5;
-// let kaijuOn = false;
-// let noTarget = true;
-// let molesOn = false;
-// let moleArmy = [];
-// let moleCount = 100;
-// let moleHill;
-// let moleColors = [
-// 	[244, 164, 96],
-// 	[205, 133, 63],
-// 	[210, 105, 30],
-// 	[139, 69, 19],
-// 	[160, 82, 45],
-// 	[165, 42, 42]
-// ];
-// let firstMoles;
-// let doomOn = false;
-// let laserOn = false;
-// let laserReset = 0;
-// let superFlyIn = false;
-// let superFlyCount = 0;
-// let superTarget;
 
-//new Buttons and arrays
+//Buttons
 //regions
 let megavatorButt, gateButt, puffButt, antarcButt;
 let megavatorOn = false;
@@ -75,63 +44,8 @@ let moonOn = false;
 let merOn = false;
 let oganOn = false;
 let superOn = false;
-//events
-// let kaijuButt, stellaButt;
-
-/*
-class Mole {
-	constructor(region){
-		this.x = int(region.x);
-		this.y = int(region.y);
-		this.diameter = random(2,5);
-		// this.speedX = int(random(-3, 3));
-		// this.speedY = int(random(-3, 3));
-		this.speedX = random(-3, 3);
-		this.speedY = random(-3, 3);
-		// this.stutterX = int(random(-this.speedX, this.speedX));
-		// this.stutterY = int(random(-this.speedY, this.speedY));
-		this.c = random(moleColors);
-	}
-
-	move(){
-		// if (this.x % 4 == 0){
-		// 	this.x += this.speedX + this.stutterX;
-		// 	this.y += this.speedY;
-		// }
-		// else if (this.x % 6 == 0){
-		// 	this.x += this.speedX;
-		// 	this.y += this.speedY + this.stutterY;
-		// }
-		// else{
-			this.x += this.speedX;
-			this.y += this.speedY;
-		// }
-	}
-
-	display(){
-		noStroke();
-		fill(this.c[0], this.c[1], this.c[2]);
-		ellipse(this.x, this.y, this.diameter, this.diameter);
-	}
-}
-*/
 
 function preload(){
-	// reg1 = loadImage('../assets/NorthAmerica.png');
-	// reg2 = loadImage('../assets/CentralAmerica.png');
-	// reg3 = loadImage('../assets/SouthAmerica.png');
-	// reg4 = loadImage('../assets/Greenland.png');
-	// reg5 = loadImage('../assets/Europe.png');
-	// reg6 = loadImage('../assets/WestAfrica.png');
-	// reg7 = loadImage('../assets/SouthAfrica.png');
-	// reg8 = loadImage('../assets/EastAfrica.png');
-	// reg9 = loadImage('../assets/Russia.png');
-	// reg10 = loadImage('../assets/MiddleEast.png');
-	// reg11 = loadImage('../assets/India.png');
-	// reg12 = loadImage('../assets/Siberia.png');
-	// reg13 = loadImage('../assets/China.png');
-	// reg14 = loadImage('../assets/Oceania.png');
-
 	//reg 1-11
 	nAmerica = loadImage('../assets/NorthAmerica.png'); //needs Greenland
 	cAmerica = loadImage('../assets/CentralAmerica.png');
@@ -163,8 +77,6 @@ function preload(){
 function setup(){
   //- - - - - overall
 	createCanvas(windowWidth, windowHeight);
-
-	// background(150, 50, 50);
 	background(0);
 	textFont(font);
 	textAlign(CENTER);
@@ -176,26 +88,9 @@ function setup(){
   fortSize	= width/11.19;
 	antFortWidth = 3 * width/4;
 	antFortHeight = height/15;
+
 	regions = [ //just for map, region images
-		/* //old
-		{img: reg1, x: 0, y: height/10, w: width/3, h: height/3 },
-		{img: reg2, x: 11 * width/80, y: 61 * height/160, w: width/5, h: height/4 },
-		{img: reg3, x: 41 * width/160, y: 46 * height/80, w: width/8, h: height/3 },
-		{img: reg4, x: width/5, y: 0, w: width/4, h: height/4 },
-		{img: reg5, x: 15 * width/40, y: height/12, w: width/5, h: height/3 },
-		{img: reg6, x: 129 * width/320, y: 68 * height/160, w: 5 * width/40, h: 5 * height/20 },
-		{img: reg7, x: 78*width/160, y: 101*height/160, w: width/8, h: height/4 },
-		{img: reg8, x: 10 * width/20, y: 7 * height/16, w: 5 * width/40, h: 5 * height/20 },
-		{img: reg9, x: 11 * width/20, y: height/15, w: width/4, h: height/3 },
-		{img: reg10, x: 90 * width/160, y: 61*height/160, w: 7* width/80, h: 4*height/20 },
-		{img: reg11, x: 51 * width/80, y: 31 * height/80, w:width/9, h: 5* height/20 },
-		{img: reg12, x: 123 * width/160, y: height/9, w: width/4, h: height/3},
-		{img: reg13, x: 27 * width/40, y: 20 * height/60, w: width/6, h: 3* height/10},
-		{img: reg14, x: 8 * width/10, y: 6* height/10,w: width/4,h: height/3},
-		{ex: width/1.39, ey: height/1.21},
-		{ex: width/10.85, ey: height/1.37},
-		{ex: width/2.44,  ey: height/1.18, a: false} //Antarctica
-		*/ //new
+ 		//new
 		{img: nAmerica, x: 0, y: height/10, w: width/3, h: height/3 },
 		{img: cAmerica, x: 11 * width/80, y: 61 * height/160, w: width/5, h: height/4 },
 		{img: sAmerica, x: 41 * width/160, y: 46 * height/80, w: width/8, h: height/3 },
@@ -210,13 +105,10 @@ function setup(){
 		{ex: width/7.36, ey: height/1.39}, //P.U.F.F.
 		{ex: width/1.31, ey: height/2.63}, //Mole Megavator
 		{ex: width/1.46, ey: height/1.39}, //Moon Gate
-		{ex: width/2,  ey: height/1.05, a: false} //Antarctica
-		// {ex: width/2.44,  ey: height/1.18, a: false} //Antarctica
+		{ex: width/2,  ey: height/1.05, a: false} //Antarctica, a is vestigal
 	];
 
-
 	hench = [ //number, box, and text
-		//should adjust N.A.
 		{n: '0', c: startCol, r: 'North America', x: width/5.75 , y: height/4.07},
 		{n: '0', c: startCol, r: 'Central America', x: width/3.77, y: height/1.91},
 		{n: '0', c: startCol, r: 'South America', x: width/3.1, y: height/1.35},
@@ -240,10 +132,9 @@ function setup(){
 		{n: '0', c: startCol, r: 'Mole Megavator', x: width/ 1.31, y: height/ 2.63},
 		{n: '0', c: startCol, r: 'Moon Gate', x: width/ 1.46, y: height/ 1.39},
 		{n: 'S', c: startCol, r: 'Antarctica', x: width/2, y: height/1.05}
-		// {n: 'S', c: startCol, r: 'Antarctica', x: width/2.45, y: height/1.15}
 	];
 
-	events = {
+	events = { //this is redundant, but w/e
 		megavator: megavatorOn,
 		gate: gateOn,
 		puff: puffOn,
@@ -255,21 +146,13 @@ function setup(){
 		super: superOn
 	};
 
-	npcs = [
+	npcs = [ //had to change from object to array
 		{img: mermen, x: 0, y: 0, w: 100, h: 100, s: false},
 		{img: molemen, x: 0, y: 0, w: 100, h: 100, s: false},
 		{img: moonmen, x: 0, y: 0, w: 100, h: 100, s: false},
 		{img: oganaughts, x: 0, y: 0, w: 100, h: 100, s: false},
 		{img: superbious, x: 0, y: 0, w: 100, h: 100, s: false}
 	];
-
-	// npcs = {
-	// 	molemen: {x: 0, y: 0, s: false},
-	// 	moonmen: {x: 0, y: 0, s: false},
-	// 	mermen: {x: 0, y: 0, s: false},
-	// 	oganaughts: {x: 0, y: 0, s: false},
-	// 	superbious: {x: 0, y: 0, s: false}
-	// };
 
 	socket.emit('refresh');
 
@@ -280,11 +163,6 @@ function setup(){
 		redraw();
   });
 
-	// socket.on('timerStart', function(){
-	// 	timerOn = true;
-	// 	startMillis = millis();
-	// })
-
 	// - - - - - heartbeat
 	socket.on('update',
 		function(data){
@@ -292,9 +170,8 @@ function setup(){
 			teams = data.t;
 			teamLimit = int(data.l);
 			events = data.e;
-			// npcs = data.n;
 			let normNpcs = data.n;
-			//update NPC locations/show
+			//update NPC locations/show, normalized w and h
 			for (var i = 0; i < npcs.length; i++){
 				npcs[i].x = width/normNpcs[i].x;
 				npcs[i].y = height/normNpcs[i].y;
@@ -310,18 +187,14 @@ function setup(){
 				hench[i].s = data.r[i].s;
 			}
 		});
-	// socket.on('superbious', function(){
-	// 	superOn = true;
-	// 	// superFlyIn = true;
-	// });
 
 }
 
 function draw(){
 	background(0);
-	// console.log(events);
 	for (var i = hench.length - 1; i >= 0; i--){
 		//map draw
+		push();
 		fill(hench[i].c);
 		tint(hench[i].c);
 		strokeWeight(4);
@@ -345,6 +218,7 @@ function draw(){
 			ellipse(regions[i].ex, regions[i].ey, antFortWidth, antFortHeight);
 			rect(hench[i].x, hench[i].y, henchBox, henchBox);
 		}
+		pop();
 	}
 	//region and hench text
 	stroke(0);
@@ -423,7 +297,7 @@ function nodeLines(){	//connecting node lines
 		line(0 , height/ 1.26, width/ 9.33, height/ 1.30 ); // Oceania (left edge) --> PUFF
 		line(0 , height/ 1.92, width/ 10.23, height/ 1.44); // Siberia (left edge) --> PUFF
 	}
-	// if (megavatorOn){ } //oh yeah, no nodes
+	// if (megavatorOn){ } //no nodes
 	if (events.gate){
 		line(width/ 1.67, height/1.29, width/1.51, height/ 1.295); // South Africa --> Moon
 		line(width/ 1.15, height/1.19, width/1.39, height/1.31 ); // Oceania --> Moon Gate

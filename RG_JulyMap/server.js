@@ -20,14 +20,10 @@ var teams = [];
 var teamLimit;
 var events = {};
 var npcs = {};
-// var dataFirst = false;
-// let startMillis;
-// let timerOn = false;
 
 function logs() {
   console.log(regions);
   console.log(teams);
-  // console.log(teamLimit);
 }
 
 
@@ -66,30 +62,6 @@ var cody = io.of('/cody');
 
 cody.on('connection', function(socket) {
   console.log('Welcome, Cody. Your id is: ' + socket.id);
-  // if(dataFirst){ //only triggers if Cody has reconnected
-  //   data = {
-  //     r: regions,
-  //     t: teams,
-  //     l: teamLimit
-  //   }
-  //   cody.emit('update', data);
-  // }
-
-  // socket.on('timerStart', function(){
-  //   console.log('timer started');
-  //   startMillis = Date.now();
-  //   timerOn = true;
-  //
-  //   // map.emit('timerStart');
-  // });
-
-  // socket.on('stop timer', function(){
-  //   console.log('timer off');
-  //   // startMillis = Date.now();
-  //   timerOn = false;
-  //
-  //   // map.emit('stop timer');
-  // });
 
   //when Cody sends update, store the new state of the map and send the update to the map
   socket.on('update', function(data) {
@@ -98,20 +70,8 @@ cody.on('connection', function(socket) {
     teamLimit = data.l;
     events = data.e;
     npcs = data.n;
-    // console.log(data);
-    // if (timerOn){
-    //   let timeElapsed = Date.now() - startMillis;
-    //   let dataPlus = {
-    //     r: regions,
-    //     t: teams,
-    //     l: teamLimit
-    //     // m: timeElapsed
-    //   }
-    //   map.emit('update', dataPlus);
-    // }
-    // else{
+
     map.emit('update', data);
-    // }
 
     //should store in separate log also, in case need for reset...
   });
@@ -121,58 +81,8 @@ cody.on('connection', function(socket) {
     logs();
   }, 30000);
 
-  /* //old map events
-    socket.on('battle', function() {
-      console.log('Battle between:');
-      map.emit('battle');
-    });
-
-    socket.on('battle over', function() {
-      console.log('Battle Over');
-      map.emit('battle over');
-    });
-
-    socket.on('kaiju', function() {
-      console.log('Kaiju Active');
-      map.emit('kaiju');
-    });
-
-    socket.on('kaiju off', function() {
-      console.log('Kaiju OFF');
-      map.emit('kaiju off');
-    });
-
-    socket.on('moles', function() {
-      console.log('Moles Active');
-      map.emit('moles');
-    });
-
-    socket.on('moles off', function() {
-      console.log('Moles OFF');
-      map.emit('moles off');
-    });
-
-    socket.on('doomsday', function() {
-      console.log('Doomsday Device Active');
-      map.emit('doomsday');
-    });
-    socket.on('fire laser', function() {
-      console.log('firing laser');
-      map.emit('fire laser');
-    });
-    */
-
-    // socket.on('superbious', function() {
-    //   console.log('Superbious Active');
-    //   map.emit('superbious');
-    // });
-
   // Listen for this client to disconnect
   socket.on('disconnect', function() {
     console.log("Client has disconnected " + socket.id);
-    // dataFirst = false;
-    // if (!dataFirst){
-    //   dataFirst = true;
-    // }
   });
 });
